@@ -124,15 +124,13 @@ namespace TowerDefence
         private void Board_MouseDown(object sender, MouseButtonEventArgs e)
         {
             _gameTimer.Stop();
-            var p = Mouse.GetPosition(Board);
+            var clickedPoint = Mouse.GetPosition(Board);
 
             int column = 0;
-            double aw = 0.0;
-            double ah = 0.0;
             int row = 0;
 
             // calc row mouse was over
-            row = I(ah, p, row, aw, ref column);
+            row = GetRowAndColumnFromMousePoint(clickedPoint, ref column);
             //Tower selection popup manu
             if (numberOfTowers < MaxTowers)
             {
@@ -226,24 +224,27 @@ namespace TowerDefence
             _gameTimer.Start();
         }
 
-        private int I(double ah, Point p, int r, double aw, ref int c)
+        private int GetRowAndColumnFromMousePoint(Point p, ref int column)
         {
-            foreach (var rd in Board.RowDefinitions)
+            double y = 0.0;
+            double x = 0.0;
+            int row = 0;
+            foreach (var rowDefinition in Board.RowDefinitions)
             {
-                ah += rd.ActualHeight;
-                if (ah >= p.Y)
+                y += rowDefinition.ActualHeight;
+                if (y >= p.Y)
                     break;
-                r++;
+                row++;
             }
             // calc col mouse was over
-            foreach (var cd in Board.ColumnDefinitions)
+            foreach (var columnDefinition in Board.ColumnDefinitions)
             {
-                aw += cd.ActualWidth;
-                if (aw >= p.X)
+                x += columnDefinition.ActualWidth;
+                if (x >= p.X)
                     break;
-                c++;
+                column++;
             }
-            return r;
+            return row;
         }
 
         private void GameTimer_Tick(object sender, EventArgs e)
