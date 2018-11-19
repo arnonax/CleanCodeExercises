@@ -34,7 +34,7 @@ namespace TowerDefence
 
         ClsE[] e = new ClsE[c1];
         TextBlock[] et = new TextBlock[c1];
-        Image[] ei = new Image[c1];
+        Image[] enemyImages = new Image[c1];
         ClsT[] tws = new ClsT[c2];
         Image[] ti = new Image[c2];
 
@@ -259,26 +259,26 @@ namespace TowerDefence
                 var en = this.e[ch];
                 m = en.l;
                 //enemy HP
-                TextBlock etb = new TextBlock();
+                TextBlock enemyTextBlock = new TextBlock();
 
-                etb.FontSize = 20;
-                etb.FontWeight = FontWeights.Bold;
-                etb.Text = en.h.ToString();
+                enemyTextBlock.FontSize = 20;
+                enemyTextBlock.FontWeight = FontWeights.Bold;
+                enemyTextBlock.Text = en.h.ToString();
 
 
                 
-                Grid.SetRow(etb, m.y);
-                Grid.SetColumn(etb, m.x);
-                Board.Children.Add(etb);
-                et[ch] = etb;
+                Grid.SetRow(enemyTextBlock, m.y);
+                Grid.SetColumn(enemyTextBlock, m.x);
+                Board.Children.Add(enemyTextBlock);
+                et[ch] = enemyTextBlock;
 
                 //enemy Picture
-                Image em = new Image();
-                em.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\1.png", UriKind.Absolute));
-                ei[ch] = em;
-                Grid.SetRow(em, m.y);
-                Grid.SetColumn(em, m.x);
-                Board.Children.Add(em);
+                Image enemyImage = new Image();
+                enemyImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\1.png", UriKind.Absolute));
+                enemyImages[ch] = enemyImage;
+                Grid.SetRow(enemyImage, m.y);
+                Grid.SetColumn(enemyImage, m.x);
+                Board.Children.Add(enemyImage);
               
                 ch++;
 
@@ -314,34 +314,34 @@ namespace TowerDefence
                     // Enemies Picture change by Power level
                     if (en.lv > 3)
                     {
-                        ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\2.png", UriKind.Absolute));
+                        enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\2.png", UriKind.Absolute));
                         if (en.lv > 5)
                         {
-                            ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\3.png", UriKind.Absolute));
+                            enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\3.png", UriKind.Absolute));
                             if (en.lv > 7)
                             {
-                                ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\4.png", UriKind.Absolute));
+                                enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\4.png", UriKind.Absolute));
                                 if (en.lv > 9)
                                 {
-                                    ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\5.png", UriKind.Absolute));
+                                    enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\5.png", UriKind.Absolute));
                                     if (en.lv > 12)
                                     {
-                                        ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\6.png", UriKind.Absolute));
+                                        enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\6.png", UriKind.Absolute));
                                         if (en.lv > 14)
                                         {
-                                            ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\7.png", UriKind.Absolute));
+                                            enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\7.png", UriKind.Absolute));
                                             if (en.lv > 16)
                                             {
-                                                ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\8.png", UriKind.Absolute));
+                                                enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\8.png", UriKind.Absolute));
                                                 if (en.lv > 18)
                                                 {
-                                                    ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\9.png", UriKind.Absolute));
+                                                    enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\9.png", UriKind.Absolute));
                                                     if (en.lv > 20)
                                                     {
-                                                        ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\10.png", UriKind.Absolute));
+                                                        enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\10.png", UriKind.Absolute));
                                                         if (en.lv > 22)
                                                         {
-                                                            ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\11.png", UriKind.Absolute));
+                                                            enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\11.png", UriKind.Absolute));
 
                                                         }
                                                     }
@@ -355,8 +355,8 @@ namespace TowerDefence
                     }
 
 
-                    etb = et[i];
-                    em = ei[i];
+                    enemyTextBlock = et[i];
+                    enemyImage = enemyImages[i];
                     b += g;
                     g = 0;
 
@@ -365,12 +365,12 @@ namespace TowerDefence
 
 
 
-                    Grid.SetRow(em, m.y);
-                    Grid.SetColumn(em, m.x);
+                    Grid.SetRow(enemyImage, m.y);
+                    Grid.SetColumn(enemyImage, m.x);
 
-                    Grid.SetRow(etb, m.y);
-                    Grid.SetColumn(etb, m.x);
-                    etb.Text = en.h.ToString();
+                    Grid.SetRow(enemyTextBlock, m.y);
+                    Grid.SetColumn(enemyTextBlock, m.x);
+                    enemyTextBlock.Text = en.h.ToString();
                 }
             }
             // called every timer interval after the enemies creation
@@ -421,34 +421,34 @@ namespace TowerDefence
                     // Enemies Picture change by Power level
                     if (en.lv > 3)
                     {
-                        ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\2.png", UriKind.Absolute));
+                        enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\2.png", UriKind.Absolute));
                         if (en.lv > 5)
                         {
-                            ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\3.png", UriKind.Absolute));
+                            enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\3.png", UriKind.Absolute));
                             if (en.lv > 7)
                             {
-                                ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\4.png", UriKind.Absolute));
+                                enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\4.png", UriKind.Absolute));
                                 if (en.lv > 9)
                                 {
-                                    ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\5.png", UriKind.Absolute));
+                                    enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\5.png", UriKind.Absolute));
                                     if (en.lv > 12)
                                     {
-                                        ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\6.png", UriKind.Absolute));
+                                        enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\6.png", UriKind.Absolute));
                                         if (en.lv > 14)
                                         {
-                                            ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\7.png", UriKind.Absolute));
+                                            enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\7.png", UriKind.Absolute));
                                             if (en.lv > 16)
                                             {
-                                                ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\8.png", UriKind.Absolute));
+                                                enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\8.png", UriKind.Absolute));
                                                 if (en.lv > 18)
                                                 {
-                                                    ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\9.png", UriKind.Absolute));
+                                                    enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\9.png", UriKind.Absolute));
                                                     if (en.lv > 20)
                                                     {
-                                                        ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\10.png", UriKind.Absolute));
+                                                        enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\10.png", UriKind.Absolute));
                                                         if (en.lv > 22)
                                                         {
-                                                            ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\11.png", UriKind.Absolute));
+                                                            enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\11.png", UriKind.Absolute));
 
                                                         }
                                                     }
@@ -463,7 +463,7 @@ namespace TowerDefence
                     m = en.l;
 
                     var etb = et[i];
-                    var em = ei[i];
+                    var em = enemyImages[i];
 
 
                     if ((en.h * 3) < en.mh)
