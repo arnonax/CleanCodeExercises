@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TowerDefence
 {
-    class ClsE
+    class Enemy
     {
 
         public int s { get; set; }
@@ -17,7 +17,7 @@ namespace TowerDefence
         public int t { get; set; }
         public int v { get; set; }
         public int lv { get; set; }
-        public ClsE(int ps, int ph)
+        public Enemy(int ps, int ph)
         {
             s = ps;
             mh = ph;

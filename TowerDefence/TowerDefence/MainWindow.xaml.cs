@@ -32,7 +32,7 @@ namespace TowerDefence
         public int towerType;
         public int k = 0;
 
-        ClsE[] e = new ClsE[c1];
+        Enemy[] enemies = new Enemy[c1];
         TextBlock[] enemyTextBlocks = new TextBlock[c1];
         Image[] enemyImages = new Image[c1];
         Tower[] towers = new Tower[MaxTowers];
@@ -49,10 +49,10 @@ namespace TowerDefence
 
             Board.MouseDown += Board_MouseDown;
 
-            for (int i = 0; i < e.Length; i++)
+            for (int i = 0; i < enemies.Length; i++)
             {
-                e[i] = new ClsE(1, 15);
-                e[i].sr = i;
+                enemies[i] = new Enemy(1, 15);
+                enemies[i].sr = i;
             }
 
             for (int i = 0; i < towers.Length; i++)
@@ -255,7 +255,7 @@ namespace TowerDefence
             if (ch < c1)
             {
                 //Making Enemies
-                var enemy = this.e[ch];
+                var enemy = this.enemies[ch];
                 m = enemy.l;
                 //enemy HP
                 TextBlock enemyTextBlock = new TextBlock();
@@ -285,14 +285,14 @@ namespace TowerDefence
                 for (int ti = 0; ti < towers.Length; ti++)
                 {
                     var tw = towers[ti];
-                    var fe = this.e[0];
+                    var fe = this.enemies[0];
 
                     for (int j = 0; j < tw.a; j++)
                     {
-                        fe = this.e[0];
-                        for (int i = 1; i < this.e.Length; i++)
+                        fe = this.enemies[0];
+                        for (int i = 1; i < this.enemies.Length; i++)
                         {
-                            enemy = this.e[i];
+                            enemy = this.enemies[i];
                             if (enemy.t > fe.t && tw.ir(enemy))
                             {
                                 fe = enemy;
@@ -307,7 +307,7 @@ namespace TowerDefence
                 //Enemies movement and changing picture by level of power
                 for (int i = 0; i < ch; i++)
                 {
-                    enemy = this.e[i];
+                    enemy = this.enemies[i];
                     if (enemy.h <= 0) { k++; }
                     enemy.M(r, out g);
                     // Enemies Picture change by Power level
@@ -383,14 +383,14 @@ namespace TowerDefence
                 for (int ti = 0; ti < towers.Length; ti++)
                 {
                     var tw = towers[ti];
-                    var fi = this.e[0];
+                    var fi = this.enemies[0];
 
                     for (int j = 0; j < tw.a; j++)
                     {
-                        fi = this.e[0];
-                        for (int i = 1; i < this.e.Length; i++)
+                        fi = this.enemies[0];
+                        for (int i = 1; i < this.enemies.Length; i++)
                         {
-                            var en = this.e[i];
+                            var en = this.enemies[i];
                             if (en.t > fi.t && tw.ir(en))
                             {
                                 fi = en;
@@ -403,10 +403,10 @@ namespace TowerDefence
                 }
 
                 // Enemies movement and changing picture by level of power
-                for (int i = 0; i < this.e.Length; i++)
+                for (int i = 0; i < this.enemies.Length; i++)
                 {
 
-                    var en = this.e[i];
+                    var en = this.enemies[i];
                     if (en.h <= 0) { k++; }
                     en.M(r, out g);
                     gold += g;

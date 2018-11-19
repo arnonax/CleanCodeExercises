@@ -55,7 +55,7 @@
     </ApplicationDefinition>
     <Compile Include="ClsB.cs" />
     <Compile Include="ClsBt.cs" />
-    <Compile Include="ClsE.cs" />
+    <Compile Include="Enemy.cs" />
     <Compile Include="ClsP.cs" />
     <Compile Include="PopupWindow.xaml.cs">
       <DependentUpon>PopupWindow.xaml</DependentUpon>

@@ -31,7 +31,7 @@ namespace TowerDefence
             a = ma;
             i = nm[0].ToString();
         }
-        public bool ir(ClsE pe)
+        public bool ir(Enemy pe)
         {
                 double x = (l.x - pe.l.x) * (l.x - pe.l.x);
                 double y = (l.y - pe.l.y) * (l.y - pe.l.y);
@@ -43,7 +43,7 @@ namespace TowerDefence
                 else return true;
 
         }
-        public void f(ClsE pe)
+        public void f(Enemy pe)
         {
             if (ir(pe) && a > 0)
             {

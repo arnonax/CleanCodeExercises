@@ -9,7 +9,7 @@ namespace TowerDefence
     class ClsB
     {
         public Tower[] tws { get; set; }
-        public ClsE[] e { get; set; }
+        public Enemy[] e { get; set; }
         public cls_r r { get; set; }
 
     }
