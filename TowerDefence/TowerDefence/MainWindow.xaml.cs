@@ -36,7 +36,7 @@ namespace TowerDefence
         TextBlock[] enemyTextBlocks = new TextBlock[c1];
         Image[] enemyImages = new Image[c1];
         ClsT[] tws = new ClsT[c2];
-        Image[] ti = new Image[c2];
+        Image[] towerImages = new Image[c2];
 
         cls_r r = new cls_r();
 
@@ -153,12 +153,12 @@ namespace TowerDefence
                             tw.B(0, ts, "Tower", 10, 3.6, 2, new ClsP(c, r));
 
                             //Tower Picture
-                            Image t = new Image();
-                            t.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tw.nm + ".png", UriKind.Absolute));
-                            ti[ch] = t;
-                            Grid.SetRow(t, tw.l.y);
-                            Grid.SetColumn(t, tw.l.x);
-                            Board.Children.Add(t);
+                            Image towerImage = new Image();
+                            towerImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tw.nm + ".png", UriKind.Absolute));
+                            towerImages[ch] = towerImage;
+                            Grid.SetRow(towerImage, tw.l.y);
+                            Grid.SetColumn(towerImage, tw.l.x);
+                            Board.Children.Add(towerImage);
                             b = (b - 20);
                             ts++;
                             MessageBox.Show("You have " + b + " gold left and you can build " + (c2 - ts) + " more towers");
@@ -179,7 +179,7 @@ namespace TowerDefence
                                 //Tower Picture
                                 Image t = new Image();
                                 t.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tw.nm + ".png", UriKind.Absolute));
-                                ti[ch] = t;
+                                towerImages[ch] = t;
                                 Grid.SetRow(t, tw.l.y);
                                 Grid.SetColumn(t, tw.l.x);
                                 Board.Children.Add(t);
@@ -205,7 +205,7 @@ namespace TowerDefence
                                 //Tower Picture
                                 Image t = new Image();
                                 t.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tw.nm + ".png", UriKind.Absolute));
-                                ti[ch] = t;
+                                towerImages[ch] = t;
                                 Grid.SetRow(t, tw.l.y);
                                 Grid.SetColumn(t, tw.l.x);
                                 Board.Children.Add(t);
