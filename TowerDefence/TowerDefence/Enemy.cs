@@ -8,8 +8,6 @@ namespace TowerDefence
 {
     class Enemy
     {
-
-        public int s { get; set; }
         public int mh { get; set; }
         public int h { get; set; }
         public int sr { get; set; }
@@ -17,9 +15,8 @@ namespace TowerDefence
         public int t { get; set; }
         public int v { get; set; }
         public int lv { get; set; }
-        public Enemy(int ps, int ph)
+        public Enemy(int ph)
         {
-            s = ps;
             mh = ph;
             h = mh;
             t = 0;
