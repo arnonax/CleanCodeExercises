@@ -51,14 +51,14 @@ namespace TowerDefence
         cls_r r = new cls_r();
         TextBlock[] rd = new TextBlock[c1];
 
-        DispatcherTimer tm;
+        DispatcherTimer _gameTimer;
         
 
         public MainWindow()
         {
             InitializeComponent();
 
-            this.br.MouseDown += new MouseButtonEventHandler(gcmd);
+            this.Board.MouseDown += new MouseButtonEventHandler(Board_MouseDown);
 
             for (int i = 0; i < e.Length; i++)
             {
@@ -85,13 +85,13 @@ namespace TowerDefence
             for (int i = 0; i < c3; i++)
             {
                 cd = new ColumnDefinition();
-                br.ColumnDefinitions.Add(cd);
+                Board.ColumnDefinitions.Add(cd);
             }
 
             for (int i = 0; i < c4; i++)
             {
                 rd = new RowDefinition();
-                br.RowDefinitions.Add(rd);
+                Board.RowDefinitions.Add(rd);
             }
  
             // Draw Grass
@@ -101,11 +101,11 @@ namespace TowerDefence
 			{
                 Image gr = new Image();
                 gr.Source = new BitmapImage(new Uri(Environment.CurrentDirectory+"\\Pictures\\Background\\Grass.png",  UriKind.RelativeOrAbsolute));
-                br.ShowGridLines = false;
+                Board.ShowGridLines = false;
 
                 Grid.SetRow(gr, j);
                 Grid.SetColumn(gr, i);
-                br.Children.Add(gr);
+                Board.Children.Add(gr);
                 }
 			}
             // draw route
@@ -117,7 +117,7 @@ namespace TowerDefence
                 
                 Grid.SetRow(w, m.y);
                 Grid.SetColumn(w, m.x);
-                br.Children.Add(w);
+                Board.Children.Add(w);
                 if (i == (r.r.Length - 1))
                 {
                     Image te = new Image();
@@ -125,18 +125,18 @@ namespace TowerDefence
 
                     Grid.SetRow(te, m.y);
                     Grid.SetColumn(te, m.x);
-                    br.Children.Add(te);
+                    Board.Children.Add(te);
                 }
             }
             // create timer
-            tm = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, new EventHandler(TC), Dispatcher); // TODO: pace the game!
-            tm.Start();
+            _gameTimer = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, new EventHandler(GameTimer_Tick), Dispatcher); // TODO: pace the game!
+            _gameTimer.Start();
     }
 
-        private void gcmd(object sender, MouseButtonEventArgs e)
+        private void Board_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            tm.Stop();
-            var p = Mouse.GetPosition(br);
+            _gameTimer.Stop();
+            var p = Mouse.GetPosition(Board);
 
             int c = 0;
             double aw = 0.0;
@@ -169,7 +169,7 @@ namespace TowerDefence
                             ti[ch] = t;
                             Grid.SetRow(t, tw.l.y);
                             Grid.SetColumn(t, tw.l.x);
-                            br.Children.Add(t);
+                            Board.Children.Add(t);
                             b = (b - 20);
                             ts++;
                             MessageBox.Show("You have " + b + " gold left and you can build " + (c2 - ts) + " more towers");
@@ -193,7 +193,7 @@ namespace TowerDefence
                                 ti[ch] = t;
                                 Grid.SetRow(t, tw.l.y);
                                 Grid.SetColumn(t, tw.l.x);
-                                br.Children.Add(t);
+                                Board.Children.Add(t);
                                 b = (b - 35);
                                 ts++;
                                 MessageBox.Show("You have " + b + " gold left and you can build " + (c2 - ts) + " more towers");
@@ -220,7 +220,7 @@ namespace TowerDefence
                                 ti[ch] = t;
                                 Grid.SetRow(t, tw.l.y);
                                 Grid.SetColumn(t, tw.l.x);
-                                br.Children.Add(t);
+                                Board.Children.Add(t);
                                 b = (b - 60);
                                 ts++;
                                 MessageBox.Show("You have " + b + " gold left and you can build " + (c2 - ts) + " more towers");
@@ -237,12 +237,12 @@ namespace TowerDefence
             {
                 MessageBox.Show("You cannot build more towers!");
             }
-            tm.Start();
+            _gameTimer.Start();
         }
 
         private int I(double ah, Point p, int r, double aw, ref int c)
         {
-            foreach (var rd in br.RowDefinitions)
+            foreach (var rd in Board.RowDefinitions)
             {
                 ah += rd.ActualHeight;
                 if (ah >= p.Y)
@@ -250,7 +250,7 @@ namespace TowerDefence
                 r++;
             }
             // calc col mouse was over
-            foreach (var cd in br.ColumnDefinitions)
+            foreach (var cd in Board.ColumnDefinitions)
             {
                 aw += cd.ActualWidth;
                 if (aw >= p.X)
@@ -264,7 +264,7 @@ namespace TowerDefence
         {
             throw new NotImplementedException();
         }
-        private void TC(object sender, EventArgs e)
+        private void GameTimer_Tick(object sender, EventArgs e)
         {
             ClsP m = new ClsP(0, 0);
 
@@ -285,7 +285,7 @@ namespace TowerDefence
                 
                 Grid.SetRow(etb, m.y);
                 Grid.SetColumn(etb, m.x);
-                br.Children.Add(etb);
+                Board.Children.Add(etb);
                 et[ch] = etb;
 
                 //enemy Picture
@@ -294,7 +294,7 @@ namespace TowerDefence
                 ei[ch] = em;
                 Grid.SetRow(em, m.y);
                 Grid.SetColumn(em, m.x);
-                br.Children.Add(em);
+                Board.Children.Add(em);
               
                 ch++;
 
@@ -431,7 +431,7 @@ namespace TowerDefence
                     if (en.l == r.e)
                     {
                         MessageBox.Show("you lose! but killed "+ k);
-                        tm.Stop();
+                        _gameTimer.Stop();
                         break;
                     }
                     // Enemies Picture change by Power level
