@@ -22,21 +22,21 @@ namespace TowerDefence
     public partial class MainWindow : Window
     {
         const int c1 = 10;
-        const int c2 = 12;
+        const int MaxTowers = 12;
         const int NumberOfColumns = 15;
-        public int ts = 0;
+        public int numberOfTowers = 0;
         const int numberOfRows = 12;
         public int ch = 0;
         public int b = 50;
         public int g = 0;
-        public int t;
+        public int towerType;
         public int k = 0;
 
         ClsE[] e = new ClsE[c1];
         TextBlock[] enemyTextBlocks = new TextBlock[c1];
         Image[] enemyImages = new Image[c1];
-        ClsT[] tws = new ClsT[c2];
-        Image[] towerImages = new Image[c2];
+        ClsT[] towers = new ClsT[MaxTowers];
+        Image[] towerImages = new Image[MaxTowers];
 
         cls_r r = new cls_r();
 
@@ -55,10 +55,10 @@ namespace TowerDefence
                 e[i].sr = i;
             }
 
-            for (int i = 0; i < tws.Length; i++)
+            for (int i = 0; i < towers.Length; i++)
             {
-                tws[i] = new ClsT();
-                tws[i].B(0, i, "Tower1",5, 2,1, new ClsP(14,14));
+                towers[i] = new ClsT();
+                towers[i].B(0, i, "Tower1",5, 2,1, new ClsP(14,14));
             }
 
             this.Loaded += MainWindow_Loaded;
@@ -135,33 +135,33 @@ namespace TowerDefence
             // calc row mouse was over
             r = I(ah, p, r, aw, ref c);
             //Tower selection popup manu
-            if (ts < c2)
+            if (numberOfTowers < MaxTowers)
             {
 
-                PW pop = new PW(b, c, r, t);
+                PW pop = new PW(b, c, r, towerType);
                 pop.ShowDialog();
-                t = pop.tt;
+                towerType = pop.tt;
             //tower selection
-                switch (t)
+                switch (towerType)
                 {
                     //SimpleTower
                     case 1:
                         if (b >= 20)
                         {
-                            var tw = tws[ts];
+                            var tower = towers[numberOfTowers];
                             ClsP pa = new ClsP(c, r);
-                            tw.B(0, ts, "Tower", 10, 3.6, 2, new ClsP(c, r));
+                            tower.B(0, numberOfTowers, "Tower", 10, 3.6, 2, new ClsP(c, r));
 
                             //Tower Picture
                             Image towerImage = new Image();
-                            towerImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tw.nm + ".png", UriKind.Absolute));
+                            towerImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tower.nm + ".png", UriKind.Absolute));
                             towerImages[ch] = towerImage;
-                            Grid.SetRow(towerImage, tw.l.y);
-                            Grid.SetColumn(towerImage, tw.l.x);
+                            Grid.SetRow(towerImage, tower.l.y);
+                            Grid.SetColumn(towerImage, tower.l.x);
                             Board.Children.Add(towerImage);
                             b = (b - 20);
-                            ts++;
-                            MessageBox.Show("You have " + b + " gold left and you can build " + (c2 - ts) + " more towers");
+                            numberOfTowers++;
+                            MessageBox.Show("You have " + b + " gold left and you can build " + (MaxTowers - numberOfTowers) + " more towers");
                         }
                         else { MessageBox.Show("You don't have enough gold for that!, you need 20 and you only have " + b); }
 
@@ -172,9 +172,9 @@ namespace TowerDefence
 
                             if (b >= 35)
                             {
-                                var tw = tws[ts];
+                                var tw = towers[numberOfTowers];
                                 ClsP pa = new ClsP(c, r);
-                                tw.B(0, ts, "Reapeter", 5, 3, 7, new ClsP(c, r));
+                                tw.B(0, numberOfTowers, "Reapeter", 5, 3, 7, new ClsP(c, r));
 
                                 //Tower Picture
                                 Image t = new Image();
@@ -184,8 +184,8 @@ namespace TowerDefence
                                 Grid.SetColumn(t, tw.l.x);
                                 Board.Children.Add(t);
                                 b = (b - 35);
-                                ts++;
-                                MessageBox.Show("You have " + b + " gold left and you can build " + (c2 - ts) + " more towers");
+                                numberOfTowers++;
+                                MessageBox.Show("You have " + b + " gold left and you can build " + (MaxTowers - numberOfTowers) + " more towers");
 
 
                             }
@@ -194,13 +194,13 @@ namespace TowerDefence
                         break;
                     //Sniper
                     case 3:
-                        if (t == 3)
+                        if (towerType == 3)
                         {
 
                             if (b >= 60)
                             {
-                                var tw = tws[ts];
-                                tw.B(0, ts, "Sniper", 20, 9.4, 1, new ClsP(c, r));
+                                var tw = towers[numberOfTowers];
+                                tw.B(0, numberOfTowers, "Sniper", 20, 9.4, 1, new ClsP(c, r));
 
                                 //Tower Picture
                                 Image t = new Image();
@@ -210,8 +210,8 @@ namespace TowerDefence
                                 Grid.SetColumn(t, tw.l.x);
                                 Board.Children.Add(t);
                                 b = (b - 60);
-                                ts++;
-                                MessageBox.Show("You have " + b + " gold left and you can build " + (c2 - ts) + " more towers");
+                                numberOfTowers++;
+                                MessageBox.Show("You have " + b + " gold left and you can build " + (MaxTowers - numberOfTowers) + " more towers");
 
 
                             }
@@ -283,9 +283,9 @@ namespace TowerDefence
                 ch++;
 
                 //Fire!!
-                for (int ti = 0; ti < tws.Length; ti++)
+                for (int ti = 0; ti < towers.Length; ti++)
                 {
-                    var tw = tws[ti];
+                    var tw = towers[ti];
                     var fe = this.e[0];
 
                     for (int j = 0; j < tw.a; j++)
@@ -381,9 +381,9 @@ namespace TowerDefence
 
 
                 //Fire!!
-                for (int ti = 0; ti < tws.Length; ti++)
+                for (int ti = 0; ti < towers.Length; ti++)
                 {
-                    var tw = tws[ti];
+                    var tw = towers[ti];
                     var fi = this.e[0];
 
                     for (int j = 0; j < tw.a; j++)
