@@ -53,7 +53,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ClsB.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="BoardLocation.cs" />
     <Compile Include="PopupWindow.xaml.cs">
