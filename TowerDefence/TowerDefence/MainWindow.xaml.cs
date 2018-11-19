@@ -33,7 +33,7 @@ namespace TowerDefence
         public int k = 0;
 
         ClsE[] e = new ClsE[c1];
-        TextBlock[] et = new TextBlock[c1];
+        TextBlock[] enemyTextBlocks = new TextBlock[c1];
         Image[] enemyImages = new Image[c1];
         ClsT[] tws = new ClsT[c2];
         Image[] ti = new Image[c2];
@@ -270,7 +270,7 @@ namespace TowerDefence
                 Grid.SetRow(enemyTextBlock, m.y);
                 Grid.SetColumn(enemyTextBlock, m.x);
                 Board.Children.Add(enemyTextBlock);
-                et[ch] = enemyTextBlock;
+                enemyTextBlocks[ch] = enemyTextBlock;
 
                 //enemy Picture
                 Image enemyImage = new Image();
@@ -355,7 +355,7 @@ namespace TowerDefence
                     }
 
 
-                    enemyTextBlock = et[i];
+                    enemyTextBlock = enemyTextBlocks[i];
                     enemyImage = enemyImages[i];
                     b += g;
                     g = 0;
@@ -462,7 +462,7 @@ namespace TowerDefence
                     }
                     m = en.l;
 
-                    var etb = et[i];
+                    var etb = enemyTextBlocks[i];
                     var em = enemyImages[i];
 
 
