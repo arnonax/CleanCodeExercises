@@ -54,7 +54,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ClsB.cs" />
-    <Compile Include="ClsBt.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="BoardLocation.cs" />
     <Compile Include="PopupWindow.xaml.cs">
