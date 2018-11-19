@@ -38,7 +38,7 @@ namespace TowerDefence
         Tower[] towers = new Tower[MaxTowers];
         Image[] towerImages = new Image[MaxTowers];
 
-        Route r = new Route();
+        Route route = new Route();
 
         DispatcherTimer _gameTimer;
         
@@ -98,16 +98,16 @@ namespace TowerDefence
                 }
 			}
             // draw route
-            for (int i = 0; i < r.locations.Length; i++)
+            for (int i = 0; i < route.locations.Length; i++)
             {
-                location = r.locations[i];
+                location = route.locations[i];
                 Image routeImage = new Image();
                 routeImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Background\\Route.png", UriKind.Absolute));
                 
                 Grid.SetRow(routeImage, location.y);
                 Grid.SetColumn(routeImage, location.x);
                 Board.Children.Add(routeImage);
-                if (i == (r.locations.Length - 1))
+                if (i == (route.locations.Length - 1))
                 {
                     Image te = new Image();
                     te.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Background\\Home.png", UriKind.Absolute));
@@ -256,7 +256,7 @@ namespace TowerDefence
             {
                 //Making Enemies
                 var enemy = this.enemies[ch];
-                m = enemy.l;
+                m = enemy.Location;
                 //enemy HP
                 TextBlock enemyTextBlock = new TextBlock();
 
@@ -309,7 +309,7 @@ namespace TowerDefence
                 {
                     enemy = this.enemies[i];
                     if (enemy.h <= 0) { killsCount++; }
-                    enemy.M(r, out goldEarnedInRound);
+                    enemy.M(route, out goldEarnedInRound);
                     // Enemies Picture change by Power level
                     if (enemy.lv > 3)
                     {
@@ -359,7 +359,7 @@ namespace TowerDefence
                     gold += goldEarnedInRound;
                     goldEarnedInRound = 0;
 
-                    m = enemy.l;
+                    m = enemy.Location;
 
 
 
@@ -408,10 +408,10 @@ namespace TowerDefence
 
                     var en = this.enemies[i];
                     if (en.h <= 0) { killsCount++; }
-                    en.M(r, out goldEarnedInRound);
+                    en.M(route, out goldEarnedInRound);
                     gold += goldEarnedInRound;
                     goldEarnedInRound = 0;
-                    if (en.l == r.e)
+                    if (en.Location == route.e)
                     {
                         MessageBox.Show("you lose! but killed "+ killsCount);
                         _gameTimer.Stop();
@@ -459,7 +459,7 @@ namespace TowerDefence
                             }
                         }
                     }
-                    m = en.l;
+                    m = en.Location;
 
                     var etb = enemyTextBlocks[i];
                     var em = enemyImages[i];

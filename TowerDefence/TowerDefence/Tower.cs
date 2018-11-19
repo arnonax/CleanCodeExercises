@@ -33,8 +33,8 @@ namespace TowerDefence
         }
         public bool ir(Enemy pe)
         {
-                double x = (l.x - pe.l.x) * (l.x - pe.l.x);
-                double y = (l.y - pe.l.y) * (l.y - pe.l.y);
+                double x = (l.x - pe.Location.x) * (l.x - pe.Location.x);
+                double y = (l.y - pe.Location.y) * (l.y - pe.Location.y);
                 double cl = Math.Sqrt(x + y);
                 if (cl > r)
                 {
