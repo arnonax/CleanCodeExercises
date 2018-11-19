@@ -1,4 +1,4 @@
-﻿<Window x:Class="TowerDefence.PW"
+﻿<Window x:Class="TowerDefence.PopupWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="PopUp" Height="357" Width="454">

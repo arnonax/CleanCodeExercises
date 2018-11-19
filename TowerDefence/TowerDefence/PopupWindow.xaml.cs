@@ -15,19 +15,18 @@ using System.Windows.Shapes;
 namespace TowerDefence
 {
     /// <summary>
-    /// Interaction logic for PW.xaml
+    /// Interaction logic for PopupWindow.xaml
     /// </summary>
-    public partial class PW : Window
+    public partial class PopupWindow : Window
     {
        public int tt;
-        public PW(int pg, int pc, int pr, int ptt)
+        public PopupWindow(int gold, int column, int row)
         {
             InitializeComponent();
-            txt.Text = "Grid clicked at column " + pc + ", row " + pr + " you have " + pg + " gold";
-            if (b1.IsPressed == true)
+            txt.Text = "Grid clicked at column " + column + ", row " + row + " you have " + gold + " gold";
+            if (b1.IsPressed)
             {
-                ptt = 1;
-                this.Close();
+                Close();
             }
         }
 

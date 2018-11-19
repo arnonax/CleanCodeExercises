@@ -57,8 +57,8 @@
     <Compile Include="ClsBt.cs" />
     <Compile Include="ClsE.cs" />
     <Compile Include="ClsP.cs" />
-    <Compile Include="PW.xaml.cs">
-      <DependentUpon>PW.xaml</DependentUpon>
+    <Compile Include="PopupWindow.xaml.cs">
+      <DependentUpon>PopupWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="cls_r.cs" />
     <Compile Include="Tower.cs" />
@@ -74,7 +74,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="PW.xaml">
+    <Page Include="PopupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
