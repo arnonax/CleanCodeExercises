@@ -56,11 +56,11 @@
     <Compile Include="ClsB.cs" />
     <Compile Include="ClsBt.cs" />
     <Compile Include="Enemy.cs" />
-    <Compile Include="ClsP.cs" />
+    <Compile Include="BoardLocation.cs" />
     <Compile Include="PopupWindow.xaml.cs">
       <DependentUpon>PopupWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="cls_r.cs" />
+    <Compile Include="Route.cs" />
     <Compile Include="Tower.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

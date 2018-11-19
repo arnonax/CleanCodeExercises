@@ -12,14 +12,14 @@ namespace TowerDefence
         public int n { get; set; }
         public string nm { get; set; }
         public double r { get; set; }
-        public ClsP l { get; set; }
+        public BoardLocation l { get; set; }
         public int t { get; set; }
         public int d { get; set; }
         public string i = "T";
         public int a { get; set; }
         public int ma { get; set; }
 
-        public void Initialize(int pc, int pn, string pnm, int pd,double pr, int pa, ClsP pl)
+        public void Initialize(int pc, int pn, string pnm, int pd,double pr, int pa, BoardLocation pl)
         {
             c = pc;
             n = pn;

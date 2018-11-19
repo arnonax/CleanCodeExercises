@@ -13,7 +13,7 @@ namespace TowerDefence
         public int mh { get; set; }
         public int h { get; set; }
         public int sr { get; set; }
-        public ClsP l {get; set; }
+        public BoardLocation l {get; set; }
         public int t { get; set; }
         public int v { get; set; }
         public int lv { get; set; }
@@ -23,11 +23,11 @@ namespace TowerDefence
             mh = ph;
             h = mh;
             t = 0;
-            l = new ClsP(0, 0);
+            l = new BoardLocation(0, 0);
             v = 1;
             lv = 1;
         }
-        public void M(cls_r w, out int g) 
+        public void M(Route w, out int g) 
         {
             g = 0;
             if (h > 0)
@@ -36,16 +36,16 @@ namespace TowerDefence
                 for (int i = 0; i < s; i++)
                 {
                     t++;
-                    if (t >= w.r.Length)
+                    if (t >= w.locations.Length)
                     {
                         break;
                     }
-                    l = w.r[t];
+                    l = w.locations[t];
                 }
             }
             else
             {
-                l = w.r[0];
+                l = w.locations[0];
                 mh = (int)(mh * 1.25);
                 h = mh;
                 t = 0;

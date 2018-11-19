@@ -10,7 +10,7 @@ namespace TowerDefence
     {
         public Tower[] tws { get; set; }
         public Enemy[] e { get; set; }
-        public cls_r r { get; set; }
+        public Route r { get; set; }
 
     }
 }

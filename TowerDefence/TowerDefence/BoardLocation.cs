@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace TowerDefence
 {
-    class ClsP
+    class BoardLocation
     {
         public int x { get; set; }
         public int y { get; set; }
-        public ClsP(int px, int py)
+        public BoardLocation(int px, int py)
         {
             x = px;
             y = py;

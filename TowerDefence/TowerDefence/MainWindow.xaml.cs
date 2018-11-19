@@ -38,7 +38,7 @@ namespace TowerDefence
         Tower[] towers = new Tower[MaxTowers];
         Image[] towerImages = new Image[MaxTowers];
 
-        cls_r r = new cls_r();
+        Route r = new Route();
 
         DispatcherTimer _gameTimer;
         
@@ -58,7 +58,7 @@ namespace TowerDefence
             for (int i = 0; i < towers.Length; i++)
             {
                 towers[i] = new Tower();
-                towers[i].Initialize(0, i, "Tower1",5, 2,1, new ClsP(14,14));
+                towers[i].Initialize(0, i, "Tower1",5, 2,1, new BoardLocation(14,14));
             }
 
             this.Loaded += MainWindow_Loaded;
@@ -66,7 +66,7 @@ namespace TowerDefence
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            ClsP m = new ClsP(0, 0);
+            BoardLocation location = new BoardLocation(0, 0);
             ColumnDefinition columnDefinition;
             RowDefinition rowDefinition;
 
@@ -98,22 +98,22 @@ namespace TowerDefence
                 }
 			}
             // draw route
-            for (int i = 0; i < r.r.Length; i++)
+            for (int i = 0; i < r.locations.Length; i++)
             {
-                m = r.r[i];
-                Image w = new Image();
-                w.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Background\\Route.png", UriKind.Absolute));
+                location = r.locations[i];
+                Image routeImage = new Image();
+                routeImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Background\\Route.png", UriKind.Absolute));
                 
-                Grid.SetRow(w, m.y);
-                Grid.SetColumn(w, m.x);
-                Board.Children.Add(w);
-                if (i == (r.r.Length - 1))
+                Grid.SetRow(routeImage, location.y);
+                Grid.SetColumn(routeImage, location.x);
+                Board.Children.Add(routeImage);
+                if (i == (r.locations.Length - 1))
                 {
                     Image te = new Image();
                     te.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Background\\Home.png", UriKind.Absolute));
 
-                    Grid.SetRow(te, m.y);
-                    Grid.SetColumn(te, m.x);
+                    Grid.SetRow(te, location.y);
+                    Grid.SetColumn(te, location.x);
                     Board.Children.Add(te);
                 }
             }
@@ -149,7 +149,7 @@ namespace TowerDefence
                         if (gold >= 20)
                         {
                             var tower = towers[numberOfTowers];
-                            tower.Initialize(0, numberOfTowers, "Tower", 10, 3.6, 2, new ClsP(column, row));
+                            tower.Initialize(0, numberOfTowers, "Tower", 10, 3.6, 2, new BoardLocation(column, row));
 
                             //Tower Picture
                             Image towerImage = new Image();
@@ -172,8 +172,8 @@ namespace TowerDefence
                             if (gold >= 35)
                             {
                                 var tw = towers[numberOfTowers];
-                                ClsP pa = new ClsP(column, row);
-                                tw.Initialize(0, numberOfTowers, "Reapeter", 5, 3, 7, new ClsP(column, row));
+                                BoardLocation pa = new BoardLocation(column, row);
+                                tw.Initialize(0, numberOfTowers, "Reapeter", 5, 3, 7, new BoardLocation(column, row));
 
                                 //Tower Picture
                                 Image t = new Image();
@@ -199,7 +199,7 @@ namespace TowerDefence
                             if (gold >= 60)
                             {
                                 var tw = towers[numberOfTowers];
-                                tw.Initialize(0, numberOfTowers, "Sniper", 20, 9.4, 1, new ClsP(column, row));
+                                tw.Initialize(0, numberOfTowers, "Sniper", 20, 9.4, 1, new BoardLocation(column, row));
 
                                 //Tower Picture
                                 Image t = new Image();
@@ -249,7 +249,7 @@ namespace TowerDefence
 
         private void GameTimer_Tick(object sender, EventArgs e)
         {
-            ClsP m = new ClsP(0, 0);
+            BoardLocation m = new BoardLocation(0, 0);
 
             //first intervals- for craeting the enemies
             if (ch < MaxEnemies)
