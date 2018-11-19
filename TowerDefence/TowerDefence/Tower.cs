@@ -8,28 +8,21 @@ namespace TowerDefence
 {
      class Tower
     {
-        public int c { get; set; }
-        public int n { get; set; }
-        public string nm { get; set; }
+        public string ImageFilename { get; set; }
         public double FightingRadius { get; set; }
         public BoardLocation Location { get; set; }
-        public int t { get; set; }
         public int Strength { get; set; }
-        public string i = "T";
         public int a { get; set; }
         public int ma { get; set; }
 
-        public void Initialize(int pc, int pn, string pnm, int pd,double pr, int pa, BoardLocation pl)
+        public void Initialize(string imageFilename, int pd,double pr, int pa, BoardLocation pl)
         {
-            c = pc;
-            n = pn;
-            nm = pnm;
+            ImageFilename = imageFilename;
             Strength = pd;
             FightingRadius = pr;
             Location = pl;
             ma = pa;
             a = ma;
-            i = nm[0].ToString();
         }
 
         public bool IsInRange(Enemy enemy)

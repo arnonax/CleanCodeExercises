@@ -57,7 +57,7 @@ namespace TowerDefence
             for (int i = 0; i < towers.Length; i++)
             {
                 towers[i] = new Tower();
-                towers[i].Initialize(0, i, "Tower1",5, 2,1, new BoardLocation(14,14));
+                towers[i].Initialize("Tower1",5, 2,1, new BoardLocation(14,14));
             }
 
             this.Loaded += MainWindow_Loaded;
@@ -146,11 +146,11 @@ namespace TowerDefence
                         if (gold >= 20)
                         {
                             var tower = towers[numberOfTowers];
-                            tower.Initialize(0, numberOfTowers, "Tower", 10, 3.6, 2, new BoardLocation(column, row));
+                            tower.Initialize("Tower", 10, 3.6, 2, new BoardLocation(column, row));
 
                             //Tower Picture
                             Image towerImage = new Image();
-                            towerImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tower.nm + ".png", UriKind.Absolute));
+                            towerImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tower.ImageFilename + ".png", UriKind.Absolute));
                             towerImages[ch] = towerImage;
                             Grid.SetRow(towerImage, tower.Location.y);
                             Grid.SetColumn(towerImage, tower.Location.x);
@@ -168,17 +168,16 @@ namespace TowerDefence
 
                             if (gold >= 35)
                             {
-                                var tw = towers[numberOfTowers];
-                                BoardLocation pa = new BoardLocation(column, row);
-                                tw.Initialize(0, numberOfTowers, "Reapeter", 5, 3, 7, new BoardLocation(column, row));
+                                var tower = towers[numberOfTowers];
+                                tower.Initialize("Reapeter", 5, 3, 7, new BoardLocation(column, row));
 
                                 //Tower Picture
-                                Image t = new Image();
-                                t.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tw.nm + ".png", UriKind.Absolute));
-                                towerImages[ch] = t;
-                                Grid.SetRow(t, tw.Location.y);
-                                Grid.SetColumn(t, tw.Location.x);
-                                Board.Children.Add(t);
+                                Image towerImage = new Image();
+                                towerImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tower.ImageFilename + ".png", UriKind.Absolute));
+                                towerImages[ch] = towerImage;
+                                Grid.SetRow(towerImage, tower.Location.y);
+                                Grid.SetColumn(towerImage, tower.Location.x);
+                                Board.Children.Add(towerImage);
                                 gold = (gold - 35);
                                 numberOfTowers++;
                                 MessageBox.Show("You have " + gold + " gold left and you can build " + (MaxTowers - numberOfTowers) + " more towers");
@@ -196,11 +195,11 @@ namespace TowerDefence
                             if (gold >= 60)
                             {
                                 var tw = towers[numberOfTowers];
-                                tw.Initialize(0, numberOfTowers, "Sniper", 20, 9.4, 1, new BoardLocation(column, row));
+                                tw.Initialize("Sniper", 20, 9.4, 1, new BoardLocation(column, row));
 
                                 //Tower Picture
                                 Image t = new Image();
-                                t.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tw.nm + ".png", UriKind.Absolute));
+                                t.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tw.ImageFilename + ".png", UriKind.Absolute));
                                 towerImages[ch] = t;
                                 Grid.SetRow(t, tw.Location.y);
                                 Grid.SetColumn(t, tw.Location.x);
