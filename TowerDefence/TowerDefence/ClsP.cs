@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace TowerDefence
 {
-    class point
+    class ClsP
     {
         public int x { get; set; }
         public int y { get; set; }
-        public point(int px, int py)
+        public ClsP(int px, int py)
         {
             x = px;
             y = py;

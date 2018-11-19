@@ -53,15 +53,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="board.cs" />
-    <Compile Include="Bullet.cs" />
-    <Compile Include="Enemy.cs" />
-    <Compile Include="point.cs" />
-    <Compile Include="PopUp.xaml.cs">
-      <DependentUpon>PopUp.xaml</DependentUpon>
+    <Compile Include="ClsB.cs" />
+    <Compile Include="ClsBt.cs" />
+    <Compile Include="ClsE.cs" />
+    <Compile Include="ClsP.cs" />
+    <Compile Include="PW.xaml.cs">
+      <DependentUpon>PW.xaml</DependentUpon>
     </Compile>
-    <Compile Include="route.cs" />
-    <Compile Include="Tower.cs" />
+    <Compile Include="cls_r.cs" />
+    <Compile Include="ClsT.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -74,7 +74,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="PopUp.xaml">
+    <Page Include="PW.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

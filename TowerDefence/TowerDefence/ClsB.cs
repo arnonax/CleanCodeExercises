@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace TowerDefence
 {
-    class board
+    class ClsB
     {
-        public Tower[] towers { get; set; }
-        public Enemy[] enemys { get; set; }
-        public route myRoute { get; set; }
+        public ClsT[] tws { get; set; }
+        public ClsE[] e { get; set; }
+        public cls_r r { get; set; }
 
     }
 }

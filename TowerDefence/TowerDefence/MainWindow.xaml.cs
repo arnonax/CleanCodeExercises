@@ -30,218 +30,218 @@ namespace TowerDefence
     /// </summary>
     public partial class MainWindow : Window
     {
-        const int MAX_NUM_ENEMIES = 10;
-        const int MAX_NUM_TOWERS = 12;
-        const int BOARD_WIDTH = 15;
-        public int towerSlot = 0;
-        const int BOARD_HEIGHT = 12;
-        public int check = 0;
-        public int bank = 50;
-        public int gold = 0;
-        public int towerType;
-        public int kills = 0;
+        const int c1 = 10;
+        const int c2 = 12;
+        const int c3 = 15;
+        public int ts = 0;
+        const int c4 = 12;
+        public int ch = 0;
+        public int b = 50;
+        public int g = 0;
+        public int t;
+        public int k = 0;
 
-        Enemy[] enemies = new Enemy[MAX_NUM_ENEMIES];
-        TextBlock[] enemyTBs = new TextBlock[MAX_NUM_ENEMIES];
-        Image[] enemyIMG = new Image[MAX_NUM_ENEMIES];
-        Tower[] towers = new Tower[MAX_NUM_TOWERS];
-        TextBlock[] towerTBs = new TextBlock[MAX_NUM_TOWERS];
-        Image[] towerIMG = new Image[MAX_NUM_TOWERS];
+        ClsE[] e = new ClsE[c1];
+        TextBlock[] et = new TextBlock[c1];
+        Image[] ei = new Image[c1];
+        ClsT[] tws = new ClsT[c2];
+        TextBlock[] tt = new TextBlock[c2];
+        Image[] ti = new Image[c2];
 
-        route myroute = new route();
-        TextBlock[] runnerDisplay = new TextBlock[MAX_NUM_ENEMIES];
+        cls_r r = new cls_r();
+        TextBlock[] rd = new TextBlock[c1];
 
-        DispatcherTimer timers;
+        DispatcherTimer tm;
         
 
         public MainWindow()
         {
             InitializeComponent();
 
-            this.myboard.MouseDown += new MouseButtonEventHandler(GridCtrl_MouseDown);
+            this.br.MouseDown += new MouseButtonEventHandler(gcmd);
 
-            for (int i = 0; i < enemies.Length; i++)
+            for (int i = 0; i < e.Length; i++)
             {
-                enemies[i] = new Enemy(1, 15);
-                enemies[i].Serial = i;
+                e[i] = new ClsE(1, 15);
+                e[i].sr = i;
             }
 
-            for (int i = 0; i < towers.Length; i++)
+            for (int i = 0; i < tws.Length; i++)
             {
-                towers[i] = new Tower();
-                towers[i].Build(0, i, "Tower1",5, 2,1, new point(14,14));
+                tws[i] = new ClsT();
+                tws[i].B(0, i, "Tower1",5, 2,1, new ClsP(14,14));
             }
 
-            this.Loaded += MainWindow_Loaded;
+            this.Loaded += MWL;
         }
 
-        void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        void MWL(object sender, RoutedEventArgs e)
         {
-            point marker = new point(0, 0);
-            ColumnDefinition col;
-            RowDefinition row;
+            ClsP m = new ClsP(0, 0);
+            ColumnDefinition cd;
+            RowDefinition rd;
 
             // create board
-            for (int i = 0; i < BOARD_WIDTH; i++)
+            for (int i = 0; i < c3; i++)
             {
-                col = new ColumnDefinition();
-                myboard.ColumnDefinitions.Add(col);
+                cd = new ColumnDefinition();
+                br.ColumnDefinitions.Add(cd);
             }
 
-            for (int i = 0; i < BOARD_HEIGHT; i++)
+            for (int i = 0; i < c4; i++)
             {
-                row = new RowDefinition();
-                myboard.RowDefinitions.Add(row);
+                rd = new RowDefinition();
+                br.RowDefinitions.Add(rd);
             }
  
             // Draw Grass
-            for (int i = 0; i < BOARD_WIDTH; i++)
+            for (int i = 0; i < c3; i++)
 			{
-                for (int j = 0; j < BOARD_HEIGHT; j++)
+                for (int j = 0; j < c4; j++)
 			{
-                Image Grass = new Image();
-                Grass.Source = new BitmapImage(new Uri(Environment.CurrentDirectory+"\\Pictures\\Background\\Grass.png",  UriKind.RelativeOrAbsolute));
-                myboard.ShowGridLines = false;
+                Image gr = new Image();
+                gr.Source = new BitmapImage(new Uri(Environment.CurrentDirectory+"\\Pictures\\Background\\Grass.png",  UriKind.RelativeOrAbsolute));
+                br.ShowGridLines = false;
 
-                Grid.SetRow(Grass, j);
-                Grid.SetColumn(Grass, i);
-                myboard.Children.Add(Grass);
+                Grid.SetRow(gr, j);
+                Grid.SetColumn(gr, i);
+                br.Children.Add(gr);
                 }
 			}
             // draw route
-            for (int i = 0; i < myroute.myRoute.Length; i++)
+            for (int i = 0; i < r.r.Length; i++)
             {
-                marker = myroute.myRoute[i];
-                Image theWay = new Image();
-                theWay.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Background\\Route.png", UriKind.Absolute));
+                m = r.r[i];
+                Image w = new Image();
+                w.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Background\\Route.png", UriKind.Absolute));
                 
-                Grid.SetRow(theWay, marker.y);
-                Grid.SetColumn(theWay, marker.x);
-                myboard.Children.Add(theWay);
-                if (i == (myroute.myRoute.Length - 1))
+                Grid.SetRow(w, m.y);
+                Grid.SetColumn(w, m.x);
+                br.Children.Add(w);
+                if (i == (r.r.Length - 1))
                 {
-                    Image theEnd = new Image();
-                    theEnd.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Background\\Home.png", UriKind.Absolute));
+                    Image te = new Image();
+                    te.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Background\\Home.png", UriKind.Absolute));
 
-                    Grid.SetRow(theEnd, marker.y);
-                    Grid.SetColumn(theEnd, marker.x);
-                    myboard.Children.Add(theEnd);
+                    Grid.SetRow(te, m.y);
+                    Grid.SetColumn(te, m.x);
+                    br.Children.Add(te);
                 }
             }
             // create timer
-            timers = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, new EventHandler(timerCycle), Dispatcher); // TODO: pace the game!
-            timers.Start();
+            tm = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, new EventHandler(TC), Dispatcher); // TODO: pace the game!
+            tm.Start();
     }
 
-        private void GridCtrl_MouseDown(object sender, MouseButtonEventArgs e)
+        private void gcmd(object sender, MouseButtonEventArgs e)
         {
-            timers.Stop();
-            var point = Mouse.GetPosition(myboard);
+            tm.Stop();
+            var p = Mouse.GetPosition(br);
 
-            int col = 0;
-            double accumulatedWidth = 0.0;
-            double accumulatedHeight = 0.0;
-            int row = 0;
+            int c = 0;
+            double aw = 0.0;
+            double ah = 0.0;
+            int r = 0;
 
             // calc row mouse was over
-            foreach (var rowDefinition in myboard.RowDefinitions)
+            foreach (var rd in br.RowDefinitions)
             {
-                accumulatedHeight += rowDefinition.ActualHeight;
-                if (accumulatedHeight >= point.Y)
+                ah += rd.ActualHeight;
+                if (ah >= p.Y)
                     break;
-                row++;
+                r++;
             }
             // calc col mouse was over
-            foreach (var columnDefinition in myboard.ColumnDefinitions)
+            foreach (var cd in br.ColumnDefinitions)
             {
-                accumulatedWidth += columnDefinition.ActualWidth;
-                if (accumulatedWidth >= point.X)
+                aw += cd.ActualWidth;
+                if (aw >= p.X)
                     break;
-                col++;
+                c++;
             }
             //Tower selection popup manu
-            if (towerSlot < MAX_NUM_TOWERS)
+            if (ts < c2)
             {
 
-                PopUp pop = new PopUp(bank, col, row, towerType);
+                PW pop = new PW(b, c, r, t);
                 pop.ShowDialog();
-                towerType = pop.towerType;
+                t = pop.tt;
             //tower selection
-                switch (towerType)
+                switch (t)
                 {
                     //SimpleTower
                     case 1:
-                        if (bank >= 20)
+                        if (b >= 20)
                         {
-                            var tower = towers[towerSlot];
-                            point pointa = new point(col, row);
-                            tower.Build(0, towerSlot, "Tower", 10, 3.6, 2, new point(col, row));
+                            var tw = tws[ts];
+                            ClsP pa = new ClsP(c, r);
+                            tw.B(0, ts, "Tower", 10, 3.6, 2, new ClsP(c, r));
 
                             //Tower Picture
-                            Image Tower = new Image();
-                            Tower.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tower.name + ".png", UriKind.Absolute));
-                            towerIMG[check] = Tower;
-                            Grid.SetRow(Tower, tower.location.y);
-                            Grid.SetColumn(Tower, tower.location.x);
-                            myboard.Children.Add(Tower);
-                            bank = (bank - 20);
-                            towerSlot++;
-                            MessageBox.Show("You have " + bank + " gold left and you can build " + (MAX_NUM_TOWERS - towerSlot) + " more towers");
+                            Image t = new Image();
+                            t.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tw.nm + ".png", UriKind.Absolute));
+                            ti[ch] = t;
+                            Grid.SetRow(t, tw.l.y);
+                            Grid.SetColumn(t, tw.l.x);
+                            br.Children.Add(t);
+                            b = (b - 20);
+                            ts++;
+                            MessageBox.Show("You have " + b + " gold left and you can build " + (c2 - ts) + " more towers");
                         }
-                        else { MessageBox.Show("You don't have enough gold for that!, you need 20 and you only have " + bank); }
+                        else { MessageBox.Show("You don't have enough gold for that!, you need 20 and you only have " + b); }
 
                         break;
                     //Reapeter
                     case 2:
                         {
 
-                            if (bank >= 35)
+                            if (b >= 35)
                             {
-                                var tower = towers[towerSlot];
-                                point pointa = new point(col, row);
-                                tower.Build(0, towerSlot, "Reapeter", 5, 3, 7, new point(col, row));
+                                var tw = tws[ts];
+                                ClsP pa = new ClsP(c, r);
+                                tw.B(0, ts, "Reapeter", 5, 3, 7, new ClsP(c, r));
 
                                 //Tower Picture
-                                Image Tower = new Image();
-                                Tower.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tower.name + ".png", UriKind.Absolute));
-                                towerIMG[check] = Tower;
-                                Grid.SetRow(Tower, tower.location.y);
-                                Grid.SetColumn(Tower, tower.location.x);
-                                myboard.Children.Add(Tower);
-                                bank = (bank - 35);
-                                towerSlot++;
-                                MessageBox.Show("You have " + bank + " gold left and you can build " + (MAX_NUM_TOWERS - towerSlot) + " more towers");
+                                Image t = new Image();
+                                t.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tw.nm + ".png", UriKind.Absolute));
+                                ti[ch] = t;
+                                Grid.SetRow(t, tw.l.y);
+                                Grid.SetColumn(t, tw.l.x);
+                                br.Children.Add(t);
+                                b = (b - 35);
+                                ts++;
+                                MessageBox.Show("You have " + b + " gold left and you can build " + (c2 - ts) + " more towers");
 
 
                             }
-                            else { MessageBox.Show("You don't have enough gold for that!, you need 35 and you only have " + bank); }
+                            else { MessageBox.Show("You don't have enough gold for that!, you need 35 and you only have " + b); }
                         }
                         break;
                     //Sniper
                     case 3:
-                        if (towerType == 3)
+                        if (t == 3)
                         {
 
-                            if (bank >= 60)
+                            if (b >= 60)
                             {
-                                var tower = towers[towerSlot];
-                                point pointa = new point(col, row);
-                                tower.Build(0, towerSlot, "Sniper", 20, 9.4, 1, new point(col, row));
+                                var tw = tws[ts];
+                                ClsP pa = new ClsP(c, r);
+                                tw.B(0, ts, "Sniper", 20, 9.4, 1, new ClsP(c, r));
 
                                 //Tower Picture
-                                Image Tower = new Image();
-                                Tower.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tower.name + ".png", UriKind.Absolute));
-                                towerIMG[check] = Tower;
-                                Grid.SetRow(Tower, tower.location.y);
-                                Grid.SetColumn(Tower, tower.location.x);
-                                myboard.Children.Add(Tower);
-                                bank = (bank - 60);
-                                towerSlot++;
-                                MessageBox.Show("You have " + bank + " gold left and you can build " + (MAX_NUM_TOWERS - towerSlot) + " more towers");
+                                Image t = new Image();
+                                t.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tw.nm + ".png", UriKind.Absolute));
+                                ti[ch] = t;
+                                Grid.SetRow(t, tw.l.y);
+                                Grid.SetColumn(t, tw.l.x);
+                                br.Children.Add(t);
+                                b = (b - 60);
+                                ts++;
+                                MessageBox.Show("You have " + b + " gold left and you can build " + (c2 - ts) + " more towers");
 
 
                             }
-                            else { MessageBox.Show("You don't have enough gold for that!, you need 60 and you only have " + bank); }
+                            else { MessageBox.Show("You don't have enough gold for that!, you need 60 and you only have " + b); }
                         }
                         break;
                 }
@@ -251,106 +251,106 @@ namespace TowerDefence
             {
                 MessageBox.Show("You cannot build more towers!");
             }
-            timers.Start();
+            tm.Start();
         }
-        void timer_Tick(object sender, EventArgs e)
+        void t_t(object sender, EventArgs e)
         {
             throw new NotImplementedException();
         }
-        private void timerCycle(object sender, EventArgs e)
+        private void TC(object sender, EventArgs e)
         {
-            point marker = new point(0, 0);
+            ClsP m = new ClsP(0, 0);
 
             //first intervals- for craeting the enemies
-            if (check < MAX_NUM_ENEMIES)
+            if (ch < c1)
             {
                 //Making Enemies
-                var enemy = enemies[check];
-                marker = enemy.location;
+                var en = this.e[ch];
+                m = en.l;
                 //enemy HP
-                TextBlock enemyTB = new TextBlock();
+                TextBlock etb = new TextBlock();
 
-                enemyTB.FontSize = 20;
-                enemyTB.FontWeight = FontWeights.Bold;
-                enemyTB.Text = enemy.health.ToString();
+                etb.FontSize = 20;
+                etb.FontWeight = FontWeights.Bold;
+                etb.Text = en.h.ToString();
 
 
                 
-                Grid.SetRow(enemyTB, marker.y);
-                Grid.SetColumn(enemyTB, marker.x);
-                myboard.Children.Add(enemyTB);
-                enemyTBs[check] = enemyTB;
+                Grid.SetRow(etb, m.y);
+                Grid.SetColumn(etb, m.x);
+                br.Children.Add(etb);
+                et[ch] = etb;
 
                 //enemy Picture
-                Image Enemy = new Image();
-                Enemy.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\1.png", UriKind.Absolute));
-                enemyIMG[check] = Enemy;
-                Grid.SetRow(Enemy, marker.y);
-                Grid.SetColumn(Enemy, marker.x);
-                myboard.Children.Add(Enemy);
+                Image em = new Image();
+                em.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\1.png", UriKind.Absolute));
+                ei[ch] = em;
+                Grid.SetRow(em, m.y);
+                Grid.SetColumn(em, m.x);
+                br.Children.Add(em);
               
-                check++;
+                ch++;
 
                 //Fire!!
-                for (int towerIndex = 0; towerIndex < towers.Length; towerIndex++)
+                for (int ti = 0; ti < tws.Length; ti++)
                 {
-                    var tower = towers[towerIndex];
-                    var firstenemy = enemies[0];
+                    var tw = tws[ti];
+                    var fe = this.e[0];
 
-                    for (int j = 0; j < tower.ammo; j++)
+                    for (int j = 0; j < tw.a; j++)
                     {
-                        firstenemy = enemies[0];
-                        for (int i = 1; i < enemies.Length; i++)
+                        fe = this.e[0];
+                        for (int i = 1; i < this.e.Length; i++)
                         {
-                            enemy = enemies[i];
-                            if (enemy.tracker > firstenemy.tracker && tower.inrange(enemy) == true)
+                            en = this.e[i];
+                            if (en.t > fe.t && tw.ir(en) == true)
                             {
-                                firstenemy = enemy;
+                                fe = en;
                             }
-                            else if (tower.inrange(firstenemy) == false && tower.inrange(enemy) == true) { firstenemy = enemy; }
+                            else if (tw.ir(fe) == false && tw.ir(en) == true) { fe = en; }
                         }
-                        tower.fire(firstenemy);
+                        tw.f(fe);
                     }
 
                 }
 
                 //Enemies movement and changing picture by level of power
-                for (int i = 0; i < check; i++)
+                for (int i = 0; i < ch; i++)
                 {
-                    enemy = enemies[i];
-                    if (enemy.health <= 0) { kills++; }
-                    enemy.move(myroute, out gold);
+                    en = this.e[i];
+                    if (en.h <= 0) { k++; }
+                    en.M(r, out g);
                     // Enemies Picture change by Power level
-                    if (enemy.level > 3)
+                    if (en.lv > 3)
                     {
-                        enemyIMG[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\2.png", UriKind.Absolute));
-                        if (enemy.level > 5)
+                        ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\2.png", UriKind.Absolute));
+                        if (en.lv > 5)
                         {
-                            enemyIMG[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\3.png", UriKind.Absolute));
-                            if (enemy.level > 7)
+                            ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\3.png", UriKind.Absolute));
+                            if (en.lv > 7)
                             {
-                                enemyIMG[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\4.png", UriKind.Absolute));
-                                if (enemy.level > 9)
+                                ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\4.png", UriKind.Absolute));
+                                if (en.lv > 9)
                                 {
-                                    enemyIMG[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\5.png", UriKind.Absolute));
-                                    if (enemy.level > 12)
+                                    ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\5.png", UriKind.Absolute));
+                                    if (en.lv > 12)
                                     {
-                                        enemyIMG[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\6.png", UriKind.Absolute));
-                                        if (enemy.level > 14)
+                                        ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\6.png", UriKind.Absolute));
+                                        if (en.lv > 14)
                                         {
-                                            enemyIMG[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\7.png", UriKind.Absolute));
-                                            if (enemy.level > 16)
+                                            ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\7.png", UriKind.Absolute));
+                                            if (en.lv > 16)
                                             {
-                                                enemyIMG[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\8.png", UriKind.Absolute));
-                                                if (enemy.level > 18)
+                                                ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\8.png", UriKind.Absolute));
+                                                if (en.lv > 18)
                                                 {
-                                                    enemyIMG[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\9.png", UriKind.Absolute));
-                                                    if (enemy.level > 20)
+                                                    ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\9.png", UriKind.Absolute));
+                                                    if (en.lv > 20)
                                                     {
-                                                        enemyIMG[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\10.png", UriKind.Absolute));
-                                                        if (enemy.level > 22)
+                                                        ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\10.png", UriKind.Absolute));
+                                                        if (en.lv > 22)
                                                         {
-                                                            enemyIMG[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\11.png", UriKind.Absolute));
+                                                            ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\11.png", UriKind.Absolute));
 
                                                         }
                                                     }
@@ -364,22 +364,22 @@ namespace TowerDefence
                     }
 
 
-                    enemyTB = enemyTBs[i];
-                    Enemy = enemyIMG[i];
-                    bank += gold;
-                    gold = 0;
+                    etb = et[i];
+                    em = ei[i];
+                    b += g;
+                    g = 0;
 
-                    marker = enemy.location;
-
-
+                    m = en.l;
 
 
-                    Grid.SetRow(Enemy, marker.y);
-                    Grid.SetColumn(Enemy, marker.x);
 
-                    Grid.SetRow(enemyTB, marker.y);
-                    Grid.SetColumn(enemyTB, marker.x);
-                    enemyTB.Text = enemy.health.ToString();
+
+                    Grid.SetRow(em, m.y);
+                    Grid.SetColumn(em, m.x);
+
+                    Grid.SetRow(etb, m.y);
+                    Grid.SetColumn(etb, m.x);
+                    etb.Text = en.h.ToString();
                 }
             }
             // called every timer interval after the enemies creation
@@ -390,74 +390,74 @@ namespace TowerDefence
 
 
                 //Fire!!
-                for (int towerIndex = 0; towerIndex < towers.Length; towerIndex++)
+                for (int ti = 0; ti < tws.Length; ti++)
                 {
-                    var tower = towers[towerIndex];
-                    var firstenemy = enemies[0];
+                    var tw = tws[ti];
+                    var fi = this.e[0];
 
-                    for (int j = 0; j < tower.ammo; j++)
+                    for (int j = 0; j < tw.a; j++)
                     {
-                        firstenemy = enemies[0];
-                        for (int i = 1; i < enemies.Length; i++)
+                        fi = this.e[0];
+                        for (int i = 1; i < this.e.Length; i++)
                         {
-                            var enemy = enemies[i];
-                            if (enemy.tracker > firstenemy.tracker && tower.inrange(enemy) == true)
+                            var en = this.e[i];
+                            if (en.t > fi.t && tw.ir(en) == true)
                             {
-                                firstenemy = enemy;
+                                fi = en;
                             }
-                            else if (tower.inrange(firstenemy) == false && tower.inrange(enemy) == true) { firstenemy = enemy; }
+                            else if (tw.ir(fi) == false && tw.ir(en) == true) { fi = en; }
                         }
-                        tower.fire(firstenemy);
+                        tw.f(fi);
 
                     }
                 }
 
                 // Enemies movement and changing picture by level of power
-                for (int i = 0; i < enemies.Length; i++)
+                for (int i = 0; i < this.e.Length; i++)
                 {
 
-                    var enemy = enemies[i];
-                    if (enemy.health <= 0) { kills++; }
-                    enemy.move(myroute, out gold);
-                    bank += gold;
-                    gold = 0;
-                    if (enemy.location == myroute.endZone)
+                    var en = this.e[i];
+                    if (en.h <= 0) { k++; }
+                    en.M(r, out g);
+                    b += g;
+                    g = 0;
+                    if (en.l == r.e)
                     {
-                        MessageBox.Show("you lose! but killed "+ kills);
-                        timers.Stop();
+                        MessageBox.Show("you lose! but killed "+ k);
+                        tm.Stop();
                         break;
                     }
                     // Enemies Picture change by Power level
-                    if (enemy.level > 3)
+                    if (en.lv > 3)
                     {
-                        enemyIMG[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\2.png", UriKind.Absolute));
-                        if (enemy.level > 5)
+                        ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\2.png", UriKind.Absolute));
+                        if (en.lv > 5)
                         {
-                            enemyIMG[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\3.png", UriKind.Absolute));
-                            if (enemy.level > 7)
+                            ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\3.png", UriKind.Absolute));
+                            if (en.lv > 7)
                             {
-                                enemyIMG[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\4.png", UriKind.Absolute));
-                                if (enemy.level > 9)
+                                ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\4.png", UriKind.Absolute));
+                                if (en.lv > 9)
                                 {
-                                    enemyIMG[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\5.png", UriKind.Absolute));
-                                    if (enemy.level > 12)
+                                    ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\5.png", UriKind.Absolute));
+                                    if (en.lv > 12)
                                     {
-                                        enemyIMG[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\6.png", UriKind.Absolute));
-                                        if (enemy.level > 14)
+                                        ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\6.png", UriKind.Absolute));
+                                        if (en.lv > 14)
                                         {
-                                            enemyIMG[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\7.png", UriKind.Absolute));
-                                            if (enemy.level > 16)
+                                            ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\7.png", UriKind.Absolute));
+                                            if (en.lv > 16)
                                             {
-                                                enemyIMG[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\8.png", UriKind.Absolute));
-                                                if (enemy.level > 18)
+                                                ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\8.png", UriKind.Absolute));
+                                                if (en.lv > 18)
                                                 {
-                                                    enemyIMG[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\9.png", UriKind.Absolute));
-                                                    if (enemy.level > 20)
+                                                    ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\9.png", UriKind.Absolute));
+                                                    if (en.lv > 20)
                                                     {
-                                                        enemyIMG[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\10.png", UriKind.Absolute));
-                                                        if (enemy.level > 22)
+                                                        ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\10.png", UriKind.Absolute));
+                                                        if (en.lv > 22)
                                                         {
-                                                            enemyIMG[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\11.png", UriKind.Absolute));
+                                                            ei[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\11.png", UriKind.Absolute));
 
                                                         }
                                                     }
@@ -469,30 +469,30 @@ namespace TowerDefence
                             }
                         }
                     }
-                    marker = enemy.location;
+                    m = en.l;
 
-                    var enemyTB = enemyTBs[i];
-                    var Enemy = enemyIMG[i];
+                    var etb = et[i];
+                    var em = ei[i];
 
 
-                    if ((enemy.health * 3) < enemy.maxHealth)
+                    if ((en.h * 3) < en.mh)
                     {
-                        enemyTB.Foreground = new SolidColorBrush(Colors.Red);
+                        etb.Foreground = new SolidColorBrush(Colors.Red);
 
                     }
                     else
                     {
 
-                        enemyTB.Foreground = new SolidColorBrush(Colors.Black);
+                        etb.Foreground = new SolidColorBrush(Colors.Black);
 
                     }
-                    enemyTB.Text = enemy.health.ToString();
+                    etb.Text = en.h.ToString();
 
-                    Grid.SetRow(Enemy, marker.y);
-                    Grid.SetColumn(Enemy, marker.x);
+                    Grid.SetRow(em, m.y);
+                    Grid.SetColumn(em, m.x);
 
-                    Grid.SetRow(enemyTB, marker.y);
-                    Grid.SetColumn(enemyTB, marker.x);
+                    Grid.SetRow(etb, m.y);
+                    Grid.SetColumn(etb, m.x);
      
                 }
 

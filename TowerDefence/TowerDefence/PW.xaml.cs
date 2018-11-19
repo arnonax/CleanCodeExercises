@@ -15,45 +15,45 @@ using System.Windows.Shapes;
 namespace TowerDefence
 {
     /// <summary>
-    /// Interaction logic for PopUp.xaml
+    /// Interaction logic for PW.xaml
     /// </summary>
-    public partial class PopUp : Window
+    public partial class PW : Window
     {
-       public int towerType;
-        public PopUp(int pgold, int pcol, int prow, int towerType)
+       public int tt;
+        public PW(int pg, int pc, int pr, int ptt)
         {
             InitializeComponent();
-            Textastic.Text = "Grid clicked at column " + pcol + ", row " + prow + " you have " + pgold + " gold";
-            if (SimpleButton.IsPressed == true)
+            txt.Text = "Grid clicked at column " + pc + ", row " + pr + " you have " + pg + " gold";
+            if (b1.IsPressed == true)
             {
-                towerType = 1;
+                ptt = 1;
                 this.Close();
             }
         }
 
-        private void Reapeter(object sender, RoutedEventArgs e)
+        private void R(object sender, RoutedEventArgs e)
         {
-            towerType = 2;
+            tt = 2;
             this.Close();
         }
 
-        private void Simple(object sender, RoutedEventArgs e)
+        private void Sm(object sender, RoutedEventArgs e)
         {
-            towerType = 1;
-            this.Close();
-
-        }
-
-        private void Sniper(object sender, RoutedEventArgs e)
-        {
-            towerType = 3;
+            tt = 1;
             this.Close();
 
         }
 
-        private void nothing(object sender, RoutedEventArgs e)
+        private void Sn(object sender, RoutedEventArgs e)
         {
-            towerType = 0;
+            tt = 3;
+            this.Close();
+
+        }
+
+        private void N(object sender, RoutedEventArgs e)
+        {
+            tt = 0;
             this.Close();
             
         }
