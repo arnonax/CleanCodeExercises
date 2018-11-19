@@ -8,18 +8,18 @@ namespace TowerDefence
 {
     class Enemy
     {
-        public int mh { get; set; }
+        public int InitialPower { get; set; }
         public int Power { get; set; }
         public int sr { get; set; }
         public BoardLocation Location {get; set; }
-        public int t { get; set; }
+        public int ProgressInRoute { get; set; }
         public int v { get; set; }
         public int lv { get; set; }
-        public Enemy(int ph)
+        public Enemy(int power)
         {
-            mh = ph;
-            Power = mh;
-            t = 0;
+            InitialPower = power;
+            Power = InitialPower;
+            ProgressInRoute = 0;
             Location = new BoardLocation(0, 0);
             v = 1;
             lv = 1;
@@ -29,16 +29,16 @@ namespace TowerDefence
             g = 0;
             if (Power > 0)
             {
-                t++;
-                if (t < route.locations.Length)
-                    Location = route.locations[t];
+                ProgressInRoute++;
+                if (ProgressInRoute < route.locations.Length)
+                    Location = route.locations[ProgressInRoute];
             }
             else
             {
                 Location = route.locations[0];
-                mh = (int)(mh * 1.25);
-                Power = mh;
-                t = 0;
+                InitialPower = (int)(InitialPower * 1.25);
+                Power = InitialPower;
+                ProgressInRoute = 0;
                 sr += 10;
                 g = v;
                 v++;

@@ -293,7 +293,7 @@ namespace TowerDefence
                         for (int i = 1; i < this.enemies.Length; i++)
                         {
                             enemy = this.enemies[i];
-                            if (enemy.t > fe.t && tower.IsInRange(enemy))
+                            if (enemy.ProgressInRoute > fe.ProgressInRoute && tower.IsInRange(enemy))
                             {
                                 fe = enemy;
                             }
@@ -391,7 +391,7 @@ namespace TowerDefence
                         for (int i = 1; i < this.enemies.Length; i++)
                         {
                             var en = this.enemies[i];
-                            if (en.t > enemy.t && tower.IsInRange(en))
+                            if (en.ProgressInRoute > enemy.ProgressInRoute && tower.IsInRange(en))
                             {
                                 enemy = en;
                             }
@@ -465,7 +465,7 @@ namespace TowerDefence
                     var em = enemyImages[i];
 
 
-                    if ((enemy.Power * 3) < enemy.mh)
+                    if ((enemy.Power * 3) < enemy.InitialPower)
                     {
                         etb.Foreground = new SolidColorBrush(Colors.Red);
 
