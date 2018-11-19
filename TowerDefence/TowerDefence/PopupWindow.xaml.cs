@@ -24,33 +24,33 @@ namespace TowerDefence
         {
             InitializeComponent();
             txt.Text = "Grid clicked at column " + column + ", row " + row + " you have " + gold + " gold";
-            if (b1.IsPressed)
+            if (BuildTowerButton.IsPressed)
             {
                 Close();
             }
         }
 
-        private void R(object sender, RoutedEventArgs e)
+        private void BuildReaper(object sender, RoutedEventArgs e)
         {
             tt = 2;
             this.Close();
         }
 
-        private void Sm(object sender, RoutedEventArgs e)
+        private void BuildTower(object sender, RoutedEventArgs e)
         {
             tt = 1;
             this.Close();
 
         }
 
-        private void Sn(object sender, RoutedEventArgs e)
+        private void BuildSn(object sender, RoutedEventArgs e)
         {
             tt = 3;
             this.Close();
 
         }
 
-        private void N(object sender, RoutedEventArgs e)
+        private void ForgetButtonClicked(object sender, RoutedEventArgs e)
         {
             tt = 0;
             this.Close();

@@ -4,10 +4,10 @@
         Title="PopUp" Height="357" Width="454">
 
     <Canvas>
-        <Button x:Name="b1" Content="Build Tower&#xD;&#xA;20 Gold"  HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" Width="89" Height="66" Click="Sm" Canvas.Left="49" Canvas.Top="106"/>
-        <Button x:Name="b2" Content="Build Reapeter&#xD;&#xA;35 Gold" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" Width="89" Height="66" Click="R" Canvas.Left="175" Canvas.Top="106"/>
-        <Button x:Name="b3" Content="Build Sn&#xD;&#xA;60 Gold" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="3" Width="89" Click="Sn" Canvas.Left="305" Canvas.Top="106" Height="66"/>
-        <Button x:Name="Forget" Content="Forget it" Grid.Column="4" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" Height="66" Width="89" Click="N" Canvas.Left="175" Canvas.Top="224"/>
+        <Button x:Name="BuildTowerButton" Content="Build Tower&#xD;&#xA;20 Gold"  HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" Width="89" Height="66" Click="BuildTower" Canvas.Left="49" Canvas.Top="106"/>
+        <Button x:Name="BuildReaperButton" Content="Build Reapeter&#xD;&#xA;35 Gold" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" Width="89" Height="66" Click="BuildReaper" Canvas.Left="175" Canvas.Top="106"/>
+        <Button x:Name="BuildSnButton" Content="Build Sn&#xD;&#xA;60 Gold" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="3" Width="89" Click="BuildSn" Canvas.Left="305" Canvas.Top="106" Height="66"/>
+        <Button x:Name="Forget" Content="Forget it" Grid.Column="4" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" Height="66" Width="89" Click="ForgetButtonClicked" Canvas.Left="175" Canvas.Top="224"/>
         <TextBlock x:Name="txt" Canvas.Left="99" TextWrapping="Wrap" Canvas.Top="49" Height="40" Width="221"/>
     </Canvas>
 </Window>
