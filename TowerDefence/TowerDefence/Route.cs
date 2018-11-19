@@ -9,7 +9,7 @@ namespace TowerDefence
     class Route
     {
        public BoardLocation [] locations = new BoardLocation[30];
-       public BoardLocation e = new BoardLocation(0,0);
+       public BoardLocation EndLocation = new BoardLocation(0,0);
        public Route()
        {
           locations[0] = new BoardLocation(0,0);
@@ -42,7 +42,7 @@ namespace TowerDefence
           locations[27] = new BoardLocation(12,9);
           locations[28] = new BoardLocation(13,9);
           locations[29] = new BoardLocation(14,9);
-          e = locations[29];
+          EndLocation = locations[29];
 
 
        }

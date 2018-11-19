@@ -247,14 +247,14 @@ namespace TowerDefence
 
         private void GameTimer_Tick(object sender, EventArgs e)
         {
-            BoardLocation m = new BoardLocation(0, 0);
+            BoardLocation enemyLocation = new BoardLocation(0, 0);
 
             //first intervals- for craeting the enemies
             if (ch < MaxEnemies)
             {
                 //Making Enemies
                 var enemy = this.enemies[ch];
-                m = enemy.Location;
+                enemyLocation = enemy.Location;
                 //enemy HP
                 TextBlock enemyTextBlock = new TextBlock();
 
@@ -264,8 +264,8 @@ namespace TowerDefence
 
 
                 
-                Grid.SetRow(enemyTextBlock, m.y);
-                Grid.SetColumn(enemyTextBlock, m.x);
+                Grid.SetRow(enemyTextBlock, enemyLocation.y);
+                Grid.SetColumn(enemyTextBlock, enemyLocation.x);
                 Board.Children.Add(enemyTextBlock);
                 enemyTextBlocks[ch] = enemyTextBlock;
 
@@ -273,8 +273,8 @@ namespace TowerDefence
                 Image enemyImage = new Image();
                 enemyImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\1.png", UriKind.Absolute));
                 enemyImages[ch] = enemyImage;
-                Grid.SetRow(enemyImage, m.y);
-                Grid.SetColumn(enemyImage, m.x);
+                Grid.SetRow(enemyImage, enemyLocation.y);
+                Grid.SetColumn(enemyImage, enemyLocation.x);
                 Board.Children.Add(enemyImage);
               
                 ch++;
@@ -283,21 +283,21 @@ namespace TowerDefence
                 for (int ti = 0; ti < towers.Length; ti++)
                 {
                     var tower = towers[ti];
-                    var fe = this.enemies[0];
+                    var enemyToFightWith = this.enemies[0];
 
                     for (int j = 0; j < tower.a; j++)
                     {
-                        fe = this.enemies[0];
+                        enemyToFightWith = this.enemies[0];
                         for (int i = 1; i < this.enemies.Length; i++)
                         {
                             enemy = this.enemies[i];
-                            if (enemy.ProgressInRoute > fe.ProgressInRoute && tower.IsInRange(enemy))
+                            if (enemy.ProgressInRoute > enemyToFightWith.ProgressInRoute && tower.IsInRange(enemy))
                             {
-                                fe = enemy;
+                                enemyToFightWith = enemy;
                             }
-                            else if (tower.IsInRange(fe) == false && tower.IsInRange(enemy)) { fe = enemy; }
+                            else if (tower.IsInRange(enemyToFightWith) == false && tower.IsInRange(enemy)) { enemyToFightWith = enemy; }
                         }
-                        tower.Fight(fe);
+                        tower.Fight(enemyToFightWith);
                     }
 
                 }
@@ -357,16 +357,16 @@ namespace TowerDefence
                     gold += goldEarnedInRound;
                     goldEarnedInRound = 0;
 
-                    m = enemy.Location;
+                    enemyLocation = enemy.Location;
 
 
 
 
-                    Grid.SetRow(enemyImage, m.y);
-                    Grid.SetColumn(enemyImage, m.x);
+                    Grid.SetRow(enemyImage, enemyLocation.y);
+                    Grid.SetColumn(enemyImage, enemyLocation.x);
 
-                    Grid.SetRow(enemyTextBlock, m.y);
-                    Grid.SetColumn(enemyTextBlock, m.x);
+                    Grid.SetRow(enemyTextBlock, enemyLocation.y);
+                    Grid.SetColumn(enemyTextBlock, enemyLocation.x);
                     enemyTextBlock.Text = enemy.Power.ToString();
                 }
             }
@@ -409,7 +409,7 @@ namespace TowerDefence
                     enemy.ProgressOrReset(route, out goldEarnedInRound);
                     gold += goldEarnedInRound;
                     goldEarnedInRound = 0;
-                    if (enemy.Location == route.e)
+                    if (enemy.Location == route.EndLocation)
                     {
                         MessageBox.Show("you lose! but killed "+ killsCount);
                         _gameTimer.Stop();
@@ -457,7 +457,7 @@ namespace TowerDefence
                             }
                         }
                     }
-                    m = enemy.Location;
+                    enemyLocation = enemy.Location;
 
                     var etb = enemyTextBlocks[i];
                     var em = enemyImages[i];
@@ -476,11 +476,11 @@ namespace TowerDefence
                     }
                     etb.Text = enemy.Power.ToString();
 
-                    Grid.SetRow(em, m.y);
-                    Grid.SetColumn(em, m.x);
+                    Grid.SetRow(em, enemyLocation.y);
+                    Grid.SetColumn(em, enemyLocation.x);
 
-                    Grid.SetRow(etb, m.y);
-                    Grid.SetColumn(etb, m.x);
+                    Grid.SetRow(etb, enemyLocation.y);
+                    Grid.SetColumn(etb, enemyLocation.x);
      
                 }
 
