@@ -144,21 +144,7 @@ namespace TowerDefence
             int r = 0;
 
             // calc row mouse was over
-            foreach (var rd in br.RowDefinitions)
-            {
-                ah += rd.ActualHeight;
-                if (ah >= p.Y)
-                    break;
-                r++;
-            }
-            // calc col mouse was over
-            foreach (var cd in br.ColumnDefinitions)
-            {
-                aw += cd.ActualWidth;
-                if (aw >= p.X)
-                    break;
-                c++;
-            }
+            r = I(ah, p, r, aw, ref c);
             //Tower selection popup manu
             if (ts < c2)
             {
@@ -253,6 +239,27 @@ namespace TowerDefence
             }
             tm.Start();
         }
+
+        private int I(double ah, Point p, int r, double aw, ref int c)
+        {
+            foreach (var rd in br.RowDefinitions)
+            {
+                ah += rd.ActualHeight;
+                if (ah >= p.Y)
+                    break;
+                r++;
+            }
+            // calc col mouse was over
+            foreach (var cd in br.ColumnDefinitions)
+            {
+                aw += cd.ActualWidth;
+                if (aw >= p.X)
+                    break;
+                c++;
+            }
+            return r;
+        }
+
         void t_t(object sender, EventArgs e)
         {
             throw new NotImplementedException();
