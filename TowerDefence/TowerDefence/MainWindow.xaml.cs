@@ -149,7 +149,6 @@ namespace TowerDefence
                         if (gold >= 20)
                         {
                             var tower = towers[numberOfTowers];
-                            ClsP pa = new ClsP(column, row);
                             tower.Initialize(0, numberOfTowers, "Tower", 10, 3.6, 2, new ClsP(column, row));
 
                             //Tower Picture
@@ -256,14 +255,14 @@ namespace TowerDefence
             if (ch < c1)
             {
                 //Making Enemies
-                var en = this.e[ch];
-                m = en.l;
+                var enemy = this.e[ch];
+                m = enemy.l;
                 //enemy HP
                 TextBlock enemyTextBlock = new TextBlock();
 
                 enemyTextBlock.FontSize = 20;
                 enemyTextBlock.FontWeight = FontWeights.Bold;
-                enemyTextBlock.Text = en.h.ToString();
+                enemyTextBlock.Text = enemy.h.ToString();
 
 
                 
@@ -293,12 +292,12 @@ namespace TowerDefence
                         fe = this.e[0];
                         for (int i = 1; i < this.e.Length; i++)
                         {
-                            en = this.e[i];
-                            if (en.t > fe.t && tw.ir(en))
+                            enemy = this.e[i];
+                            if (enemy.t > fe.t && tw.ir(enemy))
                             {
-                                fe = en;
+                                fe = enemy;
                             }
-                            else if (tw.ir(fe) == false && tw.ir(en)) { fe = en; }
+                            else if (tw.ir(fe) == false && tw.ir(enemy)) { fe = enemy; }
                         }
                         tw.f(fe);
                     }
@@ -308,38 +307,38 @@ namespace TowerDefence
                 //Enemies movement and changing picture by level of power
                 for (int i = 0; i < ch; i++)
                 {
-                    en = this.e[i];
-                    if (en.h <= 0) { k++; }
-                    en.M(r, out g);
+                    enemy = this.e[i];
+                    if (enemy.h <= 0) { k++; }
+                    enemy.M(r, out g);
                     // Enemies Picture change by Power level
-                    if (en.lv > 3)
+                    if (enemy.lv > 3)
                     {
                         enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\2.png", UriKind.Absolute));
-                        if (en.lv > 5)
+                        if (enemy.lv > 5)
                         {
                             enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\3.png", UriKind.Absolute));
-                            if (en.lv > 7)
+                            if (enemy.lv > 7)
                             {
                                 enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\4.png", UriKind.Absolute));
-                                if (en.lv > 9)
+                                if (enemy.lv > 9)
                                 {
                                     enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\5.png", UriKind.Absolute));
-                                    if (en.lv > 12)
+                                    if (enemy.lv > 12)
                                     {
                                         enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\6.png", UriKind.Absolute));
-                                        if (en.lv > 14)
+                                        if (enemy.lv > 14)
                                         {
                                             enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\7.png", UriKind.Absolute));
-                                            if (en.lv > 16)
+                                            if (enemy.lv > 16)
                                             {
                                                 enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\8.png", UriKind.Absolute));
-                                                if (en.lv > 18)
+                                                if (enemy.lv > 18)
                                                 {
                                                     enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\9.png", UriKind.Absolute));
-                                                    if (en.lv > 20)
+                                                    if (enemy.lv > 20)
                                                     {
                                                         enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\10.png", UriKind.Absolute));
-                                                        if (en.lv > 22)
+                                                        if (enemy.lv > 22)
                                                         {
                                                             enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\11.png", UriKind.Absolute));
 
@@ -360,7 +359,7 @@ namespace TowerDefence
                     gold += g;
                     g = 0;
 
-                    m = en.l;
+                    m = enemy.l;
 
 
 
@@ -370,7 +369,7 @@ namespace TowerDefence
 
                     Grid.SetRow(enemyTextBlock, m.y);
                     Grid.SetColumn(enemyTextBlock, m.x);
-                    enemyTextBlock.Text = en.h.ToString();
+                    enemyTextBlock.Text = enemy.h.ToString();
                 }
             }
             // called every timer interval after the enemies creation
