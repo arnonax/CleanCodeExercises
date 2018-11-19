@@ -9,7 +9,7 @@ namespace TowerDefence
     class Enemy
     {
         public int mh { get; set; }
-        public int h { get; set; }
+        public int Power { get; set; }
         public int sr { get; set; }
         public BoardLocation Location {get; set; }
         public int t { get; set; }
@@ -18,7 +18,7 @@ namespace TowerDefence
         public Enemy(int ph)
         {
             mh = ph;
-            h = mh;
+            Power = mh;
             t = 0;
             Location = new BoardLocation(0, 0);
             v = 1;
@@ -27,7 +27,7 @@ namespace TowerDefence
         public void M(Route route, out int g) 
         {
             g = 0;
-            if (h > 0)
+            if (Power > 0)
             {
                 t++;
                 if (t < route.locations.Length)
@@ -37,7 +37,7 @@ namespace TowerDefence
             {
                 Location = route.locations[0];
                 mh = (int)(mh * 1.25);
-                h = mh;
+                Power = mh;
                 t = 0;
                 sr += 10;
                 g = v;

@@ -155,8 +155,8 @@ namespace TowerDefence
                             Image towerImage = new Image();
                             towerImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tower.nm + ".png", UriKind.Absolute));
                             towerImages[ch] = towerImage;
-                            Grid.SetRow(towerImage, tower.l.y);
-                            Grid.SetColumn(towerImage, tower.l.x);
+                            Grid.SetRow(towerImage, tower.Location.y);
+                            Grid.SetColumn(towerImage, tower.Location.x);
                             Board.Children.Add(towerImage);
                             gold = (gold - 20);
                             numberOfTowers++;
@@ -179,8 +179,8 @@ namespace TowerDefence
                                 Image t = new Image();
                                 t.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tw.nm + ".png", UriKind.Absolute));
                                 towerImages[ch] = t;
-                                Grid.SetRow(t, tw.l.y);
-                                Grid.SetColumn(t, tw.l.x);
+                                Grid.SetRow(t, tw.Location.y);
+                                Grid.SetColumn(t, tw.Location.x);
                                 Board.Children.Add(t);
                                 gold = (gold - 35);
                                 numberOfTowers++;
@@ -205,8 +205,8 @@ namespace TowerDefence
                                 Image t = new Image();
                                 t.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tw.nm + ".png", UriKind.Absolute));
                                 towerImages[ch] = t;
-                                Grid.SetRow(t, tw.l.y);
-                                Grid.SetColumn(t, tw.l.x);
+                                Grid.SetRow(t, tw.Location.y);
+                                Grid.SetColumn(t, tw.Location.x);
                                 Board.Children.Add(t);
                                 gold = (gold - 60);
                                 numberOfTowers++;
@@ -262,7 +262,7 @@ namespace TowerDefence
 
                 enemyTextBlock.FontSize = 20;
                 enemyTextBlock.FontWeight = FontWeights.Bold;
-                enemyTextBlock.Text = enemy.h.ToString();
+                enemyTextBlock.Text = enemy.Power.ToString();
 
 
                 
@@ -284,22 +284,22 @@ namespace TowerDefence
                 //Fire!!
                 for (int ti = 0; ti < towers.Length; ti++)
                 {
-                    var tw = towers[ti];
+                    var tower = towers[ti];
                     var fe = this.enemies[0];
 
-                    for (int j = 0; j < tw.a; j++)
+                    for (int j = 0; j < tower.a; j++)
                     {
                         fe = this.enemies[0];
                         for (int i = 1; i < this.enemies.Length; i++)
                         {
                             enemy = this.enemies[i];
-                            if (enemy.t > fe.t && tw.ir(enemy))
+                            if (enemy.t > fe.t && tower.IsInRange(enemy))
                             {
                                 fe = enemy;
                             }
-                            else if (tw.ir(fe) == false && tw.ir(enemy)) { fe = enemy; }
+                            else if (tower.IsInRange(fe) == false && tower.IsInRange(enemy)) { fe = enemy; }
                         }
-                        tw.f(fe);
+                        tower.Fight(fe);
                     }
 
                 }
@@ -308,7 +308,7 @@ namespace TowerDefence
                 for (int i = 0; i < ch; i++)
                 {
                     enemy = this.enemies[i];
-                    if (enemy.h <= 0) { killsCount++; }
+                    if (enemy.Power <= 0) { killsCount++; }
                     enemy.M(route, out goldEarnedInRound);
                     // Enemies Picture change by Power level
                     if (enemy.lv > 3)
@@ -369,7 +369,7 @@ namespace TowerDefence
 
                     Grid.SetRow(enemyTextBlock, m.y);
                     Grid.SetColumn(enemyTextBlock, m.x);
-                    enemyTextBlock.Text = enemy.h.ToString();
+                    enemyTextBlock.Text = enemy.Power.ToString();
                 }
             }
             // called every timer interval after the enemies creation
@@ -382,22 +382,22 @@ namespace TowerDefence
                 //Fire!!
                 for (int ti = 0; ti < towers.Length; ti++)
                 {
-                    var tw = towers[ti];
-                    var fi = this.enemies[0];
+                    var tower = towers[ti];
+                    var enemy = this.enemies[0];
 
-                    for (int j = 0; j < tw.a; j++)
+                    for (int j = 0; j < tower.a; j++)
                     {
-                        fi = this.enemies[0];
+                        enemy = this.enemies[0];
                         for (int i = 1; i < this.enemies.Length; i++)
                         {
                             var en = this.enemies[i];
-                            if (en.t > fi.t && tw.ir(en))
+                            if (en.t > enemy.t && tower.IsInRange(en))
                             {
-                                fi = en;
+                                enemy = en;
                             }
-                            else if (tw.ir(fi) == false && tw.ir(en)) { fi = en; }
+                            else if (tower.IsInRange(enemy) == false && tower.IsInRange(en)) { enemy = en; }
                         }
-                        tw.f(fi);
+                        tower.Fight(enemy);
 
                     }
                 }
@@ -406,46 +406,46 @@ namespace TowerDefence
                 for (int i = 0; i < this.enemies.Length; i++)
                 {
 
-                    var en = this.enemies[i];
-                    if (en.h <= 0) { killsCount++; }
-                    en.M(route, out goldEarnedInRound);
+                    var enemy = this.enemies[i];
+                    if (enemy.Power <= 0) { killsCount++; }
+                    enemy.M(route, out goldEarnedInRound);
                     gold += goldEarnedInRound;
                     goldEarnedInRound = 0;
-                    if (en.Location == route.e)
+                    if (enemy.Location == route.e)
                     {
                         MessageBox.Show("you lose! but killed "+ killsCount);
                         _gameTimer.Stop();
                         break;
                     }
                     // Enemies Picture change by Power level
-                    if (en.lv > 3)
+                    if (enemy.lv > 3)
                     {
                         enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\2.png", UriKind.Absolute));
-                        if (en.lv > 5)
+                        if (enemy.lv > 5)
                         {
                             enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\3.png", UriKind.Absolute));
-                            if (en.lv > 7)
+                            if (enemy.lv > 7)
                             {
                                 enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\4.png", UriKind.Absolute));
-                                if (en.lv > 9)
+                                if (enemy.lv > 9)
                                 {
                                     enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\5.png", UriKind.Absolute));
-                                    if (en.lv > 12)
+                                    if (enemy.lv > 12)
                                     {
                                         enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\6.png", UriKind.Absolute));
-                                        if (en.lv > 14)
+                                        if (enemy.lv > 14)
                                         {
                                             enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\7.png", UriKind.Absolute));
-                                            if (en.lv > 16)
+                                            if (enemy.lv > 16)
                                             {
                                                 enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\8.png", UriKind.Absolute));
-                                                if (en.lv > 18)
+                                                if (enemy.lv > 18)
                                                 {
                                                     enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\9.png", UriKind.Absolute));
-                                                    if (en.lv > 20)
+                                                    if (enemy.lv > 20)
                                                     {
                                                         enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\10.png", UriKind.Absolute));
-                                                        if (en.lv > 22)
+                                                        if (enemy.lv > 22)
                                                         {
                                                             enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\11.png", UriKind.Absolute));
 
@@ -459,13 +459,13 @@ namespace TowerDefence
                             }
                         }
                     }
-                    m = en.Location;
+                    m = enemy.Location;
 
                     var etb = enemyTextBlocks[i];
                     var em = enemyImages[i];
 
 
-                    if ((en.h * 3) < en.mh)
+                    if ((enemy.Power * 3) < enemy.mh)
                     {
                         etb.Foreground = new SolidColorBrush(Colors.Red);
 
@@ -476,7 +476,7 @@ namespace TowerDefence
                         etb.Foreground = new SolidColorBrush(Colors.Black);
 
                     }
-                    etb.Text = en.h.ToString();
+                    etb.Text = enemy.Power.ToString();
 
                     Grid.SetRow(em, m.y);
                     Grid.SetColumn(em, m.x);

@@ -11,10 +11,10 @@ namespace TowerDefence
         public int c { get; set; }
         public int n { get; set; }
         public string nm { get; set; }
-        public double r { get; set; }
-        public BoardLocation l { get; set; }
+        public double FightingRadius { get; set; }
+        public BoardLocation Location { get; set; }
         public int t { get; set; }
-        public int d { get; set; }
+        public int Strength { get; set; }
         public string i = "T";
         public int a { get; set; }
         public int ma { get; set; }
@@ -24,30 +24,31 @@ namespace TowerDefence
             c = pc;
             n = pn;
             nm = pnm;
-            d = pd;
-            r = pr;
-            l = pl;
+            Strength = pd;
+            FightingRadius = pr;
+            Location = pl;
             ma = pa;
             a = ma;
             i = nm[0].ToString();
         }
-        public bool ir(Enemy pe)
-        {
-                double x = (l.x - pe.Location.x) * (l.x - pe.Location.x);
-                double y = (l.y - pe.Location.y) * (l.y - pe.Location.y);
-                double cl = Math.Sqrt(x + y);
-                if (cl > r)
-                {
-                    return false;
-                }
-                else return true;
 
-        }
-        public void f(Enemy pe)
+        public bool IsInRange(Enemy enemy)
         {
-            if (ir(pe) && a > 0)
+            double x = (Location.x - enemy.Location.x) * (Location.x - enemy.Location.x);
+            double y = (Location.y - enemy.Location.y) * (Location.y - enemy.Location.y);
+            double distance = Math.Sqrt(x + y);
+            if (distance > FightingRadius)
             {
-                pe.h = pe.h - d;
+                return false;
+            }
+            return true;
+        }
+
+        public void Fight(Enemy enemy)
+        {
+            if (IsInRange(enemy) && a > 0)
+            {
+                enemy.Power = enemy.Power - Strength;
             }
         }
     }
