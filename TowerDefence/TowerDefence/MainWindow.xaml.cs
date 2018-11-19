@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Timers;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace TowerDefence
@@ -45,11 +36,9 @@ namespace TowerDefence
         TextBlock[] et = new TextBlock[c1];
         Image[] ei = new Image[c1];
         ClsT[] tws = new ClsT[c2];
-        TextBlock[] tt = new TextBlock[c2];
         Image[] ti = new Image[c2];
 
         cls_r r = new cls_r();
-        TextBlock[] rd = new TextBlock[c1];
 
         DispatcherTimer _gameTimer;
         
@@ -58,7 +47,7 @@ namespace TowerDefence
         {
             InitializeComponent();
 
-            this.Board.MouseDown += new MouseButtonEventHandler(Board_MouseDown);
+            Board.MouseDown += Board_MouseDown;
 
             for (int i = 0; i < e.Length; i++)
             {
@@ -211,7 +200,6 @@ namespace TowerDefence
                             if (b >= 60)
                             {
                                 var tw = tws[ts];
-                                ClsP pa = new ClsP(c, r);
                                 tw.B(0, ts, "Sniper", 20, 9.4, 1, new ClsP(c, r));
 
                                 //Tower Picture
@@ -260,10 +248,6 @@ namespace TowerDefence
             return r;
         }
 
-        void t_t(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
         private void GameTimer_Tick(object sender, EventArgs e)
         {
             ClsP m = new ClsP(0, 0);
@@ -310,11 +294,11 @@ namespace TowerDefence
                         for (int i = 1; i < this.e.Length; i++)
                         {
                             en = this.e[i];
-                            if (en.t > fe.t && tw.ir(en) == true)
+                            if (en.t > fe.t && tw.ir(en))
                             {
                                 fe = en;
                             }
-                            else if (tw.ir(fe) == false && tw.ir(en) == true) { fe = en; }
+                            else if (tw.ir(fe) == false && tw.ir(en)) { fe = en; }
                         }
                         tw.f(fe);
                     }
@@ -408,11 +392,11 @@ namespace TowerDefence
                         for (int i = 1; i < this.e.Length; i++)
                         {
                             var en = this.e[i];
-                            if (en.t > fi.t && tw.ir(en) == true)
+                            if (en.t > fi.t && tw.ir(en))
                             {
                                 fi = en;
                             }
-                            else if (tw.ir(fi) == false && tw.ir(en) == true) { fi = en; }
+                            else if (tw.ir(fi) == false && tw.ir(en)) { fi = en; }
                         }
                         tw.f(fi);
 
