@@ -138,9 +138,9 @@ namespace TowerDefence
             if (numberOfTowers < MaxTowers)
             {
 
-                PopupWindow pop = new PopupWindow(gold, column, row);
-                pop.ShowDialog();
-                towerType = pop.tt;
+                PopupWindow popupWindow = new PopupWindow(gold, column, row);
+                popupWindow.ShowDialog();
+                towerType = popupWindow.towerType;
             //tower selection
                 switch (towerType)
                 {

@@ -19,7 +19,7 @@ namespace TowerDefence
     /// </summary>
     public partial class PopupWindow : Window
     {
-       public int tt;
+       public int towerType;
         public PopupWindow(int gold, int column, int row)
         {
             InitializeComponent();
@@ -32,27 +32,27 @@ namespace TowerDefence
 
         private void BuildReaper(object sender, RoutedEventArgs e)
         {
-            tt = 2;
+            towerType = 2;
             this.Close();
         }
 
         private void BuildTower(object sender, RoutedEventArgs e)
         {
-            tt = 1;
+            towerType = 1;
             this.Close();
 
         }
 
         private void BuildSn(object sender, RoutedEventArgs e)
         {
-            tt = 3;
+            towerType = 3;
             this.Close();
 
         }
 
         private void ForgetButtonClicked(object sender, RoutedEventArgs e)
         {
-            tt = 0;
+            towerType = 0;
             this.Close();
             
         }
