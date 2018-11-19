@@ -10,7 +10,6 @@ namespace TowerDefence
     {
         public int InitialPower { get; set; }
         public int Power { get; set; }
-        public int sr { get; set; }
         public BoardLocation Location {get; set; }
         public int ProgressInRoute { get; set; }
         public int v { get; set; }
@@ -39,7 +38,6 @@ namespace TowerDefence
                 InitialPower = (int)(InitialPower * 1.25);
                 Power = InitialPower;
                 ProgressInRoute = 0;
-                sr += 10;
                 g = v;
                 v++;
                 lv++;
