@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TowerDefence
 {
@@ -13,16 +9,14 @@ namespace TowerDefence
         public BoardLocation Location { get; set; }
         public int Strength { get; set; }
         public int a { get; set; }
-        public int ma { get; set; }
 
-        public void Initialize(string imageFilename, int pd,double pr, int pa, BoardLocation pl)
+        public void Initialize(string imageFilename, int strength, double fightingRadius, int pa, BoardLocation location)
         {
             ImageFilename = imageFilename;
-            Strength = pd;
-            FightingRadius = pr;
-            Location = pl;
-            ma = pa;
-            a = ma;
+            Strength = strength;
+            FightingRadius = fightingRadius;
+            Location = location;
+            a = pa;
         }
 
         public bool IsInRange(Enemy enemy)

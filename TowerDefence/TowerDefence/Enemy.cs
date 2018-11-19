@@ -17,7 +17,7 @@
             Value = 1;
             Level = 1;
         }
-        public void M(Route route, out int goldEarned) 
+        public void ProgressOrReset(Route route, out int goldEarned) 
         {
             goldEarned = 0;
             if (Power > 0)

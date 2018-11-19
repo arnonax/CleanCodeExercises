@@ -134,7 +134,6 @@ namespace TowerDefence
             //Tower selection popup manu
             if (numberOfTowers < MaxTowers)
             {
-
                 PopupWindow popupWindow = new PopupWindow(gold, column, row);
                 popupWindow.ShowDialog();
                 towerType = popupWindow.towerType;
@@ -308,7 +307,7 @@ namespace TowerDefence
                 {
                     enemy = this.enemies[i];
                     if (enemy.Power <= 0) { killsCount++; }
-                    enemy.M(route, out goldEarnedInRound);
+                    enemy.ProgressOrReset(route, out goldEarnedInRound);
                     // Enemies Picture change by Power level
                     if (enemy.Level > 3)
                     {
@@ -407,7 +406,7 @@ namespace TowerDefence
 
                     var enemy = this.enemies[i];
                     if (enemy.Power <= 0) { killsCount++; }
-                    enemy.M(route, out goldEarnedInRound);
+                    enemy.ProgressOrReset(route, out goldEarnedInRound);
                     gold += goldEarnedInRound;
                     goldEarnedInRound = 0;
                     if (enemy.Location == route.e)
