@@ -19,7 +19,7 @@ namespace TowerDefence
         public int a { get; set; }
         public int ma { get; set; }
 
-        public void B(int pc, int pn, string pnm, int pd,double pr, int pa, ClsP pl)
+        public void Initialize(int pc, int pn, string pnm, int pd,double pr, int pa, ClsP pl)
         {
             c = pc;
             n = pn;

@@ -58,7 +58,7 @@ namespace TowerDefence
             for (int i = 0; i < towers.Length; i++)
             {
                 towers[i] = new Tower();
-                towers[i].B(0, i, "Tower1",5, 2,1, new ClsP(14,14));
+                towers[i].Initialize(0, i, "Tower1",5, 2,1, new ClsP(14,14));
             }
 
             this.Loaded += MainWindow_Loaded;
@@ -150,7 +150,7 @@ namespace TowerDefence
                         {
                             var tower = towers[numberOfTowers];
                             ClsP pa = new ClsP(c, r);
-                            tower.B(0, numberOfTowers, "Tower", 10, 3.6, 2, new ClsP(c, r));
+                            tower.Initialize(0, numberOfTowers, "Tower", 10, 3.6, 2, new ClsP(c, r));
 
                             //Tower Picture
                             Image towerImage = new Image();
@@ -174,7 +174,7 @@ namespace TowerDefence
                             {
                                 var tw = towers[numberOfTowers];
                                 ClsP pa = new ClsP(c, r);
-                                tw.B(0, numberOfTowers, "Reapeter", 5, 3, 7, new ClsP(c, r));
+                                tw.Initialize(0, numberOfTowers, "Reapeter", 5, 3, 7, new ClsP(c, r));
 
                                 //Tower Picture
                                 Image t = new Image();
@@ -200,7 +200,7 @@ namespace TowerDefence
                             if (b >= 60)
                             {
                                 var tw = towers[numberOfTowers];
-                                tw.B(0, numberOfTowers, "Sniper", 20, 9.4, 1, new ClsP(c, r));
+                                tw.Initialize(0, numberOfTowers, "Sniper", 20, 9.4, 1, new ClsP(c, r));
 
                                 //Tower Picture
                                 Image t = new Image();
