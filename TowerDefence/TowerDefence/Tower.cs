@@ -8,15 +8,15 @@ namespace TowerDefence
         public double FightingRadius { get; set; }
         public BoardLocation Location { get; set; }
         public int Strength { get; set; }
-        public int a { get; set; }
+        public int FightsPerRound { get; set; }
 
-        public void Initialize(string imageFilename, int strength, double fightingRadius, int pa, BoardLocation location)
+        public void Initialize(string imageFilename, int strength, double fightingRadius, int fightsPerRound, BoardLocation location)
         {
             ImageFilename = imageFilename;
             Strength = strength;
             FightingRadius = fightingRadius;
             Location = location;
-            a = pa;
+            FightsPerRound = fightsPerRound;
         }
 
         public bool IsInRange(Enemy enemy)
@@ -33,7 +33,7 @@ namespace TowerDefence
 
         public void Fight(Enemy enemy)
         {
-            if (IsInRange(enemy) && a > 0)
+            if (IsInRange(enemy))
             {
                 enemy.Power = enemy.Power - Strength;
             }

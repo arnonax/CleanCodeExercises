@@ -256,50 +256,23 @@ namespace TowerDefence
                 var enemy = this.enemies[ch];
                 enemyLocation = enemy.Location;
                 //enemy HP
-                TextBlock enemyTextBlock = new TextBlock();
-
-                enemyTextBlock.FontSize = 20;
-                enemyTextBlock.FontWeight = FontWeights.Bold;
-                enemyTextBlock.Text = enemy.Power.ToString();
-
-
-                
-                Grid.SetRow(enemyTextBlock, enemyLocation.y);
-                Grid.SetColumn(enemyTextBlock, enemyLocation.x);
-                Board.Children.Add(enemyTextBlock);
+                var enemyTextBlock = CreateEnemyTextBlock(enemy, enemyLocation);
                 enemyTextBlocks[ch] = enemyTextBlock;
 
                 //enemy Picture
-                Image enemyImage = new Image();
-                enemyImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\1.png", UriKind.Absolute));
-                enemyImages[ch] = enemyImage;
-                Grid.SetRow(enemyImage, enemyLocation.y);
-                Grid.SetColumn(enemyImage, enemyLocation.x);
+                var enemyImage = CreateEnemyImage(enemyLocation);
                 Board.Children.Add(enemyImage);
               
                 ch++;
 
                 //Fire!!
-                for (int ti = 0; ti < towers.Length; ti++)
+                foreach (var tower in towers)
                 {
-                    var tower = towers[ti];
-                    var enemyToFightWith = this.enemies[0];
-
-                    for (int j = 0; j < tower.a; j++)
+                    for (int j = 0; j < tower.FightsPerRound; j++)
                     {
-                        enemyToFightWith = this.enemies[0];
-                        for (int i = 1; i < this.enemies.Length; i++)
-                        {
-                            enemy = this.enemies[i];
-                            if (enemy.ProgressInRoute > enemyToFightWith.ProgressInRoute && tower.IsInRange(enemy))
-                            {
-                                enemyToFightWith = enemy;
-                            }
-                            else if (tower.IsInRange(enemyToFightWith) == false && tower.IsInRange(enemy)) { enemyToFightWith = enemy; }
-                        }
+                        var enemyToFightWith = FindEnemyToFightWith(tower);
                         tower.Fight(enemyToFightWith);
                     }
-
                 }
 
                 //Enemies movement and changing picture by level of power
@@ -374,29 +347,13 @@ namespace TowerDefence
 
             else
             {
-                
-
-
                 //Fire!!
-                for (int ti = 0; ti < towers.Length; ti++)
+                foreach (var tower in towers)
                 {
-                    var tower = towers[ti];
-                    var enemy = this.enemies[0];
-
-                    for (int j = 0; j < tower.a; j++)
+                    for (int j = 0; j < tower.FightsPerRound; j++)
                     {
-                        enemy = this.enemies[0];
-                        for (int i = 1; i < this.enemies.Length; i++)
-                        {
-                            var en = this.enemies[i];
-                            if (en.ProgressInRoute > enemy.ProgressInRoute && tower.IsInRange(en))
-                            {
-                                enemy = en;
-                            }
-                            else if (tower.IsInRange(enemy) == false && tower.IsInRange(en)) { enemy = en; }
-                        }
+                        var enemy = FindEnemyToFightWith(tower);
                         tower.Fight(enemy);
-
                     }
                 }
 
@@ -483,9 +440,51 @@ namespace TowerDefence
                     Grid.SetColumn(etb, enemyLocation.x);
      
                 }
-
-
             }
+        }
+
+        private Enemy FindEnemyToFightWith(Tower tower)
+        {
+            var enemyToFightWith = this.enemies[0];
+            for (int i = 1; i < this.enemies.Length; i++)
+            {
+                var enemy = this.enemies[i];
+                if (enemy.ProgressInRoute > enemyToFightWith.ProgressInRoute && tower.IsInRange(enemy))
+                {
+                    enemyToFightWith = enemy;
+                }
+                else if (tower.IsInRange(enemyToFightWith) == false && tower.IsInRange(enemy))
+                {
+                    enemyToFightWith = enemy;
+                }
+            }
+            return enemyToFightWith;
+        }
+
+        private Image CreateEnemyImage(BoardLocation enemyLocation)
+        {
+            Image enemyImage = new Image();
+            enemyImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\1.png",
+                UriKind.Absolute));
+            enemyImages[ch] = enemyImage;
+            Grid.SetRow(enemyImage, enemyLocation.y);
+            Grid.SetColumn(enemyImage, enemyLocation.x);
+            return enemyImage;
+        }
+
+        private TextBlock CreateEnemyTextBlock(Enemy enemy, BoardLocation enemyLocation)
+        {
+            TextBlock enemyTextBlock = new TextBlock();
+
+            enemyTextBlock.FontSize = 20;
+            enemyTextBlock.FontWeight = FontWeights.Bold;
+            enemyTextBlock.Text = enemy.Power.ToString();
+
+
+            Grid.SetRow(enemyTextBlock, enemyLocation.y);
+            Grid.SetColumn(enemyTextBlock, enemyLocation.x);
+            Board.Children.Add(enemyTextBlock);
+            return enemyTextBlock;
         }
     }
 }
