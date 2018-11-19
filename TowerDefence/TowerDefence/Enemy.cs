@@ -12,20 +12,20 @@ namespace TowerDefence
         public int Power { get; set; }
         public BoardLocation Location {get; set; }
         public int ProgressInRoute { get; set; }
-        public int v { get; set; }
-        public int lv { get; set; }
+        public int Value { get; set; }
+        public int Level { get; set; } // TODO: remove this property and use Value instead as they always have the same value
         public Enemy(int power)
         {
             InitialPower = power;
             Power = InitialPower;
             ProgressInRoute = 0;
             Location = new BoardLocation(0, 0);
-            v = 1;
-            lv = 1;
+            Value = 1;
+            Level = 1;
         }
-        public void M(Route route, out int g) 
+        public void M(Route route, out int goldEarned) 
         {
-            g = 0;
+            goldEarned = 0;
             if (Power > 0)
             {
                 ProgressInRoute++;
@@ -38,9 +38,9 @@ namespace TowerDefence
                 InitialPower = (int)(InitialPower * 1.25);
                 Power = InitialPower;
                 ProgressInRoute = 0;
-                g = v;
-                v++;
-                lv++;
+                goldEarned = Value;
+                Value++;
+                Level++;
 
             }
 
