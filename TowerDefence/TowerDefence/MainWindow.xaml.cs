@@ -21,20 +21,20 @@ namespace TowerDefence
     /// </summary>
     public partial class MainWindow : Window
     {
-        const int c1 = 10;
+        const int MaxEnemies = 10;
         const int MaxTowers = 12;
         const int NumberOfColumns = 15;
         public int numberOfTowers = 0;
         const int numberOfRows = 12;
         public int ch = 0;
         public int gold = 50;
-        public int g = 0;
+        public int goldEarnedInRound = 0;
         public int towerType;
-        public int k = 0;
+        public int killsCount = 0;
 
-        Enemy[] enemies = new Enemy[c1];
-        TextBlock[] enemyTextBlocks = new TextBlock[c1];
-        Image[] enemyImages = new Image[c1];
+        Enemy[] enemies = new Enemy[MaxEnemies];
+        TextBlock[] enemyTextBlocks = new TextBlock[MaxEnemies];
+        Image[] enemyImages = new Image[MaxEnemies];
         Tower[] towers = new Tower[MaxTowers];
         Image[] towerImages = new Image[MaxTowers];
 
@@ -252,7 +252,7 @@ namespace TowerDefence
             ClsP m = new ClsP(0, 0);
 
             //first intervals- for craeting the enemies
-            if (ch < c1)
+            if (ch < MaxEnemies)
             {
                 //Making Enemies
                 var enemy = this.enemies[ch];
@@ -308,8 +308,8 @@ namespace TowerDefence
                 for (int i = 0; i < ch; i++)
                 {
                     enemy = this.enemies[i];
-                    if (enemy.h <= 0) { k++; }
-                    enemy.M(r, out g);
+                    if (enemy.h <= 0) { killsCount++; }
+                    enemy.M(r, out goldEarnedInRound);
                     // Enemies Picture change by Power level
                     if (enemy.lv > 3)
                     {
@@ -356,8 +356,8 @@ namespace TowerDefence
 
                     enemyTextBlock = enemyTextBlocks[i];
                     enemyImage = enemyImages[i];
-                    gold += g;
-                    g = 0;
+                    gold += goldEarnedInRound;
+                    goldEarnedInRound = 0;
 
                     m = enemy.l;
 
@@ -407,13 +407,13 @@ namespace TowerDefence
                 {
 
                     var en = this.enemies[i];
-                    if (en.h <= 0) { k++; }
-                    en.M(r, out g);
-                    gold += g;
-                    g = 0;
+                    if (en.h <= 0) { killsCount++; }
+                    en.M(r, out goldEarnedInRound);
+                    gold += goldEarnedInRound;
+                    goldEarnedInRound = 0;
                     if (en.l == r.e)
                     {
-                        MessageBox.Show("you lose! but killed "+ k);
+                        MessageBox.Show("you lose! but killed "+ killsCount);
                         _gameTimer.Stop();
                         break;
                     }
