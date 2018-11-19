@@ -283,7 +283,7 @@ namespace TowerDefence
                     enemy.ProgressOrReset(route, out goldEarnedInRound);
                     // Enemies Picture change by Power level
                     var updatedEnemyImage = enemyImages[i];
-                    UpdateEnemyImage(enemy, updatedEnemyImage);
+                    updatedEnemyImage.Source = GetEnemyImage(enemy);
 
 
                     enemyTextBlock = enemyTextBlocks[i];
@@ -334,47 +334,7 @@ namespace TowerDefence
                         break;
                     }
                     // Enemies Picture change by Power level
-                    if (enemy.Level > 3)
-                    {
-                        enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\2.png", UriKind.Absolute));
-                        if (enemy.Level > 5)
-                        {
-                            enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\3.png", UriKind.Absolute));
-                            if (enemy.Level > 7)
-                            {
-                                enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\4.png", UriKind.Absolute));
-                                if (enemy.Level > 9)
-                                {
-                                    enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\5.png", UriKind.Absolute));
-                                    if (enemy.Level > 12)
-                                    {
-                                        enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\6.png", UriKind.Absolute));
-                                        if (enemy.Level > 14)
-                                        {
-                                            enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\7.png", UriKind.Absolute));
-                                            if (enemy.Level > 16)
-                                            {
-                                                enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\8.png", UriKind.Absolute));
-                                                if (enemy.Level > 18)
-                                                {
-                                                    enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\9.png", UriKind.Absolute));
-                                                    if (enemy.Level > 20)
-                                                    {
-                                                        enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\10.png", UriKind.Absolute));
-                                                        if (enemy.Level > 22)
-                                                        {
-                                                            enemyImages[i].Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\11.png", UriKind.Absolute));
-
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    enemyImages[i].Source = GetEnemyImage(enemy);
                     enemyLocation = enemy.Location;
 
                     var etb = enemyTextBlocks[i];
@@ -404,69 +364,84 @@ namespace TowerDefence
             }
         }
 
-        private static void UpdateEnemyImage(Enemy enemy, Image updatedEnemyImage)
+        private static ImageSource GetEnemyImage(Enemy enemy)
         {
+            ImageSource result;
+            if (enemy.Level > 22)
+            {
+                result = 
+                    new BitmapImage(new Uri(
+                        Environment.CurrentDirectory + "\\Pictures\\Enemys\\11.png",
+                        UriKind.Absolute));
+                return result;
+            }
+            if (enemy.Level > 20)
+            {
+                result =
+                    new BitmapImage(
+                        new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\10.png",
+                            UriKind.Absolute));
+                return result;
+            }
+            if (enemy.Level > 18)
+            {
+                result =
+                    new BitmapImage(
+                        new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\9.png",
+                            UriKind.Absolute));
+                return result;
+            }
+            if (enemy.Level > 16)
+            {
+                result =
+                    new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\8.png",
+                        UriKind.Absolute));
+                return result;
+            }
+            if (enemy.Level > 14)
+            {
+                result =
+                    new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\7.png",
+                        UriKind.Absolute));
+                return result;
+            }
+            if (enemy.Level > 12)
+            {
+                result =
+                    new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\6.png",
+                        UriKind.Absolute));
+                return result;
+            }
+            if (enemy.Level > 9)
+            {
+                result =
+                    new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\5.png",
+                        UriKind.Absolute));
+                return result;
+            }
+            if (enemy.Level > 7)
+            {
+                result =
+                    new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\4.png",
+                        UriKind.Absolute));
+                return result;
+            }
+            if (enemy.Level > 5)
+            {
+                result =
+                    new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\3.png",
+                        UriKind.Absolute));
+                return result;
+            }
             if (enemy.Level > 3)
             {
-                updatedEnemyImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\2.png",
+                result = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\2.png",
                     UriKind.Absolute));
-                if (enemy.Level > 5)
-                {
-                    updatedEnemyImage.Source =
-                        new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\3.png", UriKind.Absolute));
-                    if (enemy.Level > 7)
-                    {
-                        updatedEnemyImage.Source =
-                            new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\4.png",
-                                UriKind.Absolute));
-                        if (enemy.Level > 9)
-                        {
-                            updatedEnemyImage.Source =
-                                new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\5.png",
-                                    UriKind.Absolute));
-                            if (enemy.Level > 12)
-                            {
-                                updatedEnemyImage.Source =
-                                    new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\6.png",
-                                        UriKind.Absolute));
-                                if (enemy.Level > 14)
-                                {
-                                    updatedEnemyImage.Source =
-                                        new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\7.png",
-                                            UriKind.Absolute));
-                                    if (enemy.Level > 16)
-                                    {
-                                        updatedEnemyImage.Source =
-                                            new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\8.png",
-                                                UriKind.Absolute));
-                                        if (enemy.Level > 18)
-                                        {
-                                            updatedEnemyImage.Source =
-                                                new BitmapImage(
-                                                    new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\9.png",
-                                                        UriKind.Absolute));
-                                            if (enemy.Level > 20)
-                                            {
-                                                updatedEnemyImage.Source =
-                                                    new BitmapImage(
-                                                        new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\10.png",
-                                                            UriKind.Absolute));
-                                                if (enemy.Level > 22)
-                                                {
-                                                    updatedEnemyImage.Source =
-                                                        new BitmapImage(new Uri(
-                                                            Environment.CurrentDirectory + "\\Pictures\\Enemys\\11.png",
-                                                            UriKind.Absolute));
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                return result;
             }
+            result = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\1.png",
+                UriKind.Absolute));
+            return result;
         }
 
         private Enemy FindEnemyToFightWith(Tower tower)
