@@ -23,9 +23,9 @@ namespace TowerDefence
     {
         const int c1 = 10;
         const int c2 = 12;
-        const int c3 = 15;
+        const int NumberOfColumns = 15;
         public int ts = 0;
-        const int c4 = 12;
+        const int numberOfRows = 12;
         public int ch = 0;
         public int b = 50;
         public int g = 0;
@@ -61,40 +61,40 @@ namespace TowerDefence
                 tws[i].B(0, i, "Tower1",5, 2,1, new ClsP(14,14));
             }
 
-            this.Loaded += MWL;
+            this.Loaded += MainWindow_Loaded;
         }
 
-        void MWL(object sender, RoutedEventArgs e)
+        void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             ClsP m = new ClsP(0, 0);
-            ColumnDefinition cd;
-            RowDefinition rd;
+            ColumnDefinition columnDefinition;
+            RowDefinition rowDefinition;
 
             // create board
-            for (int i = 0; i < c3; i++)
+            for (int i = 0; i < NumberOfColumns; i++)
             {
-                cd = new ColumnDefinition();
-                Board.ColumnDefinitions.Add(cd);
+                columnDefinition = new ColumnDefinition();
+                Board.ColumnDefinitions.Add(columnDefinition);
             }
 
-            for (int i = 0; i < c4; i++)
+            for (int i = 0; i < numberOfRows; i++)
             {
-                rd = new RowDefinition();
-                Board.RowDefinitions.Add(rd);
+                rowDefinition = new RowDefinition();
+                Board.RowDefinitions.Add(rowDefinition);
             }
  
             // Draw Grass
-            for (int i = 0; i < c3; i++)
+            for (int i = 0; i < NumberOfColumns; i++)
 			{
-                for (int j = 0; j < c4; j++)
+                for (int j = 0; j < numberOfRows; j++)
 			{
-                Image gr = new Image();
-                gr.Source = new BitmapImage(new Uri(Environment.CurrentDirectory+"\\Pictures\\Background\\Grass.png",  UriKind.RelativeOrAbsolute));
+                Image grassImage = new Image();
+                grassImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory+"\\Pictures\\Background\\Grass.png",  UriKind.RelativeOrAbsolute));
                 Board.ShowGridLines = false;
 
-                Grid.SetRow(gr, j);
-                Grid.SetColumn(gr, i);
-                Board.Children.Add(gr);
+                Grid.SetRow(grassImage, j);
+                Grid.SetColumn(grassImage, i);
+                Board.Children.Add(grassImage);
                 }
 			}
             // draw route
