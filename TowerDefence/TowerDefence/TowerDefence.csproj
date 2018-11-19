@@ -61,7 +61,7 @@
       <DependentUpon>PW.xaml</DependentUpon>
     </Compile>
     <Compile Include="cls_r.cs" />
-    <Compile Include="ClsT.cs" />
+    <Compile Include="Tower.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

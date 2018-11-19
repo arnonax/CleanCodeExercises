@@ -35,7 +35,7 @@ namespace TowerDefence
         ClsE[] e = new ClsE[c1];
         TextBlock[] enemyTextBlocks = new TextBlock[c1];
         Image[] enemyImages = new Image[c1];
-        ClsT[] towers = new ClsT[MaxTowers];
+        Tower[] towers = new Tower[MaxTowers];
         Image[] towerImages = new Image[MaxTowers];
 
         cls_r r = new cls_r();
@@ -57,7 +57,7 @@ namespace TowerDefence
 
             for (int i = 0; i < towers.Length; i++)
             {
-                towers[i] = new ClsT();
+                towers[i] = new Tower();
                 towers[i].B(0, i, "Tower1",5, 2,1, new ClsP(14,14));
             }
 

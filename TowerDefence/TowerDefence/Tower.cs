@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TowerDefence
 {
-     class ClsT
+     class Tower
     {
         public int c { get; set; }
         public int n { get; set; }
