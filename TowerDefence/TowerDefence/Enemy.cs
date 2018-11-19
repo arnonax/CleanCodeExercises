@@ -32,16 +32,9 @@ namespace TowerDefence
             g = 0;
             if (h > 0)
             {
-
-                for (int i = 0; i < s; i++)
-                {
-                    t++;
-                    if (t >= route.locations.Length)
-                    {
-                        break;
-                    }
+                t++;
+                if (t < route.locations.Length)
                     Location = route.locations[t];
-                }
             }
             else
             {
