@@ -144,19 +144,7 @@ namespace TowerDefence
                     case 1:
                         if (gold >= 20)
                         {
-                            var tower = towers[numberOfTowers];
-                            tower.Initialize("Tower", 10, 3.6, 2, new BoardLocation(column, row));
-
-                            //Tower Picture
-                            Image towerImage = new Image();
-                            towerImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tower.ImageFilename + ".png", UriKind.Absolute));
-                            towerImages[ch] = towerImage;
-                            Grid.SetRow(towerImage, tower.Location.y);
-                            Grid.SetColumn(towerImage, tower.Location.x);
-                            Board.Children.Add(towerImage);
-                            gold = (gold - 20);
-                            numberOfTowers++;
-                            MessageBox.Show("You have " + gold + " gold left and you can build " + (MaxTowers - numberOfTowers) + " more towers");
+                            CreateSimpleTower(column, row);
                         }
                         else { MessageBox.Show("You don't have enough gold for that!, you need 20 and you only have " + gold); }
 
@@ -167,21 +155,7 @@ namespace TowerDefence
 
                             if (gold >= 35)
                             {
-                                var tower = towers[numberOfTowers];
-                                tower.Initialize("Reapeter", 5, 3, 7, new BoardLocation(column, row));
-
-                                //Tower Picture
-                                Image towerImage = new Image();
-                                towerImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tower.ImageFilename + ".png", UriKind.Absolute));
-                                towerImages[ch] = towerImage;
-                                Grid.SetRow(towerImage, tower.Location.y);
-                                Grid.SetColumn(towerImage, tower.Location.x);
-                                Board.Children.Add(towerImage);
-                                gold = (gold - 35);
-                                numberOfTowers++;
-                                MessageBox.Show("You have " + gold + " gold left and you can build " + (MaxTowers - numberOfTowers) + " more towers");
-
-
+                                CreateReapeter(column, row);
                             }
                             else { MessageBox.Show("You don't have enough gold for that!, you need 35 and you only have " + gold); }
                         }
@@ -193,21 +167,7 @@ namespace TowerDefence
 
                             if (gold >= 60)
                             {
-                                var tw = towers[numberOfTowers];
-                                tw.Initialize("Sniper", 20, 9.4, 1, new BoardLocation(column, row));
-
-                                //Tower Picture
-                                Image t = new Image();
-                                t.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tw.ImageFilename + ".png", UriKind.Absolute));
-                                towerImages[ch] = t;
-                                Grid.SetRow(t, tw.Location.y);
-                                Grid.SetColumn(t, tw.Location.x);
-                                Board.Children.Add(t);
-                                gold = (gold - 60);
-                                numberOfTowers++;
-                                MessageBox.Show("You have " + gold + " gold left and you can build " + (MaxTowers - numberOfTowers) + " more towers");
-
-
+                                CreateSniper(column, row);
                             }
                             else { MessageBox.Show("You don't have enough gold for that!, you need 60 and you only have " + gold); }
                         }
@@ -220,6 +180,66 @@ namespace TowerDefence
                 MessageBox.Show("You cannot build more towers!");
             }
             _gameTimer.Start();
+        }
+
+        // TODO: remove duplication between CreateSniper, CreateReapeter and CreateSimpleSniper
+        private void CreateSniper(int column, int row)
+        {
+            var tw = towers[numberOfTowers];
+            tw.Initialize("Sniper", 20, 9.4, 1, new BoardLocation(column, row));
+
+            //Tower Picture
+            Image t = new Image();
+            t.Source = new BitmapImage(new Uri(
+                Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tw.ImageFilename + ".png", UriKind.Absolute));
+            towerImages[ch] = t;
+            Grid.SetRow(t, tw.Location.y);
+            Grid.SetColumn(t, tw.Location.x);
+            Board.Children.Add(t);
+            gold = (gold - 60);
+            numberOfTowers++;
+            MessageBox.Show(
+                "You have " + gold + " gold left and you can build " + (MaxTowers - numberOfTowers) + " more towers");
+        }
+
+        private void CreateReapeter(int column, int row)
+        {
+            var tower = towers[numberOfTowers];
+            tower.Initialize("Reapeter", 5, 3, 7, new BoardLocation(column, row));
+
+            //Tower Picture
+            Image towerImage = new Image();
+            towerImage.Source =
+                new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tower.ImageFilename + ".png",
+                    UriKind.Absolute));
+            towerImages[ch] = towerImage;
+            Grid.SetRow(towerImage, tower.Location.y);
+            Grid.SetColumn(towerImage, tower.Location.x);
+            Board.Children.Add(towerImage);
+            gold = (gold - 35);
+            numberOfTowers++;
+            MessageBox.Show(
+                "You have " + gold + " gold left and you can build " + (MaxTowers - numberOfTowers) + " more towers");
+        }
+
+        private void CreateSimpleTower(int column, int row)
+        {
+            var tower = towers[numberOfTowers];
+            tower.Initialize("Tower", 10, 3.6, 2, new BoardLocation(column, row));
+
+            //Tower Picture
+            Image towerImage = new Image();
+            towerImage.Source =
+                new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tower.ImageFilename + ".png",
+                    UriKind.Absolute));
+            towerImages[ch] = towerImage;
+            Grid.SetRow(towerImage, tower.Location.y);
+            Grid.SetColumn(towerImage, tower.Location.x);
+            Board.Children.Add(towerImage);
+            gold = (gold - 20);
+            numberOfTowers++;
+            MessageBox.Show(
+                "You have " + gold + " gold left and you can build " + (MaxTowers - numberOfTowers) + " more towers");
         }
 
         private int GetRowAndColumnFromMousePoint(Point p, ref int column)
