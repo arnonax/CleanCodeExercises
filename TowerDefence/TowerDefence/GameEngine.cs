@@ -47,9 +47,7 @@ namespace TowerDefence
         {
             if (NumberOfTowers < MaxTowers)
             {
-                PopupWindow popupWindow = new PopupWindow(Gold, column, row);
-                popupWindow.ShowDialog();
-                var towerType = popupWindow.TowerType;
+                var towerType = _ui.SelectTowerType(column, row, this);
                 //tower selection
                 if (towerType == TowerType.None)
                     return;

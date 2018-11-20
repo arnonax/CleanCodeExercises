@@ -296,5 +296,13 @@ namespace TowerDefence
             Board.Children.Add(enemyTextBlock);
             return enemyTextBlock;
         }
+
+        public GameEngine.TowerType SelectTowerType(int column, int row, GameEngine gameEngine)
+        {
+            PopupWindow popupWindow = new PopupWindow(gameEngine.Gold, column, row);
+            popupWindow.ShowDialog();
+            var towerType = popupWindow.TowerType;
+            return towerType;
+        }
     }
 }
