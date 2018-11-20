@@ -30,7 +30,6 @@ namespace TowerDefence
         private int _numberOfEnemies;
         private int _gold = 50;
         private int _goldEarnedInRound;
-        private int _towerType;
         private int _killsCount;
 
         private readonly Enemy[] _enemies = new Enemy[MaxEnemies];
@@ -133,22 +132,21 @@ namespace TowerDefence
             {
                 PopupWindow popupWindow = new PopupWindow(_gold, column, row);
                 popupWindow.ShowDialog();
-                _towerType = popupWindow.TowerType;
+                var towerType = popupWindow.TowerType;
                 //tower selection
                 ITowerFactory factory = null;
-                switch (_towerType)
+                switch (towerType)
                 {
                     //SimpleTower
-                    case 1:
+                    case TowerType.SimpleTower:
                         factory = new SimpleTower.Factory();
                         break;
 
-                    //Reapeter
-                    case 2:
+                    case TowerType.Reapeter:
                         factory = new Reapeter.Factory();
                         break;
-                    //Sniper
-                    case 3:
+
+                    case TowerType.Sniper:
                         factory = new Sniper.Factory();
                         break;
                 }
@@ -383,6 +381,13 @@ namespace TowerDefence
             Grid.SetColumn(enemyTextBlock, enemyLocation.X);
             Board.Children.Add(enemyTextBlock);
             return enemyTextBlock;
+        }
+
+        public enum TowerType
+        {
+            SimpleTower,
+            Reapeter,
+            Sniper
         }
     }
 }

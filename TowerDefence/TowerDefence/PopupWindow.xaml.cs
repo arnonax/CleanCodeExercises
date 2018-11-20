@@ -8,7 +8,7 @@ namespace TowerDefence
     public partial class PopupWindow
     {
         // TODO: change to readonly property
-        public int TowerType;
+        public MainWindow.TowerType TowerType;
         public PopupWindow(int gold, int column, int row)
         {
             InitializeComponent();
@@ -21,20 +21,20 @@ namespace TowerDefence
 
         private void BuildReaper(object sender, RoutedEventArgs e)
         {
-            TowerType = 2;
+            TowerType = MainWindow.TowerType.Reapeter;
             Close();
         }
 
         private void BuildTower(object sender, RoutedEventArgs e)
         {
-            TowerType = 1;
+            TowerType = MainWindow.TowerType.SimpleTower;
             Close();
 
         }
 
-        private void BuildSn(object sender, RoutedEventArgs e)
+        private void BuildSniper(object sender, RoutedEventArgs e)
         {
-            TowerType = 3;
+            TowerType = MainWindow.TowerType.Sniper;
             Close();
 
         }
