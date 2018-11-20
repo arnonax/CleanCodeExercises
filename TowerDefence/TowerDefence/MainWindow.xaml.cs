@@ -15,10 +15,11 @@ namespace TowerDefence
 
         private DispatcherTimer _gameTimer;
 
-        private readonly GameEngine _game = new GameEngine();
+        private readonly GameEngine _game;
 
         public MainWindow()
         {
+            _game = new GameEngine(this);
             InitializeComponent();
 
             Board.MouseDown += Board_MouseDown;
@@ -87,7 +88,7 @@ namespace TowerDefence
             // calc row mouse was over
             var row = GetRowAndColumnFromMousePoint(clickedPoint, ref column);
             //Tower selection popup manu
-            _game.UserClickedOnCell(column, row, this);
+            _game.UserClickedOnCell(column, row);
             _gameTimer.Start();
         }
 

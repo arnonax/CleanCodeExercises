@@ -5,13 +5,16 @@ namespace TowerDefence
 {
     public class GameEngine
     {
+        // TODO: extract an interface from MainWindow and use it to remove coupling
+        private MainWindow _ui;
         public const int MaxEnemies = 10;
         public const int MaxTowers = 12;
         public const int NumberOfColumns = 15;
         public const int NumberOfRows = 12;
 
-        public GameEngine()
+        public GameEngine(MainWindow ui)
         {
+            _ui = ui;
             for (int i = 0; i < Enemies.Length; i++)
             {
                 Enemies[i] = new Enemy(15);
@@ -40,7 +43,7 @@ namespace TowerDefence
 
         public Route Route { get; } = new Route();
 
-        public void UserClickedOnCell(int column, int row, MainWindow mainWindow)
+        public void UserClickedOnCell(int column, int row)
         {
             if (NumberOfTowers < MaxTowers)
             {
@@ -52,7 +55,7 @@ namespace TowerDefence
                     return;
 
                 var factory = MainWindow.GetTowerFactory(towerType);
-                mainWindow.CreateTower(column, row, factory);
+                _ui.CreateTower(column, row, factory);
             }
             else
             {
