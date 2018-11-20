@@ -139,37 +139,26 @@ namespace TowerDefence
                 {
                     //SimpleTower
                     case 1:
-                        if (_gold >= 20)
-                        {
-                            var factory = new SimpleTower.Factory();
-                            CreateTower(column, row, factory);
-                        }
-                        else { MessageBox.Show("You don't have enough gold for that!, you need 20 and you only have " + _gold); }
-
+                    {
+                        var factory = new SimpleTower.Factory();
+                        CreateTower1(column, row, factory);
+                    }
                         break;
+
                     //Reapeter
                     case 2:
-                        {
-
-                            if (_gold >= 35)
-                            {
-                                var factory = new Reapeter.Factory();
-                                CreateTower(column, row, factory);
-                            }
-                            else { MessageBox.Show("You don't have enough gold for that!, you need 35 and you only have " + _gold); }
-                        }
+                    {
+                        var factory = new Reapeter.Factory();
+                        CreateTower1(column, row, factory);
+                    }
                         break;
                     //Sniper
                     case 3:
-                        if (_towerType == 3)
-                        {
+                    {
 
-                            if (_gold >= 60)
-                            {
-                                CreateTower(column, row, new Sniper.Factory());
-                            }
-                            else { MessageBox.Show("You don't have enough gold for that!, you need 60 and you only have " + _gold); }
-                        }
+                        var towerFactory = new Sniper.Factory();
+                        CreateTower1(column, row, towerFactory);
+                    }
                         break;
                 }
 
@@ -179,6 +168,19 @@ namespace TowerDefence
                 MessageBox.Show("You cannot build more towers!");
             }
             _gameTimer.Start();
+        }
+
+        private void CreateTower1(int column, int row, ITowerFactory factory)
+        {
+            if (_gold >= factory.Price)
+            {
+                // TODO :inline CreateTower and rename Create
+                CreateTower(column, row, factory);
+            }
+            else
+            {
+                MessageBox.Show("You don't have enough gold for that!, you need 20 and you only have " + _gold);
+            }
         }
 
         // TODO: remove duplication between CreateSniper, CreateReapeter and CreateSimpleSniper
