@@ -4,14 +4,13 @@ namespace TowerDefence
 {
     public class GameEngine
     {
-        // TODO: extract an interface from MainWindow and use it to remove coupling
-        private readonly MainWindow _ui;
+        private readonly IGameUI _ui;
         public const int MaxEnemies = 10;
         public const int MaxTowers = 12;
         public const int NumberOfColumns = 15;
         public const int NumberOfRows = 12;
 
-        public GameEngine(MainWindow ui)
+        public GameEngine(IGameUI ui)
         {
             _ui = ui;
             for (int i = 0; i < Enemies.Length; i++)

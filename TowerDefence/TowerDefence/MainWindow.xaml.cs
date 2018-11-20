@@ -8,7 +8,7 @@ using System.Windows.Threading;
 
 namespace TowerDefence
 {
-    public partial class MainWindow
+    public partial class MainWindow : IGameUI
     {
         private readonly TextBlock[] _enemyTextBlocks = new TextBlock[GameEngine.MaxEnemies];
         private readonly Image[] _enemyImages = new Image[GameEngine.MaxEnemies];

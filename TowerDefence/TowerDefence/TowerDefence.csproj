@@ -56,6 +56,7 @@
     <Compile Include="Enemy.cs" />
     <Compile Include="BoardLocation.cs" />
     <Compile Include="GameEngine.cs" />
+    <Compile Include="IGameUI.cs" />
     <Compile Include="ITowerFactory.cs" />
     <Compile Include="PopupWindow.xaml.cs">
       <DependentUpon>PopupWindow.xaml</DependentUpon>
