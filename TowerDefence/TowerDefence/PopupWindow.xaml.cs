@@ -1,25 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace TowerDefence
 {
     /// <summary>
     /// Interaction logic for PopupWindow.xaml
     /// </summary>
-    public partial class PopupWindow : Window
+    public partial class PopupWindow
     {
-       public int towerType;
+        // TODO: change to readonly property
+        public int TowerType;
         public PopupWindow(int gold, int column, int row)
         {
             InitializeComponent();
@@ -32,28 +21,28 @@ namespace TowerDefence
 
         private void BuildReaper(object sender, RoutedEventArgs e)
         {
-            towerType = 2;
-            this.Close();
+            TowerType = 2;
+            Close();
         }
 
         private void BuildTower(object sender, RoutedEventArgs e)
         {
-            towerType = 1;
-            this.Close();
+            TowerType = 1;
+            Close();
 
         }
 
         private void BuildSn(object sender, RoutedEventArgs e)
         {
-            towerType = 3;
-            this.Close();
+            TowerType = 3;
+            Close();
 
         }
 
         private void ForgetButtonClicked(object sender, RoutedEventArgs e)
         {
-            towerType = 0;
-            this.Close();
+            TowerType = 0;
+            Close();
             
         }
     }

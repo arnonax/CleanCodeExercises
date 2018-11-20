@@ -2,17 +2,17 @@
 {
     class BoardLocation
     {
-        public int x { get; set; }
-        public int y { get; set; }
+        public int X { get; private set; }
+        public int Y { get; private set; }
         public BoardLocation(int px, int py)
         {
-            x = px;
-            y = py;
+            X = px;
+            Y = py;
         }
-        public void set(int px, int py)
+        public void Set(int px, int py)
         {
-            x = px;
-            y = py;
+            X = px;
+            Y = py;
         }
     }
 }

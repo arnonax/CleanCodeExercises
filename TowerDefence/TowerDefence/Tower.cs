@@ -21,8 +21,8 @@ namespace TowerDefence
 
         public bool IsInRange(Enemy enemy)
         {
-            double x = (Location.x - enemy.Location.x) * (Location.x - enemy.Location.x);
-            double y = (Location.y - enemy.Location.y) * (Location.y - enemy.Location.y);
+            double x = (Location.X - enemy.Location.X) * (Location.X - enemy.Location.X);
+            double y = (Location.Y - enemy.Location.Y) * (Location.Y - enemy.Location.Y);
             double distance = Math.Sqrt(x + y);
             if (distance > FightingRadius)
             {

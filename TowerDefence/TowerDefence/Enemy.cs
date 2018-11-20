@@ -23,12 +23,12 @@
             if (Power > 0)
             {
                 ProgressInRoute++;
-                if (ProgressInRoute < route.locations.Length)
-                    Location = route.locations[ProgressInRoute];
+                if (ProgressInRoute < route.Locations.Length)
+                    Location = route.Locations[ProgressInRoute];
             }
             else
             {
-                Location = route.locations[0];
+                Location = route.Locations[0];
                 InitialPower = (int)(InitialPower * 1.25);
                 Power = InitialPower;
                 ProgressInRoute = 0;
