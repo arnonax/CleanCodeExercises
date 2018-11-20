@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Windows;
 
 namespace TowerDefence
 {
@@ -57,7 +56,7 @@ namespace TowerDefence
             }
             else
             {
-                MessageBox.Show("You cannot build more towers!");
+                _ui.ShowMessage("You cannot build more towers!");
             }
         }
 
@@ -71,12 +70,11 @@ namespace TowerDefence
                 Gold = Gold - factory.Price;
                 NumberOfTowers++;
                 Towers.Add(tower);
-                MessageBox.Show(
-                    "You have " + Gold + " gold left and you can build " + (MaxTowers - NumberOfTowers) + " more towers");
+                _ui.ShowMessage("You have " + Gold + " gold left and you can build " + (MaxTowers - NumberOfTowers) + " more towers");
             }
             else
             {
-                MessageBox.Show("You don't have enough gold for that!, you need 20 and you only have " + Gold);
+                _ui.ShowMessage("You don't have enough gold for that!, you need 20 and you only have " + Gold);
             }
         }
     }

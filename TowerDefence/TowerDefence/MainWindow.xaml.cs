@@ -304,5 +304,10 @@ namespace TowerDefence
             var towerType = popupWindow.TowerType;
             return towerType;
         }
+
+        public void ShowMessage(string text)
+        {
+            MessageBox.Show(text);
+        }
     }
 }
