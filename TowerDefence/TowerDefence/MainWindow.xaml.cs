@@ -87,24 +87,12 @@ namespace TowerDefence
             // calc row mouse was over
             var row = GetRowAndColumnFromMousePoint(clickedPoint, ref column);
             //Tower selection popup manu
-            if (_game.NumberOfTowers < GameEngine.MaxTowers)
-            {
-                PopupWindow popupWindow = new PopupWindow(_game.Gold, column, row);
-                popupWindow.ShowDialog();
-                var towerType = popupWindow.TowerType;
-                //tower selection
-                var factory = GetTowerFactory(towerType);
-
-                CreateTower(column, row, factory);
-            }
-            else
-            {
-                MessageBox.Show("You cannot build more towers!");
-            }
+            _game.UserClickedOnCell(column, row, this);
             _gameTimer.Start();
         }
 
-        private static ITowerFactory GetTowerFactory(GameEngine.TowerType towerType)
+        // TODO: move to GameEngine
+        public static ITowerFactory GetTowerFactory(GameEngine.TowerType towerType)
         {
             ITowerFactory factory = null;
             switch (towerType)
@@ -125,7 +113,7 @@ namespace TowerDefence
             return factory;
         }
 
-        private void CreateTower(int column, int row, ITowerFactory factory)
+        public void CreateTower(int column, int row, ITowerFactory factory)
         {
             if (_game.Gold >= factory.Price)
             {

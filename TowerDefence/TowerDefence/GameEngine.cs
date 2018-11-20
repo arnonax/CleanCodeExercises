@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Windows;
 
 namespace TowerDefence
 {
@@ -37,5 +38,23 @@ namespace TowerDefence
         public List<Tower> Towers { get; } = new List<Tower>();
 
         public Route Route { get; } = new Route();
+
+        public void UserClickedOnCell(int column, int row, MainWindow mainWindow)
+        {
+            if (NumberOfTowers < MaxTowers)
+            {
+                PopupWindow popupWindow = new PopupWindow(Gold, column, row);
+                popupWindow.ShowDialog();
+                var towerType = popupWindow.TowerType;
+                //tower selection
+                var factory = MainWindow.GetTowerFactory(towerType);
+
+                mainWindow.CreateTower(column, row, factory);
+            }
+            else
+            {
+                MessageBox.Show("You cannot build more towers!");
+            }
+        }
     }
 }
