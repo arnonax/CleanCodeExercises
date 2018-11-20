@@ -35,12 +35,6 @@ namespace TowerDefence
         private readonly Enemy[] _enemies = new Enemy[MaxEnemies];
         private readonly TextBlock[] _enemyTextBlocks = new TextBlock[MaxEnemies];
         private readonly Image[] _enemyImages = new Image[MaxEnemies];
-        /* Refactoring roadmap:
-         * [Done] Change _towers to be a list
-         * [Done]Replace Initialize with constructor
-         * [Done]Make the different tower types derive from a common Tower base class
-         * [In Progress] Create Towers factory to remove duplication between the Create* methods
-         * */
         private readonly List<Tower> _towers = new List<Tower>();
 
         private readonly Route _route = new Route();
@@ -136,7 +130,7 @@ namespace TowerDefence
                 //tower selection
                 var factory = GetTowerFactory(towerType);
 
-                CreateTower1(column, row, factory);
+                CreateTower(column, row, factory);
             }
             else
             {
@@ -166,7 +160,7 @@ namespace TowerDefence
             return factory;
         }
 
-        private void CreateTower1(int column, int row, ITowerFactory factory)
+        private void CreateTower(int column, int row, ITowerFactory factory)
         {
             if (_gold >= factory.Price)
             {
