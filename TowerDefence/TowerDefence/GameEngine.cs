@@ -5,6 +5,7 @@ namespace TowerDefence
     public class GameEngine
     {
         private readonly IGameUI _ui;
+        private int _numberOfTowers;
         public const int MaxEnemies = 10;
         public const int MaxTowers = 12;
         public const int NumberOfColumns = 15;
@@ -27,8 +28,6 @@ namespace TowerDefence
             Sniper
         }
 
-        public int NumberOfTowers { get; set; }
-
         public int NumberOfEnemies { get; set; }
 
         public int Gold { get; set; } = 50;
@@ -43,7 +42,7 @@ namespace TowerDefence
 
         public void UserClickedOnCell(int column, int row)
         {
-            if (NumberOfTowers < MaxTowers)
+            if (_numberOfTowers < MaxTowers)
             {
                 var towerType = _ui.SelectTowerType(column, row, this);
                 //tower selection
@@ -67,9 +66,9 @@ namespace TowerDefence
 
                 _ui.DrawTower(tower);
                 Gold = Gold - factory.Price;
-                NumberOfTowers++;
+                _numberOfTowers++;
                 Towers.Add(tower);
-                _ui.ShowMessage("You have " + Gold + " gold left and you can build " + (MaxTowers - NumberOfTowers) + " more towers");
+                _ui.ShowMessage("You have " + Gold + " gold left and you can build " + (MaxTowers - _numberOfTowers) + " more towers");
             }
             else
             {
