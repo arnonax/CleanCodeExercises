@@ -26,7 +26,7 @@ namespace TowerDefence
         const int NumberOfColumns = 15;
         public int numberOfTowers = 0;
         const int numberOfRows = 12;
-        public int ch = 0;
+        public int numberOfEnemies = 0;
         public int gold = 50;
         public int goldEarnedInRound = 0;
         public int towerType;
@@ -266,20 +266,20 @@ namespace TowerDefence
             BoardLocation enemyLocation = new BoardLocation(0, 0);
 
             //first intervals- for craeting the enemies
-            if (ch < MaxEnemies)
+            if (numberOfEnemies < MaxEnemies)
             {
                 //Making Enemies
-                var enemy = this.enemies[ch];
+                var enemy = this.enemies[numberOfEnemies];
                 enemyLocation = enemy.Location;
                 //enemy HP
                 var enemyTextBlock = CreateEnemyTextBlock(enemy, enemyLocation);
-                enemyTextBlocks[ch] = enemyTextBlock;
+                enemyTextBlocks[numberOfEnemies] = enemyTextBlock;
 
                 //enemy Picture
                 var enemyImage = CreateEnemyImage(enemyLocation);
                 Board.Children.Add(enemyImage);
               
-                ch++;
+                numberOfEnemies++;
 
                 //Fire!!
                 foreach (var tower in towers)
@@ -292,7 +292,7 @@ namespace TowerDefence
                 }
 
                 //Enemies movement and changing picture by level of power
-                for (int i = 0; i < ch; i++)
+                for (int i = 0; i < numberOfEnemies; i++)
                 {
                     enemy = this.enemies[i];
                     if (enemy.Power <= 0) { killsCount++; }
@@ -412,7 +412,7 @@ namespace TowerDefence
             Image enemyImage = new Image();
             enemyImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\1.png",
                 UriKind.Absolute));
-            enemyImages[ch] = enemyImage;
+            enemyImages[numberOfEnemies] = enemyImage;
             Grid.SetRow(enemyImage, enemyLocation.y);
             Grid.SetColumn(enemyImage, enemyLocation.x);
             return enemyImage;
