@@ -39,8 +39,8 @@ namespace TowerDefence
         /* Refactoring roadmap:
          * [Done] Change _towers to be a list
          * [Done]Replace Initialize with constructor
-         * [In progress]Make the different tower types derive from a common Tower base class
-         * Create Towers factory to remove duplication between the Create* methods
+         * [Done]Make the different tower types derive from a common Tower base class
+         * [In Progress] Create Towers factory to remove duplication between the Create* methods
          * */
         private readonly List<Tower> _towers = new List<Tower>();
 
@@ -194,10 +194,11 @@ namespace TowerDefence
 
         private void CreateSniper(int column, int row)
         {
-            var tower = new Sniper(column, row);
+            var factory = new Sniper.Factory();
+            var tower = factory.CreateTower(column, row);
 
             DrawTower(tower);
-            _gold = (_gold - 60);
+            _gold = (_gold - factory.Price);
             _numberOfTowers++;
             _towers.Add(tower);
             MessageBox.Show(
@@ -206,22 +207,24 @@ namespace TowerDefence
 
         private void CreateReapeter(int column, int row)
         {
-            var tower = new Reapeter(column, row);
+            var factory = new Reapeter.Factory();
+            var tower = factory.CreateTower(column, row);
 
             DrawTower(tower);
             _numberOfTowers++;
             _towers.Add(tower);
-            _gold = (_gold - 35);
+            _gold = (_gold - factory.Price);
             MessageBox.Show(
                 "You have " + _gold + " gold left and you can build " + (MaxTowers - _numberOfTowers) + " more towers");
         }
 
         private void CreateSimpleTower(int column, int row)
         {
-            var tower = new SimpleTower(column, row);
+            var factory = new SimpleTower.Factory();
+            var tower = factory.CreateTower(column, row);
 
             DrawTower(tower);
-            _gold = (_gold - 20);
+            _gold = (_gold - factory.Price);
             _numberOfTowers++;
             _towers.Add(tower);
             MessageBox.Show(
