@@ -36,7 +36,6 @@ namespace TowerDefence
         TextBlock[] enemyTextBlocks = new TextBlock[MaxEnemies];
         Image[] enemyImages = new Image[MaxEnemies];
         Tower[] towers = new Tower[MaxTowers];
-        Image[] towerImages = new Image[MaxTowers];
 
         Route route = new Route();
 
@@ -192,7 +191,6 @@ namespace TowerDefence
             Image t = new Image();
             t.Source = new BitmapImage(new Uri(
                 Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tw.ImageFilename + ".png", UriKind.Absolute));
-            towerImages[ch] = t;
             Grid.SetRow(t, tw.Location.y);
             Grid.SetColumn(t, tw.Location.x);
             Board.Children.Add(t);
@@ -212,7 +210,6 @@ namespace TowerDefence
             towerImage.Source =
                 new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tower.ImageFilename + ".png",
                     UriKind.Absolute));
-            towerImages[ch] = towerImage;
             Grid.SetRow(towerImage, tower.Location.y);
             Grid.SetColumn(towerImage, tower.Location.x);
             Board.Children.Add(towerImage);
@@ -232,7 +229,6 @@ namespace TowerDefence
             towerImage.Source =
                 new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tower.ImageFilename + ".png",
                     UriKind.Absolute));
-            towerImages[ch] = towerImage;
             Grid.SetRow(towerImage, tower.Location.y);
             Grid.SetColumn(towerImage, tower.Location.x);
             Board.Children.Add(towerImage);
