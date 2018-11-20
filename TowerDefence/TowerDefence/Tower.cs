@@ -13,11 +13,11 @@ namespace TowerDefence
             FightsPerRound = fightsPerRound;
         }
 
-        public string ImageFilename { get; set; }
-        public double FightingRadius { get; set; }
-        public BoardLocation Location { get; set; }
-        public int Strength { get; set; }
-        public int FightsPerRound { get; set; }
+        public string ImageFilename { get; }
+        public double FightingRadius { get; }
+        public BoardLocation Location { get; }
+        public int Strength { get; }
+        public int FightsPerRound { get; }
 
         public bool IsInRange(Enemy enemy)
         {
