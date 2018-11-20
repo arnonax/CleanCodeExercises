@@ -2,8 +2,8 @@ namespace TowerDefence
 {
     internal class SimpleTower : Tower
     {
-        public SimpleTower(string imageFilename, int strength, double fightingRadius, int fightsPerRound, BoardLocation location)
-            : base(imageFilename, strength, fightingRadius, fightsPerRound, location)
+        public SimpleTower(int column, int row)
+            : base("Tower", 10, 3.6, 2, new BoardLocation(column, row))
         {
         }
     }

@@ -2,9 +2,9 @@
 {
     internal class Reapeter : Tower
     {
-        public Reapeter(string imageFilename, int strength, double fightingRadius, int fightsPerRound, BoardLocation location)
-            : base(imageFilename, strength, fightingRadius, fightsPerRound, location)
-        {
+        public Reapeter(int column, int row)
+            : base("Reapeter", 5, 3, 7, new BoardLocation(column, row))
+            {
         }
     }
 }

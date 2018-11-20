@@ -2,9 +2,9 @@ namespace TowerDefence
 {
     internal class Sniper : Tower
     {
-        public Sniper(string imageFilename, int strength, double fightingRadius, int fightsPerRound, BoardLocation location) 
-            : base(imageFilename, strength, fightingRadius, fightsPerRound, location)
-        {
+        public Sniper(int column, int row) 
+            : base("Sniper", 20, 9.4, 1, new BoardLocation(column, row))
+            {
         }
     }
 }

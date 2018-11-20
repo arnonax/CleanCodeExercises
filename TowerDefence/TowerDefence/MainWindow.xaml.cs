@@ -194,7 +194,7 @@ namespace TowerDefence
 
         private void CreateSniper(int column, int row)
         {
-            var tower = new Sniper("Sniper", 20, 9.4, 1, new BoardLocation(column, row));
+            var tower = new Sniper(column, row);
 
             DrawTower(tower);
             _gold = (_gold - 60);
@@ -206,7 +206,7 @@ namespace TowerDefence
 
         private void CreateReapeter(int column, int row)
         {
-            var tower = new Reapeter("Reapeter", 5, 3, 7, new BoardLocation(column, row));
+            var tower = new Reapeter(column, row);
 
             DrawTower(tower);
             _numberOfTowers++;
@@ -218,7 +218,7 @@ namespace TowerDefence
 
         private void CreateSimpleTower(int column, int row)
         {
-            var tower = new SimpleTower("Tower", 10, 3.6, 2, new BoardLocation(column, row));
+            var tower = new SimpleTower(column, row);
 
             DrawTower(tower);
             _gold = (_gold - 20);
