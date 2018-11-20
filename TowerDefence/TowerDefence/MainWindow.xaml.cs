@@ -36,15 +36,13 @@ namespace TowerDefence
         private readonly Enemy[] _enemies = new Enemy[MaxEnemies];
         private readonly TextBlock[] _enemyTextBlocks = new TextBlock[MaxEnemies];
         private readonly Image[] _enemyImages = new Image[MaxEnemies];
-        // TODO: get rid of the _towers array and use _towersList instead. Eventually rename _towersList to _towers
         /* Refactoring roadmap:
-         * Change _towers to be a list
+         * Change _towers to be a list - Done
          * Make the different tower types derive from a common Tower base class
          * Replace Initialize with constructor
          * Create Towers factory to remove duplication between the Create* methods
          * */
-        private readonly Tower[] _towers = new Tower[MaxTowers];
-        private readonly List<Tower> _towersList = new List<Tower>();
+        private readonly List<Tower> _towers = new List<Tower>();
 
         private readonly Route _route = new Route();
 
@@ -202,25 +200,25 @@ namespace TowerDefence
 
         private void CreateSniper(int column, int row)
         {
-            var tower = new Tower(); //_towers[_numberOfTowers];
+            var tower = new Tower();
             tower.Initialize("Sniper", 20, 9.4, 1, new BoardLocation(column, row));
 
             DrawTower(tower);
             _gold = (_gold - 60);
             _numberOfTowers++;
-            _towersList.Add(tower);
+            _towers.Add(tower);
             MessageBox.Show(
                 "You have " + _gold + " gold left and you can build " + (MaxTowers - _numberOfTowers) + " more towers");
         }
 
         private void CreateReapeter(int column, int row)
         {
-            var tower = new Tower(); //_towers[_numberOfTowers];
+            var tower = new Tower();
             tower.Initialize("Reapeter", 5, 3, 7, new BoardLocation(column, row));
 
             DrawTower(tower);
             _numberOfTowers++;
-            _towersList.Add(tower);
+            _towers.Add(tower);
             _gold = (_gold - 35);
             MessageBox.Show(
                 "You have " + _gold + " gold left and you can build " + (MaxTowers - _numberOfTowers) + " more towers");
@@ -228,13 +226,13 @@ namespace TowerDefence
 
         private void CreateSimpleTower(int column, int row)
         {
-            var tower = new Tower();//_towers[_numberOfTowers];
+            var tower = new Tower();
             tower.Initialize("Tower", 10, 3.6, 2, new BoardLocation(column, row));
 
             DrawTower(tower);
             _gold = (_gold - 20);
             _numberOfTowers++;
-            _towersList.Add(tower);
+            _towers.Add(tower);
             MessageBox.Show(
                 "You have " + _gold + " gold left and you can build " + (MaxTowers - _numberOfTowers) + " more towers");
         }
@@ -281,7 +279,7 @@ namespace TowerDefence
                 _numberOfEnemies++;
 
                 //Fire!!
-                foreach (var tower in _towersList)
+                foreach (var tower in _towers)
                 {
                     for (int j = 0; j < tower.FightsPerRound; j++)
                     {
@@ -314,7 +312,7 @@ namespace TowerDefence
             else
             {
                 //Fire!!
-                foreach (var tower in _towersList)
+                foreach (var tower in _towers)
                 {
                     for (int j = 0; j < tower.FightsPerRound; j++)
                     {
