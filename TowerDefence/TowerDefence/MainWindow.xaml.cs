@@ -311,17 +311,7 @@ namespace TowerDefence
                     gold += goldEarnedInRound;
                     goldEarnedInRound = 0;
 
-                    enemyLocation = enemy.Location;
-
-
-
-
-                    Grid.SetRow(enemyImage, enemyLocation.y);
-                    Grid.SetColumn(enemyImage, enemyLocation.x);
-
-                    Grid.SetRow(enemyTextBlock, enemyLocation.y);
-                    Grid.SetColumn(enemyTextBlock, enemyLocation.x);
-                    enemyTextBlock.Text = enemy.Power.ToString();
+                    UpdateEnemyLocation(enemy, enemyImage, enemyTextBlock);
                 }
             }
             // called every timer interval after the enemies creation
@@ -355,33 +345,40 @@ namespace TowerDefence
                     }
                     // Enemies Picture change by Power level
                     enemyImages[i].Source = GetEnemyImage(enemy);
-                    enemyLocation = enemy.Location;
 
-                    var etb = enemyTextBlocks[i];
-                    var em = enemyImages[i];
+                    var enemyTextBlock = enemyTextBlocks[i];
+                    var enemyImage = enemyImages[i];
 
 
-                    if ((enemy.Power * 3) < enemy.InitialPower)
-                    {
-                        etb.Foreground = new SolidColorBrush(Colors.Red);
-
-                    }
-                    else
-                    {
-
-                        etb.Foreground = new SolidColorBrush(Colors.Black);
-
-                    }
-                    etb.Text = enemy.Power.ToString();
-
-                    Grid.SetRow(em, enemyLocation.y);
-                    Grid.SetColumn(em, enemyLocation.x);
-
-                    Grid.SetRow(etb, enemyLocation.y);
-                    Grid.SetColumn(etb, enemyLocation.x);
-     
+                    SetEnemyTextColor(enemy, enemyTextBlock);
+                    UpdateEnemyLocation(enemy, enemyImage, enemyTextBlock);    
                 }
             }
+        }
+
+        private static void SetEnemyTextColor(Enemy enemy, TextBlock enemyTextBlock)
+        {
+            if ((enemy.Power * 3) < enemy.InitialPower)
+            {
+                enemyTextBlock.Foreground = new SolidColorBrush(Colors.Red);
+            }
+            else
+            {
+                enemyTextBlock.Foreground = new SolidColorBrush(Colors.Black);
+            }
+        }
+
+        private static void UpdateEnemyLocation(Enemy enemy, Image enemyImage, TextBlock enemyTextBlock)
+        {
+            var enemyLocation = enemy.Location;
+
+
+            Grid.SetRow(enemyImage, enemyLocation.y);
+            Grid.SetColumn(enemyImage, enemyLocation.x);
+
+            Grid.SetRow(enemyTextBlock, enemyLocation.y);
+            Grid.SetColumn(enemyTextBlock, enemyLocation.x);
+            enemyTextBlock.Text = enemy.Power.ToString();
         }
 
         private static ImageSource GetEnemyImage(Enemy enemy)
