@@ -141,7 +141,8 @@ namespace TowerDefence
                     case 1:
                         if (_gold >= 20)
                         {
-                            CreateSimpleTower(column, row);
+                            var factory = new SimpleTower.Factory();
+                            CreateTower(column, row, factory);
                         }
                         else { MessageBox.Show("You don't have enough gold for that!, you need 20 and you only have " + _gold); }
 
@@ -152,7 +153,8 @@ namespace TowerDefence
 
                             if (_gold >= 35)
                             {
-                                CreateReapeter(column, row);
+                                var factory = new Reapeter.Factory();
+                                CreateTower(column, row, factory);
                             }
                             else { MessageBox.Show("You don't have enough gold for that!, you need 35 and you only have " + _gold); }
                         }
@@ -201,18 +203,6 @@ namespace TowerDefence
             _towers.Add(tower);
             MessageBox.Show(
                 "You have " + _gold + " gold left and you can build " + (MaxTowers - _numberOfTowers) + " more towers");
-        }
-
-        private void CreateReapeter(int column, int row)
-        {
-            var factory = new Reapeter.Factory();
-            CreateTower(column, row, factory);
-        }
-
-        private void CreateSimpleTower(int column, int row)
-        {
-            var factory = new SimpleTower.Factory();
-            CreateTower(column, row, factory);
         }
 
         private int GetRowAndColumnFromMousePoint(Point p, ref int column)
