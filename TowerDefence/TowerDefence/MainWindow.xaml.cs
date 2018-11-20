@@ -137,15 +137,7 @@ namespace TowerDefence
 
                 _game.NumberOfEnemies++;
 
-                //Fire!!
-                foreach (var tower in _game.Towers)
-                {
-                    for (int j = 0; j < tower.FightsPerRound; j++)
-                    {
-                        var enemyToFightWith = FindEnemyToFightWith(tower);
-                        tower.Fight(enemyToFightWith);
-                    }
-                }
+                PerformFights();
 
                 //Enemies movement and changing picture by level of power
                 for (int i = 0; i < _game.NumberOfEnemies; i++)
@@ -153,6 +145,13 @@ namespace TowerDefence
                     enemy = _game.Enemies[i];
                     if (enemy.Power <= 0) { _game.KillsCount++; }
                     enemy.ProgressOrReset(_game.Route, out int goldEarnedInRound);
+                    _game.Gold = _game.Gold + goldEarnedInRound;
+                    if (enemy.Location == _game.Route.EndLocation)
+                    {
+                        MessageBox.Show("you lose! but killed " + _game.KillsCount);
+                        _gameTimer.Stop();
+                        break;
+                    }
                     // Enemies Picture change by Power level
                     var updatedEnemyImage = _enemyImages[i];
                     updatedEnemyImage.Source = GetEnemyImage(enemy);
@@ -160,8 +159,8 @@ namespace TowerDefence
 
                     enemyTextBlock = _enemyTextBlocks[i];
                     var enemyImage = updatedEnemyImage;
-                    _game.Gold = _game.Gold + goldEarnedInRound;
-                    
+
+                    SetEnemyTextColor(enemy, enemyTextBlock);
                     UpdateEnemyLocation(enemy, enemyImage, enemyTextBlock);
                 }
             }
@@ -169,20 +168,10 @@ namespace TowerDefence
 
             else
             {
-                //Fire!!
-                foreach (var tower in _game.Towers)
-                {
-                    for (int j = 0; j < tower.FightsPerRound; j++)
-                    {
-                        var enemy = FindEnemyToFightWith(tower);
-                        tower.Fight(enemy);
-                    }
-                }
-
+                PerformFights();
                 // Enemies movement and changing picture by level of power
-                for (int i = 0; i < _game.Enemies.Length; i++)
+                for (int i = 0; i < _game.NumberOfEnemies; i++)
                 {
-
                     var enemy = _game.Enemies[i];
                     if (enemy.Power <= 0) { _game.KillsCount++; }
                     enemy.ProgressOrReset(_game.Route, out int goldEarnedInRound);
@@ -194,14 +183,27 @@ namespace TowerDefence
                         break;
                     }
                     // Enemies Picture change by Power level
-                    _enemyImages[i].Source = GetEnemyImage(enemy);
+                    var updatedEnemyImage = _enemyImages[i];
+                    updatedEnemyImage.Source = GetEnemyImage(enemy);
 
                     var enemyTextBlock = _enemyTextBlocks[i];
-                    var enemyImage = _enemyImages[i];
+                    var enemyImage = updatedEnemyImage;
 
 
                     SetEnemyTextColor(enemy, enemyTextBlock);
                     UpdateEnemyLocation(enemy, enemyImage, enemyTextBlock);    
+                }
+            }
+        }
+
+        private void PerformFights()
+        {
+            foreach (var tower in _game.Towers)
+            {
+                for (int j = 0; j < tower.FightsPerRound; j++)
+                {
+                    var enemyToFightWith = FindEnemyToFightWith(tower);
+                    tower.Fight(enemyToFightWith);
                 }
             }
         }
