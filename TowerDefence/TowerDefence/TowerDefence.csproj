@@ -58,7 +58,10 @@
     <Compile Include="PopupWindow.xaml.cs">
       <DependentUpon>PopupWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reapeter.cs" />
     <Compile Include="Route.cs" />
+    <Compile Include="SimpleTower.cs" />
+    <Compile Include="Sniper.cs" />
     <Compile Include="Tower.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

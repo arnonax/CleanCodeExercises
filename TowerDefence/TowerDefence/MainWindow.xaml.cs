@@ -38,8 +38,8 @@ namespace TowerDefence
         private readonly Image[] _enemyImages = new Image[MaxEnemies];
         /* Refactoring roadmap:
          * [Done] Change _towers to be a list
-         * Replace Initialize with constructor
-         * Make the different tower types derive from a common Tower base class
+         * [Done]Replace Initialize with constructor
+         * [In progress]Make the different tower types derive from a common Tower base class
          * Create Towers factory to remove duplication between the Create* methods
          * */
         private readonly List<Tower> _towers = new List<Tower>();
@@ -194,7 +194,7 @@ namespace TowerDefence
 
         private void CreateSniper(int column, int row)
         {
-            var tower = new Tower("Sniper", 20, 9.4, 1, new BoardLocation(column, row));
+            var tower = new Sniper("Sniper", 20, 9.4, 1, new BoardLocation(column, row));
 
             DrawTower(tower);
             _gold = (_gold - 60);
@@ -206,7 +206,7 @@ namespace TowerDefence
 
         private void CreateReapeter(int column, int row)
         {
-            var tower = new Tower("Reapeter", 5, 3, 7, new BoardLocation(column, row));
+            var tower = new Reapeter("Reapeter", 5, 3, 7, new BoardLocation(column, row));
 
             DrawTower(tower);
             _numberOfTowers++;
@@ -218,7 +218,7 @@ namespace TowerDefence
 
         private void CreateSimpleTower(int column, int row)
         {
-            var tower = new Tower("Tower", 10, 3.6, 2, new BoardLocation(column, row));
+            var tower = new SimpleTower("Tower", 10, 3.6, 2, new BoardLocation(column, row));
 
             DrawTower(tower);
             _gold = (_gold - 20);
