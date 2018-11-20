@@ -164,7 +164,7 @@ namespace TowerDefence
 
                             if (_gold >= 60)
                             {
-                                CreateSniper(column, row);
+                                CreateTower(column, row, new Sniper.Factory());
                             }
                             else { MessageBox.Show("You don't have enough gold for that!, you need 60 and you only have " + _gold); }
                         }
@@ -182,7 +182,6 @@ namespace TowerDefence
         // TODO: remove duplication between CreateSniper, CreateReapeter and CreateSimpleSniper
         private void DrawTower(Tower tower)
         {
-//Tower Picture
             Image towerImage = new Image();
             towerImage.Source =
                 new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tower.ImageFilename + ".png",
@@ -192,13 +191,12 @@ namespace TowerDefence
             Board.Children.Add(towerImage);
         }
 
-        private void CreateSniper(int column, int row)
+        private void CreateTower(int column, int row, ITowerFactory towerFactory)
         {
-            var factory = new Sniper.Factory();
-            var tower = factory.CreateTower(column, row);
+            var tower = towerFactory.CreateTower(column, row);
 
             DrawTower(tower);
-            _gold = (_gold - factory.Price);
+            _gold = (_gold - towerFactory.Price);
             _numberOfTowers++;
             _towers.Add(tower);
             MessageBox.Show(
@@ -208,27 +206,13 @@ namespace TowerDefence
         private void CreateReapeter(int column, int row)
         {
             var factory = new Reapeter.Factory();
-            var tower = factory.CreateTower(column, row);
-
-            DrawTower(tower);
-            _numberOfTowers++;
-            _towers.Add(tower);
-            _gold = (_gold - factory.Price);
-            MessageBox.Show(
-                "You have " + _gold + " gold left and you can build " + (MaxTowers - _numberOfTowers) + " more towers");
+            CreateTower(column, row, factory);
         }
 
         private void CreateSimpleTower(int column, int row)
         {
             var factory = new SimpleTower.Factory();
-            var tower = factory.CreateTower(column, row);
-
-            DrawTower(tower);
-            _gold = (_gold - factory.Price);
-            _numberOfTowers++;
-            _towers.Add(tower);
-            MessageBox.Show(
-                "You have " + _gold + " gold left and you can build " + (MaxTowers - _numberOfTowers) + " more towers");
+            CreateTower(column, row, factory);
         }
 
         private int GetRowAndColumnFromMousePoint(Point p, ref int column)
