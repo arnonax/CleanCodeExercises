@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -35,7 +36,15 @@ namespace TowerDefence
         private readonly Enemy[] _enemies = new Enemy[MaxEnemies];
         private readonly TextBlock[] _enemyTextBlocks = new TextBlock[MaxEnemies];
         private readonly Image[] _enemyImages = new Image[MaxEnemies];
+        // TODO: get rid of the _towers array and use _towersList instead. Eventually rename _towersList to _towers
+        /* Refactoring roadmap:
+         * Change _towers to be a list
+         * Make the different tower types derive from a common Tower base class
+         * Replace Initialize with constructor
+         * Create Towers factory to remove duplication between the Create* methods
+         * */
         private readonly Tower[] _towers = new Tower[MaxTowers];
+        private readonly List<Tower> _towersList = new List<Tower>();
 
         private readonly Route _route = new Route();
 
@@ -199,6 +208,7 @@ namespace TowerDefence
             DrawTower(tower);
             _gold = (_gold - 60);
             _numberOfTowers++;
+            _towersList.Add(tower);
             MessageBox.Show(
                 "You have " + _gold + " gold left and you can build " + (MaxTowers - _numberOfTowers) + " more towers");
         }
@@ -210,6 +220,7 @@ namespace TowerDefence
 
             DrawTower(tower);
             _numberOfTowers++;
+            _towersList.Add(tower);
             _gold = (_gold - 35);
             MessageBox.Show(
                 "You have " + _gold + " gold left and you can build " + (MaxTowers - _numberOfTowers) + " more towers");
@@ -223,6 +234,7 @@ namespace TowerDefence
             DrawTower(tower);
             _gold = (_gold - 20);
             _numberOfTowers++;
+            _towersList.Add(tower);
             MessageBox.Show(
                 "You have " + _gold + " gold left and you can build " + (MaxTowers - _numberOfTowers) + " more towers");
         }
@@ -269,7 +281,7 @@ namespace TowerDefence
                 _numberOfEnemies++;
 
                 //Fire!!
-                foreach (var tower in _towers)
+                foreach (var tower in _towersList)
                 {
                     for (int j = 0; j < tower.FightsPerRound; j++)
                     {
@@ -302,7 +314,7 @@ namespace TowerDefence
             else
             {
                 //Fire!!
-                foreach (var tower in _towers)
+                foreach (var tower in _towersList)
                 {
                     for (int j = 0; j < tower.FightsPerRound; j++)
                     {
