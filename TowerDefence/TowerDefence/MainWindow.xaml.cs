@@ -23,11 +23,6 @@ namespace TowerDefence
 
             Board.MouseDown += Board_MouseDown;
 
-            for (int i = 0; i < _game.Enemies.Length; i++)
-            {
-                _game.Enemies[i] = new Enemy(15);
-            }
-
             Loaded += MainWindow_Loaded;
         }
 

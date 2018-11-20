@@ -9,6 +9,14 @@ namespace TowerDefence
         public const int NumberOfColumns = 15;
         public const int NumberOfRows = 12;
 
+        public GameEngine()
+        {
+            for (int i = 0; i < Enemies.Length; i++)
+            {
+                Enemies[i] = new Enemy(15);
+            }
+        }
+
         public enum TowerType
         {
             SimpleTower,
