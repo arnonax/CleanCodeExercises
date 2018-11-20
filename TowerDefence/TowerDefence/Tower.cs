@@ -2,7 +2,7 @@
 
 namespace TowerDefence
 {
-     class Tower
+    public class Tower
      {
          protected Tower(string imageFilename, int strength, double fightingRadius, int fightsPerRound, BoardLocation location)
          {

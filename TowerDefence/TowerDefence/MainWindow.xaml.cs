@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,18 +10,8 @@ namespace TowerDefence
 {
     public partial class MainWindow
     {
-        private int _numberOfTowers;
-        private int _numberOfEnemies;
-        private int _gold = 50;
-        private int _goldEarnedInRound;
-        private int _killsCount;
-
-        private readonly Enemy[] _enemies = new Enemy[GameEngine.MaxEnemies];
         private readonly TextBlock[] _enemyTextBlocks = new TextBlock[GameEngine.MaxEnemies];
         private readonly Image[] _enemyImages = new Image[GameEngine.MaxEnemies];
-        private readonly List<Tower> _towers = new List<Tower>();
-
-        private readonly Route _route = new Route();
 
         private DispatcherTimer _gameTimer;
 
@@ -34,9 +23,9 @@ namespace TowerDefence
 
             Board.MouseDown += Board_MouseDown;
 
-            for (int i = 0; i < _enemies.Length; i++)
+            for (int i = 0; i < _game.Enemies.Length; i++)
             {
-                _enemies[i] = new Enemy(15);
+                _game.Enemies[i] = new Enemy(15);
             }
 
             Loaded += MainWindow_Loaded;
@@ -74,16 +63,16 @@ namespace TowerDefence
                 }
             }
             // draw route
-            for (int i = 0; i < _route.Locations.Length; i++)
+            for (int i = 0; i < _game.Route.Locations.Length; i++)
             {
-                var location = _route.Locations[i];
+                var location = _game.Route.Locations[i];
                 Image routeImage = new Image();
                 routeImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Background\\Route.png", UriKind.Absolute));
                 
                 Grid.SetRow(routeImage, location.Y);
                 Grid.SetColumn(routeImage, location.X);
                 Board.Children.Add(routeImage);
-                if (i == _route.Locations.Length - 1)
+                if (i == _game.Route.Locations.Length - 1)
                 {
                     Image te = new Image();
                     te.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Background\\Home.png", UriKind.Absolute));
@@ -108,9 +97,9 @@ namespace TowerDefence
             // calc row mouse was over
             var row = GetRowAndColumnFromMousePoint(clickedPoint, ref column);
             //Tower selection popup manu
-            if (_numberOfTowers < GameEngine.MaxTowers)
+            if (_game.NumberOfTowers < GameEngine.MaxTowers)
             {
-                PopupWindow popupWindow = new PopupWindow(_gold, column, row);
+                PopupWindow popupWindow = new PopupWindow(_game.Gold, column, row);
                 popupWindow.ShowDialog();
                 var towerType = popupWindow.TowerType;
                 //tower selection
@@ -148,20 +137,20 @@ namespace TowerDefence
 
         private void CreateTower(int column, int row, ITowerFactory factory)
         {
-            if (_gold >= factory.Price)
+            if (_game.Gold >= factory.Price)
             {
                 var tower = factory.CreateTower(column, row);
 
                 DrawTower(tower);
-                _gold = (_gold - factory.Price);
-                _numberOfTowers++;
-                _towers.Add(tower);
+                _game.Gold = (_game.Gold - factory.Price);
+                _game.NumberOfTowers++;
+                _game.Towers.Add(tower);
                 MessageBox.Show(
-                    "You have " + _gold + " gold left and you can build " + (GameEngine.MaxTowers - _numberOfTowers) + " more towers");
+                    "You have " + _game.Gold + " gold left and you can build " + (GameEngine.MaxTowers - _game.NumberOfTowers) + " more towers");
             }
             else
             {
-                MessageBox.Show("You don't have enough gold for that!, you need 20 and you only have " + _gold);
+                MessageBox.Show("You don't have enough gold for that!, you need 20 and you only have " + _game.Gold);
             }
         }
 
@@ -203,23 +192,23 @@ namespace TowerDefence
         private void GameTimer_Tick(object sender, EventArgs e)
         {
             //first intervals- for craeting the enemies
-            if (_numberOfEnemies < GameEngine.MaxEnemies)
+            if (_game.NumberOfEnemies < GameEngine.MaxEnemies)
             {
                 //Making Enemies
-                var enemy = _enemies[_numberOfEnemies];
+                var enemy = _game.Enemies[_game.NumberOfEnemies];
                 var enemyLocation = enemy.Location;
                 //enemy HP
                 var enemyTextBlock = CreateEnemyTextBlock(enemy, enemyLocation);
-                _enemyTextBlocks[_numberOfEnemies] = enemyTextBlock;
+                _enemyTextBlocks[_game.NumberOfEnemies] = enemyTextBlock;
 
                 //enemy Picture
                 var enemyImage = CreateEnemyImage(enemyLocation);
                 Board.Children.Add(enemyImage);
               
-                _numberOfEnemies++;
+                _game.NumberOfEnemies++;
 
                 //Fire!!
-                foreach (var tower in _towers)
+                foreach (var tower in _game.Towers)
                 {
                     for (int j = 0; j < tower.FightsPerRound; j++)
                     {
@@ -229,11 +218,11 @@ namespace TowerDefence
                 }
 
                 //Enemies movement and changing picture by level of power
-                for (int i = 0; i < _numberOfEnemies; i++)
+                for (int i = 0; i < _game.NumberOfEnemies; i++)
                 {
-                    enemy = _enemies[i];
-                    if (enemy.Power <= 0) { _killsCount++; }
-                    enemy.ProgressOrReset(_route, out _goldEarnedInRound);
+                    enemy = _game.Enemies[i];
+                    if (enemy.Power <= 0) { _game.KillsCount++; }
+                    enemy.ProgressOrReset(_game.Route, out int goldEarnedInRound);
                     // Enemies Picture change by Power level
                     var updatedEnemyImage = _enemyImages[i];
                     updatedEnemyImage.Source = GetEnemyImage(enemy);
@@ -241,9 +230,8 @@ namespace TowerDefence
 
                     enemyTextBlock = _enemyTextBlocks[i];
                     enemyImage = updatedEnemyImage;
-                    _gold += _goldEarnedInRound;
-                    _goldEarnedInRound = 0;
-
+                    _game.Gold = _game.Gold + goldEarnedInRound;
+                    
                     UpdateEnemyLocation(enemy, enemyImage, enemyTextBlock);
                 }
             }
@@ -252,7 +240,7 @@ namespace TowerDefence
             else
             {
                 //Fire!!
-                foreach (var tower in _towers)
+                foreach (var tower in _game.Towers)
                 {
                     for (int j = 0; j < tower.FightsPerRound; j++)
                     {
@@ -262,17 +250,16 @@ namespace TowerDefence
                 }
 
                 // Enemies movement and changing picture by level of power
-                for (int i = 0; i < _enemies.Length; i++)
+                for (int i = 0; i < _game.Enemies.Length; i++)
                 {
 
-                    var enemy = _enemies[i];
-                    if (enemy.Power <= 0) { _killsCount++; }
-                    enemy.ProgressOrReset(_route, out _goldEarnedInRound);
-                    _gold += _goldEarnedInRound;
-                    _goldEarnedInRound = 0;
-                    if (enemy.Location == _route.EndLocation)
+                    var enemy = _game.Enemies[i];
+                    if (enemy.Power <= 0) { _game.KillsCount++; }
+                    enemy.ProgressOrReset(_game.Route, out int goldEarnedInRound);
+                    _game.Gold = _game.Gold + goldEarnedInRound;
+                    if (enemy.Location == _game.Route.EndLocation)
                     {
-                        MessageBox.Show("you lose! but killed "+ _killsCount);
+                        MessageBox.Show("you lose! but killed "+ _game.KillsCount);
                         _gameTimer.Stop();
                         break;
                     }
@@ -321,10 +308,10 @@ namespace TowerDefence
 
         private Enemy FindEnemyToFightWith(Tower tower)
         {
-            var enemyToFightWith = _enemies[0];
-            for (int i = 1; i < _enemies.Length; i++)
+            var enemyToFightWith = _game.Enemies[0];
+            for (int i = 1; i < _game.Enemies.Length; i++)
             {
-                var enemy = _enemies[i];
+                var enemy = _game.Enemies[i];
                 if (enemy.ProgressInRoute > enemyToFightWith.ProgressInRoute && tower.IsInRange(enemy))
                 {
                     enemyToFightWith = enemy;
@@ -342,7 +329,7 @@ namespace TowerDefence
             Image enemyImage = new Image();
             enemyImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\1.png",
                 UriKind.Absolute));
-            _enemyImages[_numberOfEnemies] = enemyImage;
+            _enemyImages[_game.NumberOfEnemies] = enemyImage;
             Grid.SetRow(enemyImage, enemyLocation.Y);
             Grid.SetColumn(enemyImage, enemyLocation.X);
             return enemyImage;

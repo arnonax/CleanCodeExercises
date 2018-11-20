@@ -1,6 +1,6 @@
 ﻿namespace TowerDefence
 {
-    class Route
+    public class Route
     {
         // TODO: change to readonly indexer
         public BoardLocation[] Locations = new BoardLocation[30];

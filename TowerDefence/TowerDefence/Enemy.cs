@@ -1,6 +1,6 @@
 ﻿namespace TowerDefence
 {
-    class Enemy
+    public class Enemy
     {
         public int InitialPower { get; set; }
         public int Power { get; set; }

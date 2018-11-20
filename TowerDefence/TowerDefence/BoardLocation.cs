@@ -1,6 +1,6 @@
 ﻿namespace TowerDefence
 {
-    class BoardLocation
+    public class BoardLocation
     {
         public int X { get; private set; }
         public int Y { get; private set; }

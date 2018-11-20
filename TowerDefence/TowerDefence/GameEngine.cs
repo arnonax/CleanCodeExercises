@@ -1,6 +1,8 @@
+using System.Collections.Generic;
+
 namespace TowerDefence
 {
-    internal class GameEngine
+    public class GameEngine
     {
         public const int MaxEnemies = 10;
         public const int MaxTowers = 12;
@@ -13,5 +15,19 @@ namespace TowerDefence
             Reapeter,
             Sniper
         }
+
+        public int NumberOfTowers { get; set; }
+
+        public int NumberOfEnemies { get; set; }
+
+        public int Gold { get; set; } = 50;
+
+        public int KillsCount { get; set; }
+
+        public Enemy[] Enemies { get; } = new Enemy[MaxEnemies];
+
+        public List<Tower> Towers { get; } = new List<Tower>();
+
+        public Route Route { get; } = new Route();
     }
 }
