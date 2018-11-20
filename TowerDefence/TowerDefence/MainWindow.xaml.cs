@@ -37,9 +37,9 @@ namespace TowerDefence
         private readonly TextBlock[] _enemyTextBlocks = new TextBlock[MaxEnemies];
         private readonly Image[] _enemyImages = new Image[MaxEnemies];
         /* Refactoring roadmap:
-         * Change _towers to be a list - Done
-         * Make the different tower types derive from a common Tower base class
+         * [Done] Change _towers to be a list
          * Replace Initialize with constructor
+         * Make the different tower types derive from a common Tower base class
          * Create Towers factory to remove duplication between the Create* methods
          * */
         private readonly List<Tower> _towers = new List<Tower>();
@@ -59,12 +59,6 @@ namespace TowerDefence
             {
                 _enemies[i] = new Enemy(15);
             }
-
-            //for (int i = 0; i < _towers.Length; i++)
-            //{
-            //    _towers[i] = new Tower();
-            //    _towers[i].Initialize("Tower1",5, 2,1, new BoardLocation(14,14));
-            //}
 
             Loaded += MainWindow_Loaded;
         }
@@ -200,8 +194,7 @@ namespace TowerDefence
 
         private void CreateSniper(int column, int row)
         {
-            var tower = new Tower();
-            tower.Initialize("Sniper", 20, 9.4, 1, new BoardLocation(column, row));
+            var tower = new Tower("Sniper", 20, 9.4, 1, new BoardLocation(column, row));
 
             DrawTower(tower);
             _gold = (_gold - 60);
@@ -213,8 +206,7 @@ namespace TowerDefence
 
         private void CreateReapeter(int column, int row)
         {
-            var tower = new Tower();
-            tower.Initialize("Reapeter", 5, 3, 7, new BoardLocation(column, row));
+            var tower = new Tower("Reapeter", 5, 3, 7, new BoardLocation(column, row));
 
             DrawTower(tower);
             _numberOfTowers++;
@@ -226,8 +218,7 @@ namespace TowerDefence
 
         private void CreateSimpleTower(int column, int row)
         {
-            var tower = new Tower();
-            tower.Initialize("Tower", 10, 3.6, 2, new BoardLocation(column, row));
+            var tower = new Tower("Tower", 10, 3.6, 2, new BoardLocation(column, row));
 
             DrawTower(tower);
             _gold = (_gold - 20);

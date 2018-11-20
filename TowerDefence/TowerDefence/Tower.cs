@@ -4,6 +4,11 @@ namespace TowerDefence
 {
      class Tower
     {
+        public Tower(string imageFilename, int strength, double fightingRadius, int fightsPerRound, BoardLocation location)
+        {
+            Initialize(imageFilename, strength, fightingRadius, fightsPerRound, location);
+        }
+
         public string ImageFilename { get; set; }
         public double FightingRadius { get; set; }
         public BoardLocation Location { get; set; }
