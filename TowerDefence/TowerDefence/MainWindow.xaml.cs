@@ -369,7 +369,7 @@ namespace TowerDefence
         {
             var imageLevels = new[]{3, 5, 7, 9, 12, 14, 16, 18, 20, 22};
             var i = 0;
-            while (enemy.Level > imageLevels[i])
+            while (enemy.Value > imageLevels[i])
                 i++;
 
             return new BitmapImage(new Uri(

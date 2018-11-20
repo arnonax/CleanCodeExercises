@@ -7,7 +7,7 @@
         public BoardLocation Location {get; set; }
         public int ProgressInRoute { get; set; }
         public int Value { get; set; }
-        public int Level { get; set; } // TODO: remove this property and use Value instead as they always have the same value
+
         public Enemy(int power)
         {
             InitialPower = power;
@@ -15,7 +15,6 @@
             ProgressInRoute = 0;
             Location = new BoardLocation(0, 0);
             Value = 1;
-            Level = 1;
         }
         public void ProgressOrReset(Route route, out int goldEarned) 
         {
@@ -34,10 +33,7 @@
                 ProgressInRoute = 0;
                 goldEarned = Value;
                 Value++;
-                Level++;
-
             }
-
         }
     }
 }
