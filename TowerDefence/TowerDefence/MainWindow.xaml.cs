@@ -134,22 +134,7 @@ namespace TowerDefence
                 popupWindow.ShowDialog();
                 var towerType = popupWindow.TowerType;
                 //tower selection
-                ITowerFactory factory = null;
-                switch (towerType)
-                {
-                    //SimpleTower
-                    case TowerType.SimpleTower:
-                        factory = new SimpleTower.Factory();
-                        break;
-
-                    case TowerType.Reapeter:
-                        factory = new Reapeter.Factory();
-                        break;
-
-                    case TowerType.Sniper:
-                        factory = new Sniper.Factory();
-                        break;
-                }
+                var factory = GetTowerFactory(towerType);
 
                 CreateTower1(column, row, factory);
             }
@@ -160,12 +145,39 @@ namespace TowerDefence
             _gameTimer.Start();
         }
 
+        private static ITowerFactory GetTowerFactory(TowerType towerType)
+        {
+            ITowerFactory factory = null;
+            switch (towerType)
+            {
+                //SimpleTower
+                case TowerType.SimpleTower:
+                    factory = new SimpleTower.Factory();
+                    break;
+
+                case TowerType.Reapeter:
+                    factory = new Reapeter.Factory();
+                    break;
+
+                case TowerType.Sniper:
+                    factory = new Sniper.Factory();
+                    break;
+            }
+            return factory;
+        }
+
         private void CreateTower1(int column, int row, ITowerFactory factory)
         {
             if (_gold >= factory.Price)
             {
-                // TODO :inline CreateTower and rename Create
-                CreateTower(column, row, factory);
+                var tower = factory.CreateTower(column, row);
+
+                DrawTower(tower);
+                _gold = (_gold - factory.Price);
+                _numberOfTowers++;
+                _towers.Add(tower);
+                MessageBox.Show(
+                    "You have " + _gold + " gold left and you can build " + (MaxTowers - _numberOfTowers) + " more towers");
             }
             else
             {
@@ -183,18 +195,6 @@ namespace TowerDefence
             Grid.SetRow(towerImage, tower.Location.Y);
             Grid.SetColumn(towerImage, tower.Location.X);
             Board.Children.Add(towerImage);
-        }
-
-        private void CreateTower(int column, int row, ITowerFactory towerFactory)
-        {
-            var tower = towerFactory.CreateTower(column, row);
-
-            DrawTower(tower);
-            _gold = (_gold - towerFactory.Price);
-            _numberOfTowers++;
-            _towers.Add(tower);
-            MessageBox.Show(
-                "You have " + _gold + " gold left and you can build " + (MaxTowers - _numberOfTowers) + " more towers");
         }
 
         private int GetRowAndColumnFromMousePoint(Point p, ref int column)
