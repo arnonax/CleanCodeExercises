@@ -114,26 +114,7 @@ namespace TowerDefence
             return factory;
         }
 
-        public void CreateTower(int column, int row, ITowerFactory factory)
-        {
-            if (_game.Gold >= factory.Price)
-            {
-                var tower = factory.CreateTower(column, row);
-
-                DrawTower(tower);
-                _game.Gold = (_game.Gold - factory.Price);
-                _game.NumberOfTowers++;
-                _game.Towers.Add(tower);
-                MessageBox.Show(
-                    "You have " + _game.Gold + " gold left and you can build " + (GameEngine.MaxTowers - _game.NumberOfTowers) + " more towers");
-            }
-            else
-            {
-                MessageBox.Show("You don't have enough gold for that!, you need 20 and you only have " + _game.Gold);
-            }
-        }
-
-        private void DrawTower(Tower tower)
+        public void DrawTower(Tower tower)
         {
             DrawImageOnBoard("\\Pictures\\Towers\\" + tower.ImageFilename + ".png", tower.Location);
         }
@@ -299,7 +280,6 @@ namespace TowerDefence
         {
             var enemyImage = DrawImageOnBoard("\\Pictures\\Enemys\\1.png", enemyLocation);
             _enemyImages[_game.NumberOfEnemies] = enemyImage;
-            return;
         }
 
         private TextBlock CreateEnemyTextBlock(Enemy enemy, BoardLocation enemyLocation)

@@ -6,7 +6,7 @@ namespace TowerDefence
     public class GameEngine
     {
         // TODO: extract an interface from MainWindow and use it to remove coupling
-        private MainWindow _ui;
+        private readonly MainWindow _ui;
         public const int MaxEnemies = 10;
         public const int MaxTowers = 12;
         public const int NumberOfColumns = 15;
@@ -55,11 +55,30 @@ namespace TowerDefence
                     return;
 
                 var factory = MainWindow.GetTowerFactory(towerType);
-                _ui.CreateTower(column, row, factory);
+                CreateTower(column, row, factory);
             }
             else
             {
                 MessageBox.Show("You cannot build more towers!");
+            }
+        }
+
+        private void CreateTower(int column, int row, ITowerFactory factory)
+        {
+            if (Gold >= factory.Price)
+            {
+                var tower = factory.CreateTower(column, row);
+
+                _ui.DrawTower(tower);
+                Gold = Gold - factory.Price;
+                NumberOfTowers++;
+                Towers.Add(tower);
+                MessageBox.Show(
+                    "You have " + Gold + " gold left and you can build " + (MaxTowers - NumberOfTowers) + " more towers");
+            }
+            else
+            {
+                MessageBox.Show("You don't have enough gold for that!, you need 20 and you only have " + Gold);
             }
         }
     }
