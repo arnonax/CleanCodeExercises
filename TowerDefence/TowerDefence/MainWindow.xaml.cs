@@ -65,7 +65,7 @@ namespace TowerDefence
             _gameTimer.Start();
     }
 
-        private void DrawImageOnBoard(string imageFilename, BoardLocation location)
+        private Image DrawImageOnBoard(string imageFilename, BoardLocation location)
         {
             Image image = new Image();
             image.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + imageFilename, UriKind.Absolute));
@@ -73,6 +73,8 @@ namespace TowerDefence
             Grid.SetRow(image, location.Y);
             Grid.SetColumn(image, location.X);
             Board.Children.Add(image);
+
+            return image;
         }
 
         private void Board_MouseDown(object sender, MouseButtonEventArgs e)
@@ -142,16 +144,9 @@ namespace TowerDefence
             }
         }
 
-        // TODO: remove duplication between CreateSniper, CreateReapeter and CreateSimpleSniper
         private void DrawTower(Tower tower)
         {
-            Image towerImage = new Image();
-            towerImage.Source =
-                new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Towers\\" + tower.ImageFilename + ".png",
-                    UriKind.Absolute));
-            Grid.SetRow(towerImage, tower.Location.Y);
-            Grid.SetColumn(towerImage, tower.Location.X);
-            Board.Children.Add(towerImage);
+            DrawImageOnBoard("\\Pictures\\Towers\\" + tower.ImageFilename + ".png", tower.Location);
         }
 
         private int GetRowAndColumnFromMousePoint(Point p, ref int column)
@@ -190,9 +185,8 @@ namespace TowerDefence
                 _enemyTextBlocks[_game.NumberOfEnemies] = enemyTextBlock;
 
                 //enemy Picture
-                var enemyImage = CreateEnemyImage(enemyLocation);
-                Board.Children.Add(enemyImage);
-              
+                CreateEnemyImage(enemyLocation);
+
                 _game.NumberOfEnemies++;
 
                 //Fire!!
@@ -217,7 +211,7 @@ namespace TowerDefence
 
 
                     enemyTextBlock = _enemyTextBlocks[i];
-                    enemyImage = updatedEnemyImage;
+                    var enemyImage = updatedEnemyImage;
                     _game.Gold = _game.Gold + goldEarnedInRound;
                     
                     UpdateEnemyLocation(enemy, enemyImage, enemyTextBlock);
@@ -312,15 +306,11 @@ namespace TowerDefence
             return enemyToFightWith;
         }
 
-        private Image CreateEnemyImage(BoardLocation enemyLocation)
+        private void CreateEnemyImage(BoardLocation enemyLocation)
         {
-            Image enemyImage = new Image();
-            enemyImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Enemys\\1.png",
-                UriKind.Absolute));
+            var enemyImage = DrawImageOnBoard("\\Pictures\\Enemys\\1.png", enemyLocation);
             _enemyImages[_game.NumberOfEnemies] = enemyImage;
-            Grid.SetRow(enemyImage, enemyLocation.Y);
-            Grid.SetColumn(enemyImage, enemyLocation.X);
-            return enemyImage;
+            return;
         }
 
         private TextBlock CreateEnemyTextBlock(Enemy enemy, BoardLocation enemyLocation)
