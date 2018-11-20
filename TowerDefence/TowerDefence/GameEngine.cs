@@ -16,7 +16,7 @@ namespace TowerDefence
             _ui = ui;
             for (int i = 0; i < Enemies.Length; i++)
             {
-                Enemies[i] = new Enemy(15);
+                Enemies[i] = new Enemy();
             }
         }
 

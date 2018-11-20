@@ -2,15 +2,15 @@
 {
     public class Enemy
     {
-        public int InitialPower { get; set; }
+        public int InitialPower { get; private set; }
         public int Power { get; set; }
         public BoardLocation Location {get; set; }
         public int ProgressInRoute { get; set; }
         public int Value { get; set; }
 
-        public Enemy(int power)
+        public Enemy()
         {
-            InitialPower = power;
+            InitialPower = 15;
             Power = InitialPower;
             ProgressInRoute = 0;
             Location = new BoardLocation(0, 0);
