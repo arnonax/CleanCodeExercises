@@ -62,11 +62,11 @@ namespace TowerDefence
                 _enemies[i] = new Enemy(15);
             }
 
-            for (int i = 0; i < _towers.Length; i++)
-            {
-                _towers[i] = new Tower();
-                _towers[i].Initialize("Tower1",5, 2,1, new BoardLocation(14,14));
-            }
+            //for (int i = 0; i < _towers.Length; i++)
+            //{
+            //    _towers[i] = new Tower();
+            //    _towers[i].Initialize("Tower1",5, 2,1, new BoardLocation(14,14));
+            //}
 
             Loaded += MainWindow_Loaded;
         }
@@ -202,7 +202,7 @@ namespace TowerDefence
 
         private void CreateSniper(int column, int row)
         {
-            var tower = _towers[_numberOfTowers];
+            var tower = new Tower(); //_towers[_numberOfTowers];
             tower.Initialize("Sniper", 20, 9.4, 1, new BoardLocation(column, row));
 
             DrawTower(tower);
@@ -215,7 +215,7 @@ namespace TowerDefence
 
         private void CreateReapeter(int column, int row)
         {
-            var tower = _towers[_numberOfTowers];
+            var tower = new Tower(); //_towers[_numberOfTowers];
             tower.Initialize("Reapeter", 5, 3, 7, new BoardLocation(column, row));
 
             DrawTower(tower);
@@ -228,7 +228,7 @@ namespace TowerDefence
 
         private void CreateSimpleTower(int column, int row)
         {
-            var tower = _towers[_numberOfTowers];
+            var tower = new Tower();//_towers[_numberOfTowers];
             tower.Initialize("Tower", 10, 3.6, 2, new BoardLocation(column, row));
 
             DrawTower(tower);
