@@ -20,6 +20,7 @@ namespace TowerDefence
 
         public enum TowerType
         {
+            None,
             SimpleTower,
             Reapeter,
             Sniper
@@ -47,8 +48,10 @@ namespace TowerDefence
                 popupWindow.ShowDialog();
                 var towerType = popupWindow.TowerType;
                 //tower selection
-                var factory = MainWindow.GetTowerFactory(towerType);
+                if (towerType == TowerType.None)
+                    return;
 
+                var factory = MainWindow.GetTowerFactory(towerType);
                 mainWindow.CreateTower(column, row, factory);
             }
             else

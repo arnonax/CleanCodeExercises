@@ -41,7 +41,7 @@ namespace TowerDefence
 
         private void ForgetButtonClicked(object sender, RoutedEventArgs e)
         {
-            TowerType = 0;
+            TowerType = GameEngine.TowerType.None;
             Close();
             
         }
