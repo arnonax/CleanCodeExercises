@@ -46,39 +46,34 @@ namespace TowerDefence
             {
                 for (int j = 0; j < GameEngine.NumberOfRows; j++)
                 {
-                    Image grassImage = new Image();
-                    grassImage.Source =
-                        new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Background\\Grass.png",
-                            UriKind.RelativeOrAbsolute));
-                    Board.ShowGridLines = false;
-
-                    Grid.SetRow(grassImage, j);
-                    Grid.SetColumn(grassImage, i);
-                    Board.Children.Add(grassImage);
+                    const string grassImageFilename = "\\Pictures\\Background\\Grass.png";
+                    DrawImageOnBoard(grassImageFilename, new BoardLocation(i, j));
                 }
             }
             // draw route
             foreach (var location in _game.Route.Locations)
             {
-                Image routeImage = new Image();
-                routeImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Background\\Route.png", UriKind.Absolute));
-                
-                Grid.SetRow(routeImage, location.Y);
-                Grid.SetColumn(routeImage, location.X);
-                Board.Children.Add(routeImage);
+                const string routeImageFilename = "\\Pictures\\Background\\Route.png";
+                DrawImageOnBoard(routeImageFilename, location);
             }
             // draw home
-            var homeImage = new Image();
-            homeImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Background\\Home.png", UriKind.Absolute));
-
-            Grid.SetRow(homeImage, _game.Route.EndLocation.Y);
-            Grid.SetColumn(homeImage, _game.Route.EndLocation.X);
-            Board.Children.Add(homeImage);
+            const string homeImageFilename = "\\Pictures\\Background\\Home.png";
+            DrawImageOnBoard(homeImageFilename, _game.Route.EndLocation);
 
             // create timer
             _gameTimer = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, GameTimer_Tick, Dispatcher); // TODO: pace the game!
             _gameTimer.Start();
     }
+
+        private void DrawImageOnBoard(string imageFilename, BoardLocation location)
+        {
+            Image image = new Image();
+            image.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + imageFilename, UriKind.Absolute));
+
+            Grid.SetRow(image, location.Y);
+            Grid.SetColumn(image, location.X);
+            Board.Children.Add(image);
+        }
 
         private void Board_MouseDown(object sender, MouseButtonEventArgs e)
         {
