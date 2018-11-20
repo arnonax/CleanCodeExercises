@@ -92,28 +92,6 @@ namespace TowerDefence
             _gameTimer.Start();
         }
 
-        // TODO: move to GameEngine
-        public static ITowerFactory GetTowerFactory(GameEngine.TowerType towerType)
-        {
-            ITowerFactory factory = null;
-            switch (towerType)
-            {
-                //SimpleTower
-                case GameEngine.TowerType.SimpleTower:
-                    factory = new SimpleTower.Factory();
-                    break;
-
-                case GameEngine.TowerType.Reapeter:
-                    factory = new Reapeter.Factory();
-                    break;
-
-                case GameEngine.TowerType.Sniper:
-                    factory = new Sniper.Factory();
-                    break;
-            }
-            return factory;
-        }
-
         public void DrawTower(Tower tower)
         {
             DrawImageOnBoard("\\Pictures\\Towers\\" + tower.ImageFilename + ".png", tower.Location);

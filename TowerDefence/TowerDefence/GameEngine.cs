@@ -50,7 +50,7 @@ namespace TowerDefence
                 if (towerType == TowerType.None)
                     return;
 
-                var factory = MainWindow.GetTowerFactory(towerType);
+                var factory = GetTowerFactory(towerType);
                 CreateTower(column, row, factory);
             }
             else
@@ -75,6 +75,27 @@ namespace TowerDefence
             {
                 _ui.ShowMessage("You don't have enough gold for that!, you need 20 and you only have " + Gold);
             }
+        }
+
+        private static ITowerFactory GetTowerFactory(TowerType towerType)
+        {
+            ITowerFactory factory = null;
+            switch (towerType)
+            {
+                //SimpleTower
+                case TowerType.SimpleTower:
+                    factory = new SimpleTower.Factory();
+                    break;
+
+                case TowerType.Reapeter:
+                    factory = new Reapeter.Factory();
+                    break;
+
+                case TowerType.Sniper:
+                    factory = new Sniper.Factory();
+                    break;
+            }
+            return factory;
         }
     }
 }
