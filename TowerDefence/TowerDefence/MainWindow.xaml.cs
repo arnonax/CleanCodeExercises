@@ -135,33 +135,25 @@ namespace TowerDefence
                 popupWindow.ShowDialog();
                 _towerType = popupWindow.TowerType;
                 //tower selection
+                ITowerFactory factory = null;
                 switch (_towerType)
                 {
                     //SimpleTower
                     case 1:
-                    {
-                        var factory = new SimpleTower.Factory();
-                        CreateTower1(column, row, factory);
-                    }
+                        factory = new SimpleTower.Factory();
                         break;
 
                     //Reapeter
                     case 2:
-                    {
-                        var factory = new Reapeter.Factory();
-                        CreateTower1(column, row, factory);
-                    }
+                        factory = new Reapeter.Factory();
                         break;
                     //Sniper
                     case 3:
-                    {
-
-                        var towerFactory = new Sniper.Factory();
-                        CreateTower1(column, row, towerFactory);
-                    }
+                        factory = new Sniper.Factory();
                         break;
                 }
 
+                CreateTower1(column, row, factory);
             }
             else
             {
