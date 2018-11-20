@@ -136,63 +136,35 @@ namespace TowerDefence
                 CreateEnemyImage(enemyLocation);
 
                 _game.NumberOfEnemies++;
-
-                PerformFights();
-
-                //Enemies movement and changing picture by level of power
-                for (int i = 0; i < _game.NumberOfEnemies; i++)
-                {
-                    enemy = _game.Enemies[i];
-                    if (enemy.Power <= 0) { _game.KillsCount++; }
-                    enemy.ProgressOrReset(_game.Route, out int goldEarnedInRound);
-                    _game.Gold = _game.Gold + goldEarnedInRound;
-                    if (enemy.Location == _game.Route.EndLocation)
-                    {
-                        MessageBox.Show("you lose! but killed " + _game.KillsCount);
-                        _gameTimer.Stop();
-                        break;
-                    }
-                    // Enemies Picture change by Power level
-                    var updatedEnemyImage = _enemyImages[i];
-                    updatedEnemyImage.Source = GetEnemyImage(enemy);
-
-
-                    enemyTextBlock = _enemyTextBlocks[i];
-                    var enemyImage = updatedEnemyImage;
-
-                    SetEnemyTextColor(enemy, enemyTextBlock);
-                    UpdateEnemyLocation(enemy, enemyImage, enemyTextBlock);
-                }
             }
-            // called every timer interval after the enemies creation
+            PerformFights();
 
-            else
+            //Enemies movement and changing picture by level of power
+            for (int i = 0; i < _game.NumberOfEnemies; i++)
             {
-                PerformFights();
-                // Enemies movement and changing picture by level of power
-                for (int i = 0; i < _game.NumberOfEnemies; i++)
+                var enemy = _game.Enemies[i];
+                if (enemy.Power <= 0)
                 {
-                    var enemy = _game.Enemies[i];
-                    if (enemy.Power <= 0) { _game.KillsCount++; }
-                    enemy.ProgressOrReset(_game.Route, out int goldEarnedInRound);
-                    _game.Gold = _game.Gold + goldEarnedInRound;
-                    if (enemy.Location == _game.Route.EndLocation)
-                    {
-                        MessageBox.Show("you lose! but killed "+ _game.KillsCount);
-                        _gameTimer.Stop();
-                        break;
-                    }
-                    // Enemies Picture change by Power level
-                    var updatedEnemyImage = _enemyImages[i];
-                    updatedEnemyImage.Source = GetEnemyImage(enemy);
-
-                    var enemyTextBlock = _enemyTextBlocks[i];
-                    var enemyImage = updatedEnemyImage;
-
-
-                    SetEnemyTextColor(enemy, enemyTextBlock);
-                    UpdateEnemyLocation(enemy, enemyImage, enemyTextBlock);    
+                    _game.KillsCount++;
                 }
+                enemy.ProgressOrReset(_game.Route, out int goldEarnedInRound);
+                _game.Gold = _game.Gold + goldEarnedInRound;
+                if (enemy.Location == _game.Route.EndLocation)
+                {
+                    MessageBox.Show("you lose! but killed " + _game.KillsCount);
+                    _gameTimer.Stop();
+                    break;
+                }
+                // Enemies Picture change by Power level
+                var updatedEnemyImage = _enemyImages[i];
+                updatedEnemyImage.Source = GetEnemyImage(enemy);
+
+                var enemyTextBlock = _enemyTextBlocks[i];
+                var enemyImage = updatedEnemyImage;
+
+                SetEnemyTextColor(enemy, enemyTextBlock);
+                UpdateEnemyLocation(enemy, enemyImage, enemyTextBlock);
+
             }
         }
 
