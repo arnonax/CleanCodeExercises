@@ -6,7 +6,11 @@ namespace TowerDefence
     {
         public Tower(string imageFilename, int strength, double fightingRadius, int fightsPerRound, BoardLocation location)
         {
-            Initialize(imageFilename, strength, fightingRadius, fightsPerRound, location);
+            ImageFilename = imageFilename;
+            Strength = strength;
+            FightingRadius = fightingRadius;
+            Location = location;
+            FightsPerRound = fightsPerRound;
         }
 
         public string ImageFilename { get; set; }
@@ -14,15 +18,6 @@ namespace TowerDefence
         public BoardLocation Location { get; set; }
         public int Strength { get; set; }
         public int FightsPerRound { get; set; }
-
-        public void Initialize(string imageFilename, int strength, double fightingRadius, int fightsPerRound, BoardLocation location)
-        {
-            ImageFilename = imageFilename;
-            Strength = strength;
-            FightingRadius = fightingRadius;
-            Location = location;
-            FightsPerRound = fightsPerRound;
-        }
 
         public bool IsInRange(Enemy enemy)
         {
