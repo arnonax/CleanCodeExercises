@@ -58,25 +58,23 @@ namespace TowerDefence
                 }
             }
             // draw route
-            for (int i = 0; i < _game.Route.Locations.Length; i++)
+            foreach (var location in _game.Route.Locations)
             {
-                var location = _game.Route.Locations[i];
                 Image routeImage = new Image();
                 routeImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Background\\Route.png", UriKind.Absolute));
                 
                 Grid.SetRow(routeImage, location.Y);
                 Grid.SetColumn(routeImage, location.X);
                 Board.Children.Add(routeImage);
-                if (i == _game.Route.Locations.Length - 1)
-                {
-                    Image te = new Image();
-                    te.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Background\\Home.png", UriKind.Absolute));
-
-                    Grid.SetRow(te, location.Y);
-                    Grid.SetColumn(te, location.X);
-                    Board.Children.Add(te);
-                }
             }
+            // draw home
+            var homeImage = new Image();
+            homeImage.Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Pictures\\Background\\Home.png", UriKind.Absolute));
+
+            Grid.SetRow(homeImage, _game.Route.EndLocation.Y);
+            Grid.SetColumn(homeImage, _game.Route.EndLocation.X);
+            Board.Children.Add(homeImage);
+
             // create timer
             _gameTimer = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, GameTimer_Tick, Dispatcher); // TODO: pace the game!
             _gameTimer.Start();
