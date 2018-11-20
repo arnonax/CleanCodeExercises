@@ -9,38 +9,24 @@ using System.Windows.Threading;
 
 namespace TowerDefence
 {
-    /// <Summary>
-    /// 1) Tower and enemy creation
-    /// 2) Board and Route creation
-    /// 3) Timer Ticking
-    /// 4) On-click tower creation
-    /// 5) Endgame
-    /// 6) Going from textbaxed to pictuers
-    /// 7) Enemy Level up!
-    /// 8) Getting the Enemy pictures up
-    /// 9) Setting the Image source to Relative
-    /// </summary>
     public partial class MainWindow
     {
-        private const int MaxEnemies = 10;
-        private const int MaxTowers = 12;
-        private const int NumberOfColumns = 15;
         private int _numberOfTowers;
-        private const int NumberOfRows = 12;
         private int _numberOfEnemies;
         private int _gold = 50;
         private int _goldEarnedInRound;
         private int _killsCount;
 
-        private readonly Enemy[] _enemies = new Enemy[MaxEnemies];
-        private readonly TextBlock[] _enemyTextBlocks = new TextBlock[MaxEnemies];
-        private readonly Image[] _enemyImages = new Image[MaxEnemies];
+        private readonly Enemy[] _enemies = new Enemy[GameEngine.MaxEnemies];
+        private readonly TextBlock[] _enemyTextBlocks = new TextBlock[GameEngine.MaxEnemies];
+        private readonly Image[] _enemyImages = new Image[GameEngine.MaxEnemies];
         private readonly List<Tower> _towers = new List<Tower>();
 
         private readonly Route _route = new Route();
 
         private DispatcherTimer _gameTimer;
-        
+
+        private readonly GameEngine _game = new GameEngine();
 
         public MainWindow()
         {
@@ -59,22 +45,22 @@ namespace TowerDefence
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             // create board
-            for (int i = 0; i < NumberOfColumns; i++)
+            for (int i = 0; i < GameEngine.NumberOfColumns; i++)
             {
                 var columnDefinition = new ColumnDefinition();
                 Board.ColumnDefinitions.Add(columnDefinition);
             }
 
-            for (int i = 0; i < NumberOfRows; i++)
+            for (int i = 0; i < GameEngine.NumberOfRows; i++)
             {
                 var rowDefinition = new RowDefinition();
                 Board.RowDefinitions.Add(rowDefinition);
             }
  
             // Draw Grass
-            for (int i = 0; i < NumberOfColumns; i++)
+            for (int i = 0; i < GameEngine.NumberOfColumns; i++)
             {
-                for (int j = 0; j < NumberOfRows; j++)
+                for (int j = 0; j < GameEngine.NumberOfRows; j++)
                 {
                     Image grassImage = new Image();
                     grassImage.Source =
@@ -122,7 +108,7 @@ namespace TowerDefence
             // calc row mouse was over
             var row = GetRowAndColumnFromMousePoint(clickedPoint, ref column);
             //Tower selection popup manu
-            if (_numberOfTowers < MaxTowers)
+            if (_numberOfTowers < GameEngine.MaxTowers)
             {
                 PopupWindow popupWindow = new PopupWindow(_gold, column, row);
                 popupWindow.ShowDialog();
@@ -139,21 +125,21 @@ namespace TowerDefence
             _gameTimer.Start();
         }
 
-        private static ITowerFactory GetTowerFactory(TowerType towerType)
+        private static ITowerFactory GetTowerFactory(GameEngine.TowerType towerType)
         {
             ITowerFactory factory = null;
             switch (towerType)
             {
                 //SimpleTower
-                case TowerType.SimpleTower:
+                case GameEngine.TowerType.SimpleTower:
                     factory = new SimpleTower.Factory();
                     break;
 
-                case TowerType.Reapeter:
+                case GameEngine.TowerType.Reapeter:
                     factory = new Reapeter.Factory();
                     break;
 
-                case TowerType.Sniper:
+                case GameEngine.TowerType.Sniper:
                     factory = new Sniper.Factory();
                     break;
             }
@@ -171,7 +157,7 @@ namespace TowerDefence
                 _numberOfTowers++;
                 _towers.Add(tower);
                 MessageBox.Show(
-                    "You have " + _gold + " gold left and you can build " + (MaxTowers - _numberOfTowers) + " more towers");
+                    "You have " + _gold + " gold left and you can build " + (GameEngine.MaxTowers - _numberOfTowers) + " more towers");
             }
             else
             {
@@ -217,7 +203,7 @@ namespace TowerDefence
         private void GameTimer_Tick(object sender, EventArgs e)
         {
             //first intervals- for craeting the enemies
-            if (_numberOfEnemies < MaxEnemies)
+            if (_numberOfEnemies < GameEngine.MaxEnemies)
             {
                 //Making Enemies
                 var enemy = _enemies[_numberOfEnemies];
@@ -375,13 +361,6 @@ namespace TowerDefence
             Grid.SetColumn(enemyTextBlock, enemyLocation.X);
             Board.Children.Add(enemyTextBlock);
             return enemyTextBlock;
-        }
-
-        public enum TowerType
-        {
-            SimpleTower,
-            Reapeter,
-            Sniper
         }
     }
 }
