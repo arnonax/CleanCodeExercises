@@ -6,6 +6,8 @@ namespace TowerDefence
     {
         private readonly IGameUI _ui;
         private int _numberOfTowers;
+        private readonly Enemy[] _enemies = new Enemy[MaxEnemies];
+        private readonly List<Tower> _towers = new List<Tower>();
         public const int MaxEnemies = 10;
         public const int MaxTowers = 12;
         public const int NumberOfColumns = 15;
@@ -14,9 +16,9 @@ namespace TowerDefence
         public GameEngine(IGameUI ui)
         {
             _ui = ui;
-            for (int i = 0; i < Enemies.Length; i++)
+            for (int i = 0; i < _enemies.Length; i++)
             {
-                Enemies[i] = new Enemy();
+                _enemies[i] = new Enemy();
             }
         }
 
@@ -34,9 +36,15 @@ namespace TowerDefence
 
         public int KillsCount { get; private set; }
 
-        public Enemy[] Enemies { get; } = new Enemy[MaxEnemies];
+        public IReadOnlyCollection<Enemy> Enemies
+        {
+            get { return _enemies; }
+        }
 
-        public List<Tower> Towers { get; } = new List<Tower>();
+        public IReadOnlyCollection<Tower> Towers
+        {
+            get { return _towers; }
+        }
 
         public Route Route { get; } = new Route();
 
@@ -67,7 +75,7 @@ namespace TowerDefence
                 _ui.DrawTower(tower);
                 Gold = Gold - factory.Price;
                 _numberOfTowers++;
-                Towers.Add(tower);
+                _towers.Add(tower);
                 _ui.ShowMessage("You have " + Gold + " gold left and you can build " + (MaxTowers - _numberOfTowers) + " more towers");
             }
             else
@@ -103,7 +111,7 @@ namespace TowerDefence
             if (NumberOfEnemies < MaxEnemies)
             {
                 //Making Enemies
-                var enemy = Enemies[NumberOfEnemies];
+                var enemy = _enemies[NumberOfEnemies];
                 _ui.EnemyCreated(enemy);
 
                 NumberOfEnemies++;
@@ -113,7 +121,7 @@ namespace TowerDefence
             //Enemies movement and changing picture by level of power
             for (int i = 0; i < NumberOfEnemies; i++)
             {
-                var enemy = Enemies[i];
+                var enemy = _enemies[i];
                 if (enemy.Power <= 0)
                 {
                     KillsCount++;
@@ -145,10 +153,10 @@ namespace TowerDefence
 
         private Enemy FindEnemyToFightWith(Tower tower)
         {
-            var enemyToFightWith = Enemies[0];
-            for (int i = 1; i < Enemies.Length; i++)
+            var enemyToFightWith = _enemies[0];
+            for (int i = 1; i < _enemies.Length; i++)
             {
-                var enemy = Enemies[i];
+                var enemy = _enemies[i];
                 if (enemy.ProgressInRoute > enemyToFightWith.ProgressInRoute && tower.IsInRange(enemy))
                 {
                     enemyToFightWith = enemy;
