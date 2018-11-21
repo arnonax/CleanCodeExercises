@@ -122,53 +122,39 @@ namespace TowerDefence
 
         private void GameTimer_Tick(object sender, EventArgs e)
         {
-            //first intervals- for craeting the enemies
-            if (_game.NumberOfEnemies < GameEngine.MaxEnemies)
-            {
-                //Making Enemies
-                var enemy = _game.Enemies[_game.NumberOfEnemies];
-                var enemyLocation = enemy.Location;
-                //enemy HP
-                var enemyTextBlock = CreateEnemyTextBlock(enemy, enemyLocation);
-                _enemyTextBlocks[_game.NumberOfEnemies] = enemyTextBlock;
-
-                //enemy Picture
-                CreateEnemyImage(enemyLocation);
-
-                _game.NumberOfEnemies++;
-            }
-            PerformFights();
-
-            //Enemies movement and changing picture by level of power
-            for (int i = 0; i < _game.NumberOfEnemies; i++)
-            {
-                var enemy = _game.Enemies[i];
-                if (enemy.Power <= 0)
-                {
-                    _game.KillsCount++;
-                }
-                enemy.ProgressOrReset(_game.Route, out int goldEarnedInRound);
-                _game.Gold = _game.Gold + goldEarnedInRound;
-                if (enemy.Location == _game.Route.EndLocation)
-                {
-                    MessageBox.Show("you lose! but killed " + _game.KillsCount);
-                    _gameTimer.Stop();
-                    break;
-                }
-                // Enemies Picture change by Power level
-                var updatedEnemyImage = _enemyImages[i];
-                updatedEnemyImage.Source = GetEnemyImage(enemy);
-
-                var enemyTextBlock = _enemyTextBlocks[i];
-                var enemyImage = updatedEnemyImage;
-
-                SetEnemyTextColor(enemy, enemyTextBlock);
-                UpdateEnemyLocation(enemy, enemyImage, enemyTextBlock);
-
-            }
+            _game.PlayRound();
         }
 
-        private void PerformFights()
+        // TODO: get rid of enemyIndex
+        public void EnemyUpdated(Enemy enemy, int enemyIndex)
+        {
+            var updatedEnemyImage = _enemyImages[enemyIndex];
+            updatedEnemyImage.Source = GetEnemyImage(enemy);
+
+            var enemyTextBlock = _enemyTextBlocks[enemyIndex];
+            var enemyImage = updatedEnemyImage;
+
+            SetEnemyTextColor(enemy, enemyTextBlock);
+            UpdateEnemyLocation(enemy, enemyImage, enemyTextBlock);
+        }
+
+        public void GameEnded()
+        {
+            _gameTimer.Stop();
+        }
+
+        public void EnemyCreated(Enemy enemy)
+        {
+            var enemyLocation = enemy.Location;
+            //enemy HP
+            var enemyTextBlock = CreateEnemyTextBlock(enemy, enemyLocation);
+            _enemyTextBlocks[_game.NumberOfEnemies] = enemyTextBlock;
+
+            //enemy Picture
+            CreateEnemyImage(enemyLocation);
+        }
+
+        public void PerformFights()
         {
             foreach (var tower in _game.Towers)
             {

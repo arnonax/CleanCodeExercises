@@ -96,5 +96,39 @@ namespace TowerDefence
             }
             return factory;
         }
+
+        public void PlayRound()
+        {
+//first intervals- for craeting the enemies
+            if (NumberOfEnemies < MaxEnemies)
+            {
+                //Making Enemies
+                var enemy = Enemies[NumberOfEnemies];
+                _ui.EnemyCreated(enemy);
+
+                NumberOfEnemies++;
+            }
+            _ui.PerformFights();
+
+            //Enemies movement and changing picture by level of power
+            for (int i = 0; i < NumberOfEnemies; i++)
+            {
+                var enemy = Enemies[i];
+                if (enemy.Power <= 0)
+                {
+                    KillsCount++;
+                }
+                enemy.ProgressOrReset(Route, out int goldEarnedInRound);
+                Gold = Gold + goldEarnedInRound;
+                if (enemy.Location == Route.EndLocation)
+                {
+                    _ui.ShowMessage("you lose! but killed " + KillsCount);
+                    _ui.GameEnded();
+                    break;
+                }
+                // Enemies Picture change by Power level
+                _ui.EnemyUpdated(enemy, i);
+            }
+        }
     }
 }
