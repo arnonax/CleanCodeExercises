@@ -28,11 +28,11 @@ namespace TowerDefence
             Sniper
         }
 
-        public int NumberOfEnemies { get; set; }
+        public int NumberOfEnemies { get; private set; }
 
-        public int Gold { get; set; } = 50;
+        public int Gold { get; private set; } = 50;
 
-        public int KillsCount { get; set; }
+        public int KillsCount { get; private set; }
 
         public Enemy[] Enemies { get; } = new Enemy[MaxEnemies];
 
