@@ -108,7 +108,7 @@ namespace TowerDefence
 
                 NumberOfEnemies++;
             }
-            _ui.PerformFights();
+            PerformFights();
 
             //Enemies movement and changing picture by level of power
             for (int i = 0; i < NumberOfEnemies; i++)
@@ -129,6 +129,36 @@ namespace TowerDefence
                 // Enemies Picture change by Power level
                 _ui.EnemyUpdated(enemy, i);
             }
+        }
+
+        private void PerformFights()
+        {
+            foreach (var tower in Towers)
+            {
+                for (int j = 0; j < tower.FightsPerRound; j++)
+                {
+                    var enemyToFightWith = FindEnemyToFightWith(tower);
+                    tower.Fight(enemyToFightWith);
+                }
+            }
+        }
+
+        private Enemy FindEnemyToFightWith(Tower tower)
+        {
+            var enemyToFightWith = Enemies[0];
+            for (int i = 1; i < Enemies.Length; i++)
+            {
+                var enemy = Enemies[i];
+                if (enemy.ProgressInRoute > enemyToFightWith.ProgressInRoute && tower.IsInRange(enemy))
+                {
+                    enemyToFightWith = enemy;
+                }
+                else if (tower.IsInRange(enemyToFightWith) == false && tower.IsInRange(enemy))
+                {
+                    enemyToFightWith = enemy;
+                }
+            }
+            return enemyToFightWith;
         }
     }
 }

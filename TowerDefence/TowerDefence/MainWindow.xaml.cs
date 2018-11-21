@@ -154,18 +154,6 @@ namespace TowerDefence
             CreateEnemyImage(enemyLocation);
         }
 
-        public void PerformFights()
-        {
-            foreach (var tower in _game.Towers)
-            {
-                for (int j = 0; j < tower.FightsPerRound; j++)
-                {
-                    var enemyToFightWith = FindEnemyToFightWith(tower);
-                    tower.Fight(enemyToFightWith);
-                }
-            }
-        }
-
         private static void SetEnemyTextColor(Enemy enemy, TextBlock enemyTextBlock)
         {
             enemyTextBlock.Foreground = (enemy.Power * 3) < enemy.InitialPower ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black);
@@ -194,24 +182,6 @@ namespace TowerDefence
             return new BitmapImage(new Uri(
                 Environment.CurrentDirectory + $"\\Pictures\\Enemys\\{i+1}.png",
                 UriKind.Absolute));
-        }
-
-        private Enemy FindEnemyToFightWith(Tower tower)
-        {
-            var enemyToFightWith = _game.Enemies[0];
-            for (int i = 1; i < _game.Enemies.Length; i++)
-            {
-                var enemy = _game.Enemies[i];
-                if (enemy.ProgressInRoute > enemyToFightWith.ProgressInRoute && tower.IsInRange(enemy))
-                {
-                    enemyToFightWith = enemy;
-                }
-                else if (tower.IsInRange(enemyToFightWith) == false && tower.IsInRange(enemy))
-                {
-                    enemyToFightWith = enemy;
-                }
-            }
-            return enemyToFightWith;
         }
 
         private void CreateEnemyImage(BoardLocation enemyLocation)

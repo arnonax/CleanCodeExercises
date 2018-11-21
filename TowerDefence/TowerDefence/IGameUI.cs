@@ -7,7 +7,6 @@ namespace TowerDefence
         void DrawTower(Tower tower);
         GameEngine.TowerType SelectTowerType(int column, int row, GameEngine gameEngine);
         void EnemyCreated(Enemy enemy);
-        void PerformFights();
         void GameEnded();
         void EnemyUpdated(Enemy enemy, int enemyIndex);
     }
