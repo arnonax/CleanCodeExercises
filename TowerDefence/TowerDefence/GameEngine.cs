@@ -9,13 +9,25 @@ namespace TowerDefence
         private readonly Enemy[] _enemies = new Enemy[MaxEnemies];
         private readonly List<Tower> _towers = new List<Tower>();
         public const int MaxEnemies = 10;
-        public const int MaxTowers = 12;
         public const int NumberOfColumns = 15;
         public const int NumberOfRows = 12;
 
+        private readonly Parameters _params;
+
+        public class Messages
+        {
+            public const string YouCannotBuildMoreTowers = "You cannot build more towers!";
+        }
+
         public GameEngine(IGameUI ui)
+            : this(ui, new Parameters())
+        {
+        }
+
+        public GameEngine(IGameUI ui, Parameters parameters)
         {
             _ui = ui;
+            _params = parameters.Clone();
             for (int i = 0; i < _enemies.Length; i++)
             {
                 _enemies[i] = new Enemy();
@@ -48,6 +60,11 @@ namespace TowerDefence
 
         public Route Route { get; } = new Route();
 
+        public int MaxTowers
+        {
+            get { return _params.MaxTowers; }
+        }
+
         public void UserClickedOnCell(int column, int row)
         {
             if (_numberOfTowers < MaxTowers)
@@ -62,7 +79,7 @@ namespace TowerDefence
             }
             else
             {
-                _ui.ShowMessage("You cannot build more towers!");
+                _ui.ShowMessage(Messages.YouCannotBuildMoreTowers);
             }
         }
 
@@ -167,6 +184,16 @@ namespace TowerDefence
                 }
             }
             return enemyToFightWith;
+        }
+
+        public class Parameters
+        {
+            public Parameters Clone()
+            {
+                return (Parameters) MemberwiseClone();
+            }
+
+            public int MaxTowers = 12;
         }
     }
 }

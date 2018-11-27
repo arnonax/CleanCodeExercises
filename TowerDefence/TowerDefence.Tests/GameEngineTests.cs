@@ -66,5 +66,28 @@ namespace TowerDefence.Tests
             Assert.AreEqual(column, tower.Location.X, $"Tower should be created in the {column} column");
             Assert.AreEqual(row, tower.Location.Y, $"Tower should be created in the {row} row");
         }
+
+        [TestMethod]
+        public void UserCannotBuildMoreThanMaxTowers()
+        {
+            var mockUI = A.Fake<IGameUI>();
+            var gameParams = new GameEngine.Parameters
+            {
+                MaxTowers = 2
+            };
+            var gameEngine = new GameEngine(mockUI, gameParams);
+
+            A.CallTo(() => mockUI.SelectTowerType(0, 0, gameEngine)).Returns(GameEngine.TowerType.SimpleTower);
+            gameEngine.UserClickedOnCell(0, 0);
+            gameEngine.UserClickedOnCell(0, 0);
+
+            A.CallTo(() => mockUI.ShowMessage(GameEngine.Messages.YouCannotBuildMoreTowers))
+                .MustNotHaveHappened();
+
+            gameEngine.UserClickedOnCell(0, 0);
+
+            A.CallTo(() => mockUI.ShowMessage(GameEngine.Messages.YouCannotBuildMoreTowers))
+                .MustHaveHappenedOnceExactly();
+        }
     }
 }
