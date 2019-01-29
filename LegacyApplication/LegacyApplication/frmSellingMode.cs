@@ -7,12 +7,13 @@ namespace LegacyApplication
 {
 	public partial class frmSellingMode : Form
 	{
-		private readonly StoreDataSet _dataset = new StoreDataSet();
+	    private readonly StoreDataSet _dataset;
 		private readonly List<StoreDataSet.ProductsRow> _productsInInvoice = new List<StoreDataSet.ProductsRow>();
 
-		public frmSellingMode()
+		public frmSellingMode(StoreDataSet dataset)
 		{
-			InitializeComponent();
+		    _dataset = dataset;
+		    InitializeComponent();
 		}
 
 		private void txtBarcode_TextChanged(object sender, EventArgs e)
@@ -22,7 +23,7 @@ namespace LegacyApplication
 
 		private void btnAdd_Click(object sender, EventArgs e)
 		{
-			var product = _dataset.Products.FirstOrDefault(p => p.Barcode == txtBarcode.Text);
+		    var product = _dataset.Products.FirstOrDefault(p => p.Barcode == txtBarcode.Text);
 			if (product == null)
 			{
 				MessageBox.Show("No product found for the specified barcode", "Selling", MessageBoxButtons.OK,
@@ -40,13 +41,13 @@ namespace LegacyApplication
 			txtTotal.Text = total.ToString("C");
 		}
 
-		private decimal CalculateDiscounts()
+	    private decimal CalculateDiscounts()
 		{
 			var totalDisount = 0m;
 			dgvPromotions.Rows.Clear();
-			foreach (var promotion in _dataset.Promotions)
+		    foreach (var promotion in _dataset.Promotions)
 			{
-				var actualQuantity = _productsInInvoice.Count(x => x.Id == promotion.ProductId);
+                var actualQuantity = _productsInInvoice.Count(x => x.Id == promotion.ProductId);
 				if (actualQuantity >= promotion.Quantity)
 				{
 					dgvPromotions.Rows.Add(promotion.Description, promotion.Discount);
@@ -56,10 +57,8 @@ namespace LegacyApplication
 			return totalDisount;
 		}
 
-		private void frmSellingMode_Load(object sender, EventArgs e)
+	    private void frmSellingMode_Load(object sender, EventArgs e)
 		{
-			productsTableAdapter.Fill(_dataset.Products);
-			promotionsTableAdapter.Fill(_dataset.Promotions);
 			txtTotal.Text = 0m.ToString("C");
 		}
 

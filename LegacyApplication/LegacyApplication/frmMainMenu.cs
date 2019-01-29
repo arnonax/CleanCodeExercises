@@ -21,10 +21,24 @@ namespace LegacyApplication
 
 		private void btnSellingMode_Click(object sender, System.EventArgs e)
 		{
-			new frmSellingMode().ShowDialog();
+		    var dataset = InitializeStoreDataSet();
+		    new frmSellingMode(dataset).ShowDialog();
 		}
 
-		private void btnPromotions_Click(object sender, System.EventArgs e)
+	    private static StoreDataSet InitializeStoreDataSet()
+	    {
+	        var productsTableAdapter = new StoreDataSetTableAdapters.ProductsTableAdapter();
+	        productsTableAdapter.ClearBeforeFill = true;
+	        var promotionsTableAdapter = new StoreDataSetTableAdapters.PromotionsTableAdapter();
+	        promotionsTableAdapter.ClearBeforeFill = true;
+	        var dataset = new StoreDataSet();
+
+	        productsTableAdapter.Fill(dataset.Products);
+	        promotionsTableAdapter.Fill(dataset.Promotions);
+	        return dataset;
+	    }
+
+	    private void btnPromotions_Click(object sender, System.EventArgs e)
 		{
 			new frmPromotions().ShowDialog();
 		}
