@@ -23,7 +23,8 @@ namespace LegacyApplication
 
 		private void btnAdd_Click(object sender, EventArgs e)
 		{
-		    var product = _dataset.Products.FirstOrDefault(p => p.Barcode == txtBarcode.Text);
+		    var barcode = txtBarcode.Text;
+		    var product = GetProductByBarcode(barcode);
 			if (product == null)
 			{
 				MessageBox.Show("No product found for the specified barcode", "Selling", MessageBoxButtons.OK,
@@ -40,6 +41,12 @@ namespace LegacyApplication
 
 			txtTotal.Text = total.ToString("C");
 		}
+
+	    private StoreDataSet.ProductsRow GetProductByBarcode(string barcode)
+	    {
+            var productsCatalog = new ProductsCatalog(_dataset);
+	        return productsCatalog.GetProductByBarcode(barcode);
+	    }
 
 	    private decimal CalculateDiscounts()
 		{
