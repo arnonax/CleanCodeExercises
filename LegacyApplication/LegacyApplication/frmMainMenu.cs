@@ -22,7 +22,8 @@ namespace LegacyApplication
 		private void btnSellingMode_Click(object sender, System.EventArgs e)
 		{
 		    var dataset = InitializeStoreDataSet();
-		    new frmSellingMode(dataset).ShowDialog();
+		    var productsCatalog = new ProductsCatalog(dataset);
+		    new frmSellingMode(dataset, productsCatalog).ShowDialog();
 		}
 
 	    private static StoreDataSet InitializeStoreDataSet()

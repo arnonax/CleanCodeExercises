@@ -11,11 +11,11 @@ namespace LegacyApplication
 		private readonly List<StoreDataSet.ProductsRow> _productsInInvoice = new List<StoreDataSet.ProductsRow>();
 	    private readonly ProductsCatalog _productsCatalog;
 
-	    public frmSellingMode(StoreDataSet dataset)
+	    public frmSellingMode(StoreDataSet dataset, ProductsCatalog productsCatalog)
 		{
 		    _dataset = dataset;
+		    _productsCatalog = productsCatalog;
 		    InitializeComponent();
-		    _productsCatalog = new ProductsCatalog(_dataset);
 		}
 
 		private void txtBarcode_TextChanged(object sender, EventArgs e)
