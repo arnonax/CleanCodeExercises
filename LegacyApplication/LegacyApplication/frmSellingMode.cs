@@ -9,11 +9,13 @@ namespace LegacyApplication
 	{
 	    private readonly StoreDataSet _dataset;
 		private readonly List<StoreDataSet.ProductsRow> _productsInInvoice = new List<StoreDataSet.ProductsRow>();
+	    private readonly ProductsCatalog _productsCatalog;
 
-		public frmSellingMode(StoreDataSet dataset)
+	    public frmSellingMode(StoreDataSet dataset)
 		{
 		    _dataset = dataset;
 		    InitializeComponent();
+		    _productsCatalog = new ProductsCatalog(_dataset);
 		}
 
 		private void txtBarcode_TextChanged(object sender, EventArgs e)
@@ -44,8 +46,7 @@ namespace LegacyApplication
 
 	    private StoreDataSet.ProductsRow GetProductByBarcode(string barcode)
 	    {
-            var productsCatalog = new ProductsCatalog(_dataset);
-	        return productsCatalog.GetProductByBarcode(barcode);
+	        return _productsCatalog.GetProductByBarcode(barcode);
 	    }
 
 	    private decimal CalculateDiscounts()

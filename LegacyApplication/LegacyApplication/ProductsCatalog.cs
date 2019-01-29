@@ -2,7 +2,7 @@
 
 namespace LegacyApplication
 {
-    class ProductsCatalog
+    public class ProductsCatalog
     {
         private readonly StoreDataSet _dataset;
 
