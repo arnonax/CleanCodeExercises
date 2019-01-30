@@ -7,15 +7,15 @@ namespace LegacyApplication
 {
 	public partial class frmSellingMode : Form
 	{
-	    private readonly StoreDataSet _dataset;
-		private readonly List<StoreDataSet.ProductsRow> _productsInInvoice = new List<StoreDataSet.ProductsRow>();
+	    private readonly List<StoreDataSet.ProductsRow> _productsInInvoice = new List<StoreDataSet.ProductsRow>();
 	    private readonly ProductsCatalog _productsCatalog;
+	    private readonly PromotionsCatalog _promotionsCatalog;
 
 	    public frmSellingMode(StoreDataSet dataset, ProductsCatalog productsCatalog)
 		{
-		    _dataset = dataset;
 		    _productsCatalog = productsCatalog;
 		    InitializeComponent();
+		    _promotionsCatalog = new PromotionsCatalog(dataset);
 		}
 
 		private void txtBarcode_TextChanged(object sender, EventArgs e)
@@ -67,8 +67,7 @@ namespace LegacyApplication
 
 	    private StoreDataSet.PromotionsDataTable GetAllPromotions()
 	    {
-	        var promotionsCatalog = new PromotionsCatalog(_dataset);
-	        return promotionsCatalog.GetAllPromotions();
+	        return _promotionsCatalog.GetAllPromotions();
 	    }
 
 	    private void frmSellingMode_Load(object sender, EventArgs e)
