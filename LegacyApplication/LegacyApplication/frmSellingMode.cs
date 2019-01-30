@@ -7,8 +7,6 @@ namespace LegacyApplication
 {
 	public partial class frmSellingMode : Form
 	{
-        // TODO: move _productsInInvoice into Invoice
-        private readonly List<StoreDataSet.ProductsRow> _productsInInvoice = new List<StoreDataSet.ProductsRow>();
 	    private readonly ProductsCatalog _productsCatalog;
 	    private readonly PromotionsCatalog _promotionsCatalog;
 
@@ -22,7 +20,12 @@ namespace LegacyApplication
 		    InitializeComponent();
 		}
 
-		private void txtBarcode_TextChanged(object sender, EventArgs e)
+	    public List<StoreDataSet.ProductsRow> ProductsInInvoice
+	    {
+	        get { return _invoice._productsInInvoice; }
+	    }
+
+	    private void txtBarcode_TextChanged(object sender, EventArgs e)
 		{
 			btnAdd.Enabled = !string.IsNullOrEmpty(txtBarcode.Text);
 		}
@@ -38,11 +41,11 @@ namespace LegacyApplication
 				return;
 			}
 
-			_productsInInvoice.Add(product);
-			dgvInvoice.Rows.Add(product.Barcode, product.Description, product.Price);
+		    _invoice.AddProduct(product);
+		    dgvInvoice.Rows.Add(product.Barcode, product.Description, product.Price);
 			txtBarcode.SelectAll();
 
-			var total = _productsInInvoice.Sum(x => x.Price);
+			var total = ProductsInInvoice.Sum(x => x.Price);
 			total -= CalculateDiscounts();
 
 			txtTotal.Text = total.ToString("C");
@@ -59,7 +62,7 @@ namespace LegacyApplication
 			dgvPromotions.Rows.Clear();
 		    foreach (var promotion in GetAllPromotions())
 			{
-                var actualQuantity = _productsInInvoice.Count(x => x.Id == promotion.ProductId);
+                var actualQuantity = ProductsInInvoice.Count(x => x.Id == promotion.ProductId);
 				if (actualQuantity >= promotion.Quantity)
 				{
 					dgvPromotions.Rows.Add(promotion.Description, promotion.Discount);
@@ -83,7 +86,7 @@ namespace LegacyApplication
 		{
 			dgvInvoice.Rows.Clear();
 			dgvPromotions.Rows.Clear();
-			_productsInInvoice.Clear();
+			ProductsInInvoice.Clear();
 			txtTotal.Text = 0m.ToString("C");
 		}
 	}
