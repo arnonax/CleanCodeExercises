@@ -83,6 +83,7 @@
     <Compile Include="frmPromotion.Designer.cs">
       <DependentUpon>frmPromotion.cs</DependentUpon>
     </Compile>
+    <Compile Include="PromotionsCatalog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StoreDataSet.cs">
       <DependentUpon>StoreDataSet.xsd</DependentUpon>

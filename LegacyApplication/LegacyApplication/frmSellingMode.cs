@@ -67,7 +67,8 @@ namespace LegacyApplication
 
 	    private StoreDataSet.PromotionsDataTable GetAllPromotions()
 	    {
-	        return _dataset.Promotions;
+	        var promotionsCatalog = new PromotionsCatalog(_dataset);
+	        return promotionsCatalog.GetAllPromotions();
 	    }
 
 	    private void frmSellingMode_Load(object sender, EventArgs e)
