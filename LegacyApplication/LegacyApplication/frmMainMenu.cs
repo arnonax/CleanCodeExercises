@@ -23,7 +23,8 @@ namespace LegacyApplication
 		{
 		    var dataset = InitializeStoreDataSet();
 		    var productsCatalog = new ProductsCatalog(dataset);
-		    new frmSellingMode(dataset, productsCatalog).ShowDialog();
+		    var promotionsCatalog = new PromotionsCatalog(dataset);
+		    new frmSellingMode(productsCatalog, promotionsCatalog).ShowDialog();
 		}
 
 	    private static StoreDataSet InitializeStoreDataSet()
