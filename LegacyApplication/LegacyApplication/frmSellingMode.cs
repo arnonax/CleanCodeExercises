@@ -7,14 +7,18 @@ namespace LegacyApplication
 {
 	public partial class frmSellingMode : Form
 	{
-	    private readonly List<StoreDataSet.ProductsRow> _productsInInvoice = new List<StoreDataSet.ProductsRow>();
+        // TODO: move _productsInInvoice into Invoice
+        private readonly List<StoreDataSet.ProductsRow> _productsInInvoice = new List<StoreDataSet.ProductsRow>();
 	    private readonly ProductsCatalog _productsCatalog;
 	    private readonly PromotionsCatalog _promotionsCatalog;
+
+	    private readonly Invoice _invoice;
 
 	    public frmSellingMode(ProductsCatalog productsCatalog, PromotionsCatalog promotionsCatalog)
 		{
 		    _productsCatalog = productsCatalog;
 		    _promotionsCatalog = promotionsCatalog;
+		    _invoice = new Invoice(_promotionsCatalog);
 		    InitializeComponent();
 		}
 
