@@ -53,7 +53,7 @@ namespace LegacyApplication
 		{
 			var totalDisount = 0m;
 			dgvPromotions.Rows.Clear();
-		    foreach (var promotion in _dataset.Promotions)
+		    foreach (var promotion in GetAllPromotions())
 			{
                 var actualQuantity = _productsInInvoice.Count(x => x.Id == promotion.ProductId);
 				if (actualQuantity >= promotion.Quantity)
@@ -64,6 +64,11 @@ namespace LegacyApplication
 			}
 			return totalDisount;
 		}
+
+	    private StoreDataSet.PromotionsDataTable GetAllPromotions()
+	    {
+	        return _dataset.Promotions;
+	    }
 
 	    private void frmSellingMode_Load(object sender, EventArgs e)
 		{
