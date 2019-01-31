@@ -46,7 +46,8 @@ namespace LegacyApplication
 			txtBarcode.SelectAll();
 
 			var total = ProductsInInvoice.Sum(x => x.Price);
-			total -= CalculateDiscounts();
+		    dgvPromotions.Rows.Clear();
+		    total -= CalculateDiscounts(PromotionAdded);
 
 			txtTotal.Text = total.ToString("C");
 		}
@@ -56,21 +57,25 @@ namespace LegacyApplication
 	        return _productsCatalog.GetProductByBarcode(barcode);
 	    }
 
-	    private decimal CalculateDiscounts()
-		{
-			var totalDisount = 0m;
-			dgvPromotions.Rows.Clear();
-		    foreach (var promotion in GetAllPromotions())
-			{
-                var actualQuantity = ProductsInInvoice.Count(x => x.Id == promotion.ProductId);
-				if (actualQuantity >= promotion.Quantity)
-				{
-					dgvPromotions.Rows.Add(promotion.Description, promotion.Discount);
-					totalDisount += promotion.Discount;
-				}
-			}
-			return totalDisount;
-		}
+	    private decimal CalculateDiscounts(Action<StoreDataSet.PromotionsRow> promotionAdded)
+	    {
+	        var totalDisount = 0m;
+	        foreach (var promotion in GetAllPromotions())
+	        {
+	            var actualQuantity = ProductsInInvoice.Count(x => x.Id == promotion.ProductId);
+	            if (actualQuantity >= promotion.Quantity)
+	            {
+	                promotionAdded(promotion);
+	                totalDisount += promotion.Discount;
+	            }
+	        }
+	        return totalDisount;
+	    }
+
+	    private void PromotionAdded(StoreDataSet.PromotionsRow promotion)
+	    {
+	        dgvPromotions.Rows.Add(promotion.Description, promotion.Discount);
+	    }
 
 	    private StoreDataSet.PromotionsDataTable GetAllPromotions()
 	    {
