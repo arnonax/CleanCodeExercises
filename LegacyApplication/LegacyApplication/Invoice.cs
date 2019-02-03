@@ -7,8 +7,7 @@ namespace LegacyApplication
     public class Invoice
     {
         private readonly PromotionsCatalog _promotionsCatalog;
-        // TODO: change to private after moving all references to it into this class.
-        public readonly List<StoreDataSet.ProductsRow> _productsInInvoice = new List<StoreDataSet.ProductsRow>();
+        private readonly List<StoreDataSet.ProductsRow> _productsInInvoice = new List<StoreDataSet.ProductsRow>();
 
         public Invoice(PromotionsCatalog promotionsCatalog)
         {

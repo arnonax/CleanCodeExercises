@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace LegacyApplication
@@ -9,7 +8,7 @@ namespace LegacyApplication
 	    private readonly ProductsCatalog _productsCatalog;
 	    private readonly PromotionsCatalog _promotionsCatalog;
 
-	    private readonly Invoice _invoice;
+	    private Invoice _invoice;
 
 	    public frmSellingMode(ProductsCatalog productsCatalog, PromotionsCatalog promotionsCatalog)
 		{
@@ -18,21 +17,6 @@ namespace LegacyApplication
 		    _invoice = new Invoice(_promotionsCatalog);
 		    InitializeComponent();
 		}
-
-	    public List<StoreDataSet.ProductsRow> ProductsInInvoice
-	    {
-	        get { return _invoice._productsInInvoice; }
-	    }
-
-	    public Invoice Invoice
-	    {
-	        get { return _invoice; }
-	    }
-
-	    public PromotionsCatalog PromotionsCatalog
-	    {
-	        get { return _promotionsCatalog; }
-	    }
 
 	    private void txtBarcode_TextChanged(object sender, EventArgs e)
 		{
@@ -79,7 +63,7 @@ namespace LegacyApplication
 		{
 			dgvInvoice.Rows.Clear();
 			dgvPromotions.Rows.Clear();
-			ProductsInInvoice.Clear();
+		    _invoice = new Invoice(_promotionsCatalog);
 			txtTotal.Text = 0m.ToString("C");
 		}
 	}
