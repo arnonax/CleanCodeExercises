@@ -14,9 +14,16 @@ namespace LegacyApplication
 		{
 		    _productsCatalog = productsCatalog;
 		    _promotionsCatalog = promotionsCatalog;
-		    _invoice = new Invoice(_promotionsCatalog);
+		    _invoice = CreateNewInvoice();
 		    InitializeComponent();
 		}
+
+	    private Invoice CreateNewInvoice()
+	    {
+	        var invoice = new Invoice(_promotionsCatalog);
+	        invoice.PromotionAdded += PromotionAdded;
+	        return invoice;
+	    }
 
 	    private void txtBarcode_TextChanged(object sender, EventArgs e)
 		{
@@ -39,7 +46,7 @@ namespace LegacyApplication
 			txtBarcode.SelectAll();
 
 		    dgvPromotions.Rows.Clear();
-		    var total = _invoice.CalculateTotal(PromotionAdded);
+		    var total = _invoice.CalculateTotal();
 
 		    txtTotal.Text = total.ToString("C");
 		}
@@ -63,7 +70,7 @@ namespace LegacyApplication
 		{
 			dgvInvoice.Rows.Clear();
 			dgvPromotions.Rows.Clear();
-		    _invoice = new Invoice(_promotionsCatalog);
+		    _invoice = CreateNewInvoice();
 			txtTotal.Text = 0m.ToString("C");
 		}
 	}

@@ -9,6 +9,8 @@ namespace LegacyApplication
         private readonly PromotionsCatalog _promotionsCatalog;
         private readonly List<StoreDataSet.ProductsRow> _productsInInvoice = new List<StoreDataSet.ProductsRow>();
 
+        public event Action<StoreDataSet.PromotionsRow> PromotionAdded;
+
         public Invoice(PromotionsCatalog promotionsCatalog)
         {
             _promotionsCatalog = promotionsCatalog;
@@ -19,14 +21,14 @@ namespace LegacyApplication
             _productsInInvoice.Add(product);
         }
 
-        public decimal CalculateTotal(Action<StoreDataSet.PromotionsRow> promotionAdded)
+        public decimal CalculateTotal()
         {
             var total = _productsInInvoice.Sum(x => x.Price);
-            total -= CalculateDiscounts(promotionAdded);
+            total -= CalculateDiscounts();
             return total;
         }
 
-        private decimal CalculateDiscounts(Action<StoreDataSet.PromotionsRow> promotionAdded)
+        private decimal CalculateDiscounts()
         {
             var totalDisount = 0m;
             foreach (var promotion in _promotionsCatalog.GetAllPromotions())
@@ -34,11 +36,16 @@ namespace LegacyApplication
                 var actualQuantity = _productsInInvoice.Count(x => x.Id == promotion.ProductId);
                 if (actualQuantity >= promotion.Quantity)
                 {
-                    promotionAdded(promotion);
+                    RaisePromotionAdded(promotion);
                     totalDisount += promotion.Discount;
                 }
             }
             return totalDisount;
+        }
+
+        private void RaisePromotionAdded(StoreDataSet.PromotionsRow promotion)
+        {
+            PromotionAdded?.Invoke(promotion);
         }
     }
 }
