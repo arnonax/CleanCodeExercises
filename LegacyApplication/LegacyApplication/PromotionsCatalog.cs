@@ -1,6 +1,6 @@
 namespace LegacyApplication
 {
-    public class PromotionsCatalog
+    public class PromotionsCatalog : IPromotionsCatalog
     {
         private readonly StoreDataSet _dataset;
 

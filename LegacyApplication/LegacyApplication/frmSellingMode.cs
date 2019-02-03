@@ -6,11 +6,11 @@ namespace LegacyApplication
 	public partial class frmSellingMode : Form
 	{
 	    private readonly ProductsCatalog _productsCatalog;
-	    private readonly PromotionsCatalog _promotionsCatalog;
+	    private readonly IPromotionsCatalog _promotionsCatalog;
 
 	    private Invoice _invoice;
 
-	    public frmSellingMode(ProductsCatalog productsCatalog, PromotionsCatalog promotionsCatalog)
+	    public frmSellingMode(ProductsCatalog productsCatalog, IPromotionsCatalog promotionsCatalog)
 		{
 		    _productsCatalog = productsCatalog;
 		    _promotionsCatalog = promotionsCatalog;

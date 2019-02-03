@@ -6,12 +6,12 @@ namespace LegacyApplication
 {
     public class Invoice
     {
-        private readonly PromotionsCatalog _promotionsCatalog;
+        private readonly IPromotionsCatalog _promotionsCatalog;
         private readonly List<StoreDataSet.ProductsRow> _productsInInvoice = new List<StoreDataSet.ProductsRow>();
 
         public event Action<StoreDataSet.PromotionsRow> PromotionAdded;
 
-        public Invoice(PromotionsCatalog promotionsCatalog)
+        public Invoice(IPromotionsCatalog promotionsCatalog)
         {
             _promotionsCatalog = promotionsCatalog;
         }

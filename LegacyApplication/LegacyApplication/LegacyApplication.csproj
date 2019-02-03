@@ -76,6 +76,7 @@
       <DependentUpon>frmProduct.cs</DependentUpon>
     </Compile>
     <Compile Include="Invoice.cs" />
+    <Compile Include="IPromotionsCatalog.cs" />
     <Compile Include="ProductsCatalog.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="frmPromotion.cs">
