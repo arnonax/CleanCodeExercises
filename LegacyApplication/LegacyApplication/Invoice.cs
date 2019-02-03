@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LegacyApplication
 {
@@ -16,6 +18,28 @@ namespace LegacyApplication
         public void AddProduct(StoreDataSet.ProductsRow product)
         {
             _productsInInvoice.Add(product);
+        }
+
+        public decimal CalculateTotal(Action<StoreDataSet.PromotionsRow> promotionAdded)
+        {
+            var total = _productsInInvoice.Sum(x => x.Price);
+            total -= CalculateDiscounts(promotionAdded);
+            return total;
+        }
+
+        private decimal CalculateDiscounts(Action<StoreDataSet.PromotionsRow> promotionAdded)
+        {
+            var totalDisount = 0m;
+            foreach (var promotion in _promotionsCatalog.GetAllPromotions())
+            {
+                var actualQuantity = _productsInInvoice.Count(x => x.Id == promotion.ProductId);
+                if (actualQuantity >= promotion.Quantity)
+                {
+                    promotionAdded(promotion);
+                    totalDisount += promotion.Discount;
+                }
+            }
+            return totalDisount;
         }
     }
 }

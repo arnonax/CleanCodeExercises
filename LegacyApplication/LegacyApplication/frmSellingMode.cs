@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace LegacyApplication
@@ -25,6 +24,16 @@ namespace LegacyApplication
 	        get { return _invoice._productsInInvoice; }
 	    }
 
+	    public Invoice Invoice
+	    {
+	        get { return _invoice; }
+	    }
+
+	    public PromotionsCatalog PromotionsCatalog
+	    {
+	        get { return _promotionsCatalog; }
+	    }
+
 	    private void txtBarcode_TextChanged(object sender, EventArgs e)
 		{
 			btnAdd.Enabled = !string.IsNullOrEmpty(txtBarcode.Text);
@@ -45,11 +54,10 @@ namespace LegacyApplication
 		    dgvInvoice.Rows.Add(product.Barcode, product.Description, product.Price);
 			txtBarcode.SelectAll();
 
-			var total = ProductsInInvoice.Sum(x => x.Price);
 		    dgvPromotions.Rows.Clear();
-		    total -= CalculateDiscounts(PromotionAdded);
+		    var total = _invoice.CalculateTotal(PromotionAdded);
 
-			txtTotal.Text = total.ToString("C");
+		    txtTotal.Text = total.ToString("C");
 		}
 
 	    private StoreDataSet.ProductsRow GetProductByBarcode(string barcode)
@@ -57,29 +65,9 @@ namespace LegacyApplication
 	        return _productsCatalog.GetProductByBarcode(barcode);
 	    }
 
-	    private decimal CalculateDiscounts(Action<StoreDataSet.PromotionsRow> promotionAdded)
-	    {
-	        var totalDisount = 0m;
-	        foreach (var promotion in GetAllPromotions())
-	        {
-	            var actualQuantity = ProductsInInvoice.Count(x => x.Id == promotion.ProductId);
-	            if (actualQuantity >= promotion.Quantity)
-	            {
-	                promotionAdded(promotion);
-	                totalDisount += promotion.Discount;
-	            }
-	        }
-	        return totalDisount;
-	    }
-
 	    private void PromotionAdded(StoreDataSet.PromotionsRow promotion)
 	    {
 	        dgvPromotions.Rows.Add(promotion.Description, promotion.Discount);
-	    }
-
-	    private StoreDataSet.PromotionsDataTable GetAllPromotions()
-	    {
-	        return _promotionsCatalog.GetAllPromotions();
 	    }
 
 	    private void frmSellingMode_Load(object sender, EventArgs e)
