@@ -1,7 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
+
 namespace LegacyApplication
 {
     public interface IPromotionsCatalog
     {
-        StoreDataSet.PromotionsDataTable GetAllPromotions();
+        IEnumerable<StoreDataSet.PromotionsRow> GetAllPromotions();
     }
 }

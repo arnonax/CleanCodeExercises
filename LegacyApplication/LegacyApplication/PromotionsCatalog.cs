@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace LegacyApplication
 {
     public class PromotionsCatalog : IPromotionsCatalog
@@ -9,7 +11,7 @@ namespace LegacyApplication
             _dataset = dataset;
         }
 
-        public StoreDataSet.PromotionsDataTable GetAllPromotions()
+        public IEnumerable<StoreDataSet.PromotionsRow> GetAllPromotions()
         {
             return _dataset.Promotions;
         }
